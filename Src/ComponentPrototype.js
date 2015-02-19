@@ -39,11 +39,13 @@
         'use strict';
 
         // Create an Constructor with all functions of the classObject inherited in the prototype.
-        const BaseConstructor = _mixin(function() {}, classObject);
+        let BaseConstructor = _mixin(function() {}, classObject);
 
         // Support for additional passed in mixins.
         if(classObject.mixins && classObject.mixins.constructor === Array) {
-            console.log('Yup, Additional Mixins');
+            classObject.mixins.forEach(function(mixin) {
+                BaseConstructor = _mixin(BaseConstructor, mixin);
+            });
         }
 
         // Convert the Constructor into an ES6 Class.
