@@ -1,0 +1,15 @@
+# General ignores.
+node_modules
+
+# Unfinished test suite
+.travis.yml
+Tests/
+lcov.info
+
+
+####
+Build/
+Dist/
+README.md
+names.txt
+package.json
