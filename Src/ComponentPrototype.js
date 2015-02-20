@@ -67,12 +67,12 @@
                 this.validateProps(props);
             }
             validateProps(props) {
-                for (let propName in classObject.propTypes) {
-                    let propValidator = classObject.propTypes[propName];
-                    let hasPropPassedValidator = propValidator(props, propName);
+                for (let propTypeName in classObject.propTypes) {
+                    const propValidator = classObject.propTypes[propTypeName];
+                    let hasPropPassedValidator = propValidator(props, propTypeName);
 
                     if(hasPropPassedValidator) {
-                        this.setProp(propName, props[propName]);
+                        this.setProp(propTypeName, props[propTypeName]);
                     }
                 }
             }
@@ -84,6 +84,9 @@
             }
             getProp(propName) {
                 return this.props[propName];
+            }
+            hasProp(propName) {
+                return this.getProp(propName) != null;
             }
         }
 
