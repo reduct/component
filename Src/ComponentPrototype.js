@@ -20,24 +20,70 @@
 }(window, function() {
     'use strict';
 
-    const propTypes = {
-        isRequired: function(props, propName) {
-            var isPropInProps = props[propName];
+    const createClass = function(classObject) {
+        // Create an Constructor with all functions of the classObject inherited in the prototype.
+        let BaseClass = _createBaseClass(classObject);
 
-            if(!isPropInProps) {
-                throw new Error('ComponentPrototype Error: The prop "' + propName + '" is required.');
+        // Extend the mixedIn Class with the base functionality.
+        class ComponentPrototype extends BaseClass {
+            constructor(element, props) {
+                if(!element) {
+                    throw new Error('ComponentPrototype Error: No element was specified while creating a new Class.');
+                }
+                if(!props) {
+                    throw new Error('ComponentPrototype Error: No props where specified while creating a new Class.');
+                }
+
+                this.props = {};
+                this.states = {};
+                this.el = element;
+
+                this._validateAndSetProps(props, classObject.propTypes);
             }
 
-            return isPropInProps;
-        },
-        isOptional: function() {
-            return true;
-        },
-    }
+            _validateAndSetProps(props, validators) {
+                for (let validatorName in validators) {
+                    const validator = validators[validatorName];
+                    let hasPropPassedValidator = validator(props, validatorName);
 
-    const createClass = function(classObject) {
-        'use strict';
+                    if(hasPropPassedValidator) {
+                        this._setProp(validatorName, props[validatorName]);
+                    }
+                }
+            }
 
+            getElement() {
+                return this.el;
+            }
+
+            // Prop related methods.
+            _setProp(propName, propVal) {
+                this.props[propName] = propVal;
+            }
+            getProp(propName) {
+                return this.props[propName];
+            }
+            hasProp(propName) {
+                return _isDefinedInObject(this.props, propName);
+            }
+            getDefaultProps() {
+                // ToDo: Create a getDefaultProps() method.
+                return this.props;
+            }
+
+            // State related methods.
+            setState(stateName, stateVal) {
+                this.states[stateName] = stateVal;
+            }
+            getState(stateName) {
+                return this.states[stateName];
+            }
+        }
+
+        return ComponentPrototype;
+    };
+
+    const _createBaseClass = function(classObject) {
         // Create an Constructor with all functions of the classObject inherited in the prototype.
         let BaseConstructor = _mixin(function() {}, classObject);
 
@@ -51,55 +97,14 @@
         // Convert the Constructor into an ES6 Class.
         class MixedMirrorClass extends BaseConstructor {}
 
-        // Extend the mixedIn Class with the base functionality.
-        class ComponentPrototype extends MixedMirrorClass {
-            constructor(element, props) {
-                if(!element) {
-                    throw new Error('ComponentPrototype Error: No element was specified while creating a new Class.');
-                }
-                if(!props) {
-                    throw new Error('ComponentPrototype Error: No props where specified while creating a new Class.');
-                }
-
-                this.props = {};
-                this.el = element;
-
-                this.validateProps(props);
-            }
-            validateProps(props) {
-                for (let propTypeName in classObject.propTypes) {
-                    const propValidator = classObject.propTypes[propTypeName];
-                    let hasPropPassedValidator = propValidator(props, propTypeName);
-
-                    if(hasPropPassedValidator) {
-                        this.setProp(propTypeName, props[propTypeName]);
-                    }
-                }
-            }
-            getElement() {
-                return this.el;
-            }
-            setProp(propName, propKey) {
-                this.props[propName] = propKey;
-            }
-            getProp(propName) {
-                return this.props[propName];
-            }
-            hasProp(propName) {
-                return this.getProp(propName) != null;
-            }
-        }
-
-        // Return the Class.
-        return ComponentPrototype;
-    }
+        return MixedMirrorClass;
+    };
 
     const _mixin = function(arg1, arg2) {
-        let isFirstArgumentConstructor = _isFunction(arg1);
+        const isFirstArgumentConstructor = _isFunction(arg1);
         let Constructor = isFirstArgumentConstructor ? arg1 : this;
         let mixinObject = isFirstArgumentConstructor ? arg2 : arg1;
 
-        // Mix in each function into the Constructors prototype.
         for (let mixinFunctionName in mixinObject) {
             const mixinFunction = mixinObject[mixinFunctionName];
 
@@ -109,11 +114,36 @@
         }
 
         return Constructor;
-    }
+    };
 
     const _isFunction = function(func) {
         return typeof(func) === 'function';
-    }
+    };
+
+    const _isDefinedInObject = function(key, object) {
+        return object[key] !== null;
+    };
+
+    const propTypes = {
+        isRequired: function(props, propName) {
+            var isPropInProps = _isDefinedInObject(propName, props);
+
+            if(!isPropInProps) {
+                throw new Error('ComponentPrototype Error: The prop "' + propName + '" is required.');
+            }
+
+            return isPropInProps;
+        },
+        isOptional: function(props, propName) {
+            var isPropInProps = _isDefinedInObject(propName, props);
+
+            if(!isPropInProps) {
+                console.info('ComponentPrototype Info: The prop "' + propName + '" is optional and wasn`t found.');
+            }
+
+            return true;
+        }
+    };
 
     return {
         createClass: createClass,
