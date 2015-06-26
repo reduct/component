@@ -17,136 +17,233 @@
     } else {
         global.componentPrototype = factory(global);
     }
-}(window, function() {
+}(window, function(global) {
     'use strict';
 
-    const createClass = function(classObject) {
-        // Create an Constructor with all functions of the classObject inherited in the prototype.
-        let BaseClass = _createBaseClass(classObject);
-
-        // Extend the mixedIn Class with the base functionality.
-        class ComponentPrototype extends BaseClass {
-            constructor(element, props) {
-                if(!element) {
-                    throw new Error('ComponentPrototype Error: No element was specified while creating a new Class.');
-                }
-                if(!props) {
-                    throw new Error('ComponentPrototype Error: No props where specified while creating a new Class.');
-                }
-
-                this.props = {};
-                this.states = {};
-                this.el = element;
-
-                this._validateAndSetProps(props, classObject.propTypes);
-            }
-
-            _validateAndSetProps(props, validators) {
-                for (let validatorName in validators) {
-                    const validator = validators[validatorName];
-                    let hasPropPassedValidator = validator(props, validatorName);
-
-                    if(hasPropPassedValidator) {
-                        this._setProp(validatorName, props[validatorName]);
-                    }
-                }
-            }
-
-            getElement() {
-                return this.el;
-            }
-
-            // Prop related methods.
-            _setProp(propName, propVal) {
-                this.props[propName] = propVal;
-            }
-            getProp(propName) {
-                return this.props[propName];
-            }
-            hasProp(propName) {
-                return _isDefinedInObject(this.props, propName);
-            }
-            getDefaultProps() {
-                // ToDo: Create a getDefaultProps() method.
-                return this.props;
-            }
-
-            // State related methods.
-            setState(stateName, stateVal) {
-                this.states[stateName] = stateVal;
-            }
-            getState(stateName) {
-                return this.states[stateName];
-            }
-        }
-
-        return ComponentPrototype;
-    };
-
-    const _createBaseClass = function(classObject) {
-        // Create an Constructor with all functions of the classObject inherited in the prototype.
-        let BaseConstructor = _mixin(function() {}, classObject);
-
-        // Support for additional passed in mixins.
-        if(classObject.mixins && classObject.mixins.constructor === Array) {
-            classObject.mixins.forEach(function(mixin) {
-                BaseConstructor = _mixin(BaseConstructor, mixin);
-            });
-        }
-
-        // Convert the Constructor into an ES6 Class.
-        class MixedMirrorClass extends BaseConstructor {}
-
-        return MixedMirrorClass;
-    };
-
-    const _mixin = function(arg1, arg2) {
-        const isFirstArgumentConstructor = _isFunction(arg1);
-        let Constructor = isFirstArgumentConstructor ? arg1 : this;
-        let mixinObject = isFirstArgumentConstructor ? arg2 : arg1;
-
-        for (let mixinFunctionName in mixinObject) {
-            const mixinFunction = mixinObject[mixinFunctionName];
-
-            if(_isFunction(mixinFunction)) {
-                Constructor.prototype[mixinFunctionName] = mixinFunction;
-            }
-        }
-
-        return Constructor;
-    };
-
+    const doc = global.document;
     const _isFunction = function(func) {
         return typeof(func) === 'function';
     };
-
+    const _isNumeric = function(num){
+        return !isNaN(num);
+    };
+    const _isObject = function(obj){
+        return (typeof obj === 'object') && (obj !== null);
+    };
     const _isDefinedInObject = function(key, object) {
         return object[key] !== null;
     };
-
     const propTypes = {
-        isRequired: function(props, propName) {
-            var isPropInProps = _isDefinedInObject(propName, props);
+        isRequired: function(propValue, propName, el) {
+            const isPropInProps = propValue !== null & propValue !== undefined;
 
             if(!isPropInProps) {
-                throw new Error('ComponentPrototype Error: The prop "' + propName + '" is required.');
+                console.error('ComponentPrototype Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
-            return isPropInProps;
+            return {
+                result: isPropInProps,
+                value: propValue
+            };
         },
-        isOptional: function(props, propName) {
-            var isPropInProps = _isDefinedInObject(propName, props);
+        isOptional: function(propValue, propName, el) {
+            const isPropInProps = propValue !== null;
 
             if(!isPropInProps) {
-                console.info('ComponentPrototype Info: The prop "' + propName + '" is optional and wasn`t found.');
+                console.info('ComponentPrototype Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
             }
 
-            return true;
+            return {
+                result: true,
+                value: propValue
+            };
+        },
+        isNumber: {
+            isRequired: function(propValue, propName, el) {
+                const isNumber = _isNumeric(propValue);
+                let result = true;
+
+                // Since The prop is required, check for it's value beforehand.
+                propTypes.isRequired.apply(this, arguments);
+
+                if(!isNumber) {
+                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    result = false;
+                } else {
+                    propValue = Math.abs(propValue);
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: function(propValue, propName, el) {
+                const isNumber = _isNumeric(propValue);
+                let result = true;
+
+                if(propValue && !isNumber) {
+                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    result = false;
+                }
+
+                propValue = Math.abs(propValue);
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
+        },
+        isObject: {
+            isRequired: function(propValue, propName, el) {
+                let isObject;
+                let result = true;
+
+                // Since The prop is required, check for it's value beforehand.
+                propTypes.isRequired.apply(this, arguments);
+
+                // If the passed Property is a string, convert it to a JSON object beforehand.
+                try {
+                    propValue = JSON.parse(propValue);
+                } catch(e) {}
+
+                // Verify the type of the value.
+                isObject = _isObject(propValue);
+
+                if(!isObject) {
+                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: function(propValue, propName, el) {
+                let isObject;
+                let result = true;
+
+                // If the passed Property is a string, convert it to a JSON object beforehand.
+                try {
+                    propValue = JSON.parse(propValue);
+                } catch(e) {}
+
+                // Verify the type of the value.
+                isObject = _isObject(propValue);
+
+                if(propValue && !isObject) {
+                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
         }
     };
 
+    class Component {
+        constructor(element, props, propTypes) {
+            if(!element) {
+                console.warning('ComponentPrototype: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+            }
+
+            this._passedProps = props || {};
+            this.props = {};
+            this.states = {};
+            this.observers = {};
+            this.el = element || doc.createElement('div');
+
+            this._validateAndSetProps(propTypes);
+        }
+
+        _validateAndSetProps(propTypes) {
+            const el = this.el;
+            const _passedProps = this._passedProps;
+            const defaultProps = _isFunction(this.getDefaultProps) ? this.getDefaultProps() : {};
+
+            for (let propName in propTypes) {
+                const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+                const validator = propTypes[propName];
+                const hasPropPassedValidator = validator(propValue, propName, el);
+
+                if(hasPropPassedValidator.result) {
+                    this._setProp(propName, hasPropPassedValidator.value);
+                }
+            }
+        }
+
+        getElement() {
+            return this.el;
+        }
+
+        // Prop related methods.
+        _setProp(propName, propVal) {
+            this.props[propName] = propVal;
+        }
+
+        getProp(propName) {
+            return this.props[propName];
+        }
+
+        hasProp(propName) {
+            return _isDefinedInObject(this.props, propName);
+        }
+
+        // State related methods.
+        setState(stateName, stateVal) {
+            this.states[stateName] = stateVal;
+        }
+
+        getState(stateName) {
+            return this.states[stateName];
+        }
+
+        // Event System
+        on(event, listener) {
+            return (this.observers[event] || (this.observers[event] = [])).push(listener);
+        }
+
+        trigger(event, data) {
+            let value;
+            let key;
+
+            for (value = this.observers[event], key = 0; value && key < value.length;) {
+                value[key++](data);
+            }
+        }
+
+        off(event, listener) {
+            let value;
+            let key;
+
+            for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
+                value.splice(key, 1);
+            }
+
+            this.observers[event] = listener ? value : [];
+        }
+
+        extend(instance, mixinObject) {
+            for (let name in mixinObject) {
+                let mixinFunction = mixinObject[name];
+
+                if(_isFunction(mixinFunction)) {
+                    // ToDo: __proto__ shouldn't be used, find a better way to mixin functionality into ES6 classes.
+                    if (!instance.__proto__.hasOwnProperty(name)) {
+                        instance.__proto__[name] = mixinFunction;
+                    }
+                }
+            }
+        }
+    }
+
     return {
-        createClass: createClass,
+        Component: Component,
         propTypes: propTypes
     };
 }));
