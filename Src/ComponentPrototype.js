@@ -24,15 +24,19 @@
     const _isFunction = function(func) {
         return typeof(func) === 'function';
     };
+
     const _isNumeric = function(num){
         return !isNaN(num);
     };
+
     const _isObject = function(obj){
         return (typeof obj === 'object') && (obj !== null);
     };
+
     const _isDefinedInObject = function(key, object) {
         return object[key] !== null;
     };
+
     const propTypes = {
         isRequired: function(propValue, propName, el) {
             const isPropInProps = propValue !== null & propValue !== undefined;
