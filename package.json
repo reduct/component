@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run build && npm run fixBabelJestScopeIssue && jest",
     "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
-    "fixBabelJestScopeIssue": "rm Tests/NodeProto.js && cp -i Src/NodeProto.js Tests"
+    "fixBabelJestScopeIssue": "cp -i Src/NodeProto.js Tests"
   },
   "repository": {
     "type": "git",
