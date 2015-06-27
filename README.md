@@ -1,3 +1,3 @@
-# NodeProto
+# NodeProto [![Build Status](https://travis-ci.org/Inkdpixels/NodeProto.svg)](https://travis-ci.org/Inkdpixels/NodeProto) [![Dependency Status](https://david-dm.org/Inkdpixels/NodeProto.svg)](https://david-dm.org/Inkdpixels/NodeProto) [![devDependency Status](https://david-dm.org/Inkdpixels/NodeProto/dev-status.svg)](https://david-dm.org/Inkdpixels/NodeProto#info=devDependencies)
 
 > A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.
