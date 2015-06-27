@@ -254,6 +254,7 @@
             return (this.observers[event] || (this.observers[event] = [])).push(listener);
         }
 
+        // ToDo: Support for multiple arguments.
         trigger(event, data) {
             let value;
             let key;
