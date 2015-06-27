@@ -19,10 +19,6 @@ describe('NodeProto: propTypes.isNumber.isRequired', function () {
         });
     });
 
-    it('should return an negative result with no arguments passed.', function () {
-        expect(propType().result).toBeFalsy();
-    });
-
     it('should return an negative result if the argument which was passed isNaN.', function () {
         expect(propType('Prop').result).toBeFalsy();
     });

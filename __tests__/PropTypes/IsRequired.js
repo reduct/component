@@ -19,10 +19,6 @@ describe('NodeProto: propTypes.isRequired', function () {
         });
     });
 
-    it('should return an negative result with no arguments passed.', function () {
-        expect(propType().result).toBeFalsy();
-    });
-
     it('should return an positive result if an argument was passed.', function () {
         expect(propType('Prop').result).toBeTruthy();
     });
