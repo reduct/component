@@ -37,9 +37,13 @@
         return object[key] !== null;
     };
 
+    const _isDefined = function(val) {
+        return val !== null & val !== undefined;
+    };
+
     const propTypes = {
         isRequired: function(propValue, propName, el) {
-            const isPropInProps = propValue !== null & propValue !== undefined;
+            const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
                 console.error('NodeProto Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
@@ -52,7 +56,7 @@
             };
         },
         isOptional: function(propValue, propName, el) {
-            const isPropInProps = propValue !== null;
+            const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
                 console.info('NodeProto Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
@@ -130,7 +134,7 @@
             isOptional: function(propValue, propName, el) {
                 let isObject;
                 let result = true;
-                let isPropValueDefined = propValue !== undefined && propValue !== null;
+                let isPropValueDefined = _isDefined(propValue);
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {

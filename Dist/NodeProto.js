@@ -43,9 +43,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return object[key] !== null;
     };
 
+    var _isDefined = function _isDefined(val) {
+        return val !== null & val !== undefined;
+    };
+
     var propTypes = {
         isRequired: function isRequired(propValue, propName, el) {
-            var isPropInProps = propValue !== null & propValue !== undefined;
+            var isPropInProps = _isDefined(propValue);
 
             if (!isPropInProps) {
                 console.error("NodeProto Error: The prop \"" + propName + "\" is required and wasn‘t found on: ", el);
@@ -58,7 +62,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             };
         },
         isOptional: function isOptional(propValue, propName, el) {
-            var isPropInProps = propValue !== null;
+            var isPropInProps = _isDefined(propValue);
 
             if (!isPropInProps) {
                 console.info("NodeProto Info: The prop \"" + propName + "\" is optional and wasn‘t found on: ", el);
@@ -136,7 +140,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             isOptional: function isOptional(propValue, propName, el) {
                 var isObject = undefined;
                 var result = true;
-                var isPropValueDefined = propValue !== undefined && propValue !== null;
+                var isPropValueDefined = _isDefined(propValue);
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
