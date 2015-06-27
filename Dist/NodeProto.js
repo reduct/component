@@ -27,6 +27,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "use strict";
 
     var doc = global.document;
+    var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
+
     var _isFunction = function _isFunction(func) {
         return typeof func === "function";
     };
@@ -44,7 +46,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var _isDefined = function _isDefined(val) {
-        return val !== null & val !== undefined;
+        return val !== null && val !== undefined;
     };
 
     var propTypes = {
@@ -164,7 +166,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var logger = {
         log: function log(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
@@ -173,7 +175,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         info: function info(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
@@ -182,21 +184,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         warn: function warn(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.warn(message);
             } catch (e) {}
         },
         error: function error(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.error(message);
             } catch (e) {}
         }
     };
@@ -209,6 +211,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 logger.warn("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
             }
 
+            console.log("yep 2");
             this._passedProps = props || {};
             this.props = {};
             this.states = {};

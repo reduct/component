@@ -21,6 +21,8 @@
     'use strict';
 
     const doc = global.document;
+    const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
+
     const _isFunction = function(func) {
         return typeof(func) === 'function';
     };
@@ -38,7 +40,7 @@
     };
 
     const _isDefined = function(val) {
-        return val !== null & val !== undefined;
+        return val !== null && val !== undefined;
     };
 
     const propTypes = {
@@ -158,7 +160,7 @@
 
     const logger = {
         log: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
@@ -167,7 +169,7 @@
             } catch(e) {}
         },
         info: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
@@ -176,21 +178,21 @@
             } catch(e) {}
         },
         warn: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.warn(message);
             } catch(e) {}
         },
         error: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.error(message);
             } catch(e) {}
         }
     };
@@ -201,6 +203,7 @@
                 logger.warn('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
             }
 
+            console.log('yep 2')
             this._passedProps = props || {};
             this.props = {};
             this.states = {};

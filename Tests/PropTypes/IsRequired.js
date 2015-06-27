@@ -9,7 +9,7 @@ describe('NodeProto: propTypes.isRequired', function () {
 
     it('should return an object containing a result and value when called.', function () {
         expect(propType()).toEqual({
-            result: 0,
+            result: false,
             value: undefined
         });
     });
