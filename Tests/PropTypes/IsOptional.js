@@ -1,4 +1,4 @@
-import nodeProto from './../../Dist/NodeProto.js';
+import nodeProto from './../../Src/NodeProto.js';
 
 const propType = nodeProto.propTypes.isOptional;
 
