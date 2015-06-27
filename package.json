@@ -5,7 +5,9 @@
   "main": "Dist/NodeProto.js",
   "scripts": {
     "test": "npm run build && npm run fixBabelJestScopeIssue && jest",
-    "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
+    "build": "npm run babel && npm run uglify",
+    "babel": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
+    "uglify": "node_modules/.bin/uglifyjs Dist/NodeProto.js -o Dist/NodeProto.min.js --comments -c -m",
     "fixBabelJestScopeIssue": "cp -i Src/NodeProto.js Tests"
   },
   "repository": {
@@ -38,7 +40,8 @@
   "devDependencies": {
     "babel": "^5.6.14",
     "babel-jest": "^5.3.0",
-    "jest-cli": "^0.4.13"
+    "jest-cli": "^0.4.13",
+    "uglify-js": "^2.4.23"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
