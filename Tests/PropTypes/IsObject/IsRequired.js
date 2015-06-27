@@ -26,13 +26,13 @@ describe('NodeProto: propTypes.isObject.isRequired', function () {
         expect(propType('{ "key": "value" }').result).toBeTruthy();
     });
 
-    it('should return the passed argument as the returning value', function () {
+    it('should return the passed argument as the returning value.', function () {
         const value = {};
 
         expect(propType(value).value).toBe(value);
     });
 
-    it('should return a valid JSON Object as the returning value if the passed argument is a String but Contains a JSON Object', function () {
+    it('should return a valid JSON Object as the returning value if the passed argument is a String but Contains a JSON Object.', function () {
         expect(propType('{ "key": "value" }').value).toEqual({
             "key": "value"
         });

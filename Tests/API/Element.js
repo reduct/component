@@ -8,7 +8,7 @@ class ExampleComponent extends nodeProto.Component {
 }
 
 describe('NodeProto: Element API', function () {
-    it('The element should be defined', function () {
+    it('should return a DOM element even if none was passed directly to the Constructor.', function () {
         var componentInstance = new ExampleComponent();
 
         expect(componentInstance.getElement()).toBeDefined();
