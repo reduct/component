@@ -1,5 +1,3 @@
-jest.dontMock('./../../../Dist/NodeProto.js');
-
 var propType;
 
 beforeEach(function() {

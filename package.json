@@ -39,6 +39,11 @@
     "jest-cli": "^0.4.13"
   },
   "jest": {
-    "testDirectoryName": "Tests"
+    "testDirectoryName": "Tests",
+    "unmockedModulePathPatterns": [
+      "./Src",
+      "./Build",
+      "./Dist"
+    ]
   }
 }
