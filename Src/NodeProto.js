@@ -45,6 +45,7 @@
                 console.error('ComponentPrototype Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
+            // ToDo: Returns 0 and not false as a result if no argument was passed.
             return {
                 result: isPropInProps,
                 value: propValue

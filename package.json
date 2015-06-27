@@ -4,7 +4,7 @@
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/NodeProto.js",
   "scripts": {
-    "test": "npm run build",
+    "test": "npm run build && jest",
     "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js"
   },
   "repository": {
@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/Inkdpixels/NodeProto#readme",
   "devDependencies": {
-    "babel": "^5.6.14"
+    "babel": "^5.6.14",
+    "jest-cli": "^0.4.13"
   }
 }
