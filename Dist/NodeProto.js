@@ -136,6 +136,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             isOptional: function isOptional(propValue, propName, el) {
                 var isObject = undefined;
                 var result = true;
+                var isPropValueDefined = propValue !== undefined && propValue !== null;
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -145,7 +146,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 // Verify the type of the value.
                 isObject = _isObject(propValue);
 
-                if (propValue && !isObject) {
+                if (isPropValueDefined && !isObject) {
                     console.error("NodeProto Error: The prop \"" + propName + "\" is not an valid JSON object. ", el);
                     result = false;
                 }
