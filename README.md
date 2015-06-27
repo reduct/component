@@ -7,7 +7,7 @@
 * Clean and simple react-like syntax (states, props, method names)
 * ES6 Class support
 * Clear listings of required props which will be passed in while initiating a new instance.
-* 3-Way prop injection 
+* 3-Way prop injection
  * Via the `arguments` array
  * The `dataset` of element if one was passed
  * Or the described `getDefaultProps()` method.
@@ -45,10 +45,10 @@ const myComponentPropTypes = {
 class MyComponent extends nodeProto.Component {
   constructor(el, props) {
     super(el, props, myComponentPropTypes);
-    
+
     this.on('logSomething', this.doSomething.bind(this));
   }
-  
+
   doSomething() {
     console.log(this.getProp('myProp'));
   }
@@ -72,24 +72,24 @@ instance.trigger('logSomething') // LOG: 'myString'
 
 
 ## PropType validators
-The PropType validators are a key feature of the NodeProto - They validate your props, and optionally transform the values into the requested ones by the validator. 
+The PropType validators are a key feature of the NodeProto - They validate your props, and optionally transform the values into the requested types by the validator.
 
-F.e. if your component expects a `Number` as a prop with the name `myProp`, and you can't pass in the prop directly via JS, you can create a dataset property with the given name on the target element with a `Number` as the value e.g. `data-myProp="2"`. The component itself does have prop with the name `myProp` and the value of `2` at this moment.
+F.e. if your component expects a `Number` as a prop with the name `myProp`, and you can't pass in the prop directly via JS, you can create a dataset property with the given name on the target element with a `Number` as the value e.g. `data-myProp="2"`.
 
-##### propTypes.isRequired 
+##### propTypes.isRequired
 Will expect that the given key is present in either the passed Props-Object, the elements dataset or in the `getDefaultProps()` method.
 
-##### propTypes.isOptional 
+##### propTypes.isOptional
 Will log an info message into the UA's console if the given key is not present in either the passed Props-Object, the elements dataset or in the `getDefaultProps()` method.
 
 ##### propTypes.isNumber.isRequired
-Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a `Number`, or a `String` containing a `Number`. 
+Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a `Number`, or a `String` containing a `Number`.
 
 ##### propTypes.isNumber.isOptional
 Like the basic `propTypes.isOptional` validator, but will also expect a `Number` as the value.
 
 ##### propTypes.isObject.isRequired
-Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a valid `Object`, or a `String` containing a JSON `Object`. 
+Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a valid `Object`, or a `String` containing a JSON `Object`.
 
 ##### propTypes.isObject.isOptional
 Like the basic `propTypes.isOptional` validator, but will also expect a `Object` as the value.
