@@ -113,6 +113,11 @@ Argument `key`: `String`
 
 Will return a boolean regarding the existence of the prop for the given key.
 
+#### instance.getDefaultProps();
+Type: `Function`
+
+Should return an object with all defaultProps you want to specify.
+
 #### instance.setState(key, val);
 Type: `Function`
 Argument `key`: `String`
