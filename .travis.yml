@@ -12,3 +12,6 @@ branches:
 cache:
   directories:
     - node_modules
+
+after_script:
+  - node Build/PublishCodeCoverage.js
