@@ -24,7 +24,7 @@
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
 
     const _isFunction = function(func) {
-        return typeof(func) === 'function';
+        return typeof func === 'function';
     };
 
     const _isNumeric = function(num){
@@ -32,13 +32,7 @@
     };
 
     const _isObject = function(obj){
-        return (typeof obj === 'object') && (obj !== null);
-    };
-
-    const _isDefinedInObject = function(key, object) {
-        let val = object[key];
-
-        return _isDefined(val);
+        return typeof obj === 'object';
     };
 
     const _isDefined = function(val) {
@@ -243,7 +237,7 @@
         }
 
         hasProp(propName) {
-            return _isDefinedInObject(this.props, propName);
+            return _isDefined(this.props[propName]);
         }
 
         // State related methods.
