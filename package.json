@@ -37,12 +37,18 @@
   "homepage": "https://github.com/Inkdpixels/NodeProto#readme",
   "devDependencies": {
     "babel": "^5.6.14",
+    "babel-jest": "^5.3.0",
     "jest-cli": "^0.4.13"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": ["js"],
-    "moduleFileExtensions": ["js", "json"],
+    "testFileExtensions": [
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
       "./Src",
