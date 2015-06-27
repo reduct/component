@@ -13,5 +13,8 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - npm install -g codeclimate-test-reporter
+
 after_script:
   - node Build/PublishCodeCoverage.js
