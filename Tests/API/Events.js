@@ -7,7 +7,7 @@ class ExampleComponent extends nodeProto.Component {
     }
 }
 
-describe('NodeProto: Events API', function () {
+describe('NodeProto: Events API', () => {
     let instance;
     let eventCallback;
 
@@ -16,14 +16,14 @@ describe('NodeProto: Events API', function () {
         eventCallback = jest.genMockFunction();
     });
 
-    it('should listen to the trigger event and execute the callback with the provided argument.', function () {
+    it('should listen to the trigger event and execute the callback with the provided argument.', () => {
         instance.on('myEvent', eventCallback);
         instance.trigger('myEvent', 1);
 
         expect(eventCallback).toBeCalledWith(1);
     });
 
-    it('should remove the given function from the event queue.', function () {
+    it('should remove the given function from the event queue.', () => {
         instance.on('myEvent', eventCallback);
         instance.off('myEvent', eventCallback);
         instance.trigger('myEvent', 1);

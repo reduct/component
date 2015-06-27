@@ -13,20 +13,20 @@ class ExampleComponent extends nodeProto.Component {
     }
 }
 
-describe('NodeProto: Prop API', function () {
-    it('should return undefined if no prop was set.', function () {
+describe('NodeProto: Prop API', () => {
+    it('should return undefined if no prop was set.', () => {
         let instance = new ExampleComponent();
 
         expect(instance.getProp('myProp')).toBeUndefined();
     });
 
-    it('should check if a prop is present.', function () {
+    it('should check if a prop is present.', () => {
         let instance = new ExampleComponent();
 
         expect(instance.hasProp('myProp')).toBeFalsy();
     });
 
-    it('should return the value of a state which was previously set.', function () {
+    it('should return the value of a state which was previously set.', () => {
         let instance = new ExampleComponent();
 
         instance.setState('myState', 1);
@@ -34,7 +34,7 @@ describe('NodeProto: Prop API', function () {
         expect(instance.getState('myState')).toBe(1);
     });
 
-    it('should validate and set the passed props when propTypes are given.', function () {
+    it('should validate and set the passed props when propTypes are given.', () => {
         let instance = new ExampleComponent(null, {
             'myProp': 2
         }, {
@@ -44,7 +44,7 @@ describe('NodeProto: Prop API', function () {
         expect(instance.getProp('myProp')).toBe(2);
     });
 
-    it('should validate and set values of the elements dataset when propTypes are given.', function () {
+    it('should validate and set values of the elements dataset when propTypes are given.', () => {
         let element = document.createElement('div');
         let instance;
 
@@ -57,7 +57,7 @@ describe('NodeProto: Prop API', function () {
         expect(instance.getProp('myProp')).toBe('value');
     });
 
-    it('should fall back to the getDefaultProps method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', function () {
+    it('should fall back to the getDefaultProps method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
         let instance;
 
         instance = new ExampleComponent(null, null, {
