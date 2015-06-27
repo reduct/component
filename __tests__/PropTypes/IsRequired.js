@@ -24,11 +24,15 @@ describe('NodeProto: propTypes.isRequired', function () {
     });
 
     it('should return an positive result if an argument was passed.', function () {
-        expect(propType('test').result).toBeTruthy();
+        expect(propType('Prop').result).toBeTruthy();
     });
 
     it('should return an positive result even if the argument passed argument is "false".', function () {
         expect(propType(false).result).toBeTruthy();
+    });
+
+    it('should return the passed argument as the returning value', function () {
+        expect(propType('Prop').value).toBe('Prop');
     });
 });
 

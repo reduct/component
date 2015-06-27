@@ -22,6 +22,10 @@ describe('NodeProto: propTypes.isOptional', function () {
     it('should return an positive result with no arguments passed.', function () {
         expect(propType().result).toBeTruthy();
     });
+
+    it('should return the passed argument as the returning value', function () {
+        expect(propType('Prop').value).toBe('Prop');
+    });
 });
 
 afterEach(function() {
