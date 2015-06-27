@@ -36,7 +36,9 @@
     };
 
     const _isDefinedInObject = function(key, object) {
-        return object[key] !== null;
+        let val = object[key];
+
+        return _isDefined(val);
     };
 
     const _isDefined = function(val) {
