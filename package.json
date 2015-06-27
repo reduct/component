@@ -44,18 +44,10 @@
     "uglify-js": "^2.4.23"
   },
   "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": [
-      "js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
+    "scriptPreprocessor": "node_modules/babel-jest",
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
       "./Src",
-      "./Build",
       "./Dist"
     ]
   }
