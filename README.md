@@ -85,13 +85,13 @@ Will log an info message into the UA's console if the given key is not present i
 ##### propTypes.isNumber.isRequired
 Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a `Number`, or a `String` containing a `Number`. 
 
-##### propTypes.isNumber.isRequired
+##### propTypes.isNumber.isOptional
 Like the basic `propTypes.isOptional` validator, but will also expect a `Number` as the value.
 
 ##### propTypes.isObject.isRequired
 Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a valid `Object`, or a `String` containing a JSON `Object`. 
 
-##### propTypes.isObject.isRequired
+##### propTypes.isObject.isOptional
 Like the basic `propTypes.isOptional` validator, but will also expect a `Object` as the value.
 
 
