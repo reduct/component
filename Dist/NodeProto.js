@@ -206,7 +206,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _classCallCheck(this, Component);
 
             if (!element) {
-                logger.warning("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
+                logger.warn("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
             }
 
             this._passedProps = props || {};
