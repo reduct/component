@@ -53,7 +53,8 @@
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
       "./Src",
-      "./Dist"
+      "./Dist",
+      "./Tests/ExampleComponent.js"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import nodeProto from './../../../Src/NodeProto.js';
+var nodeProto = require('./../../../Src/NodeProto.js');
 
 const propType = nodeProto.propTypes.isNumber.isOptional;
 

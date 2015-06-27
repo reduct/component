@@ -1,17 +1,5 @@
 var nodeProto = require('./../../Src/NodeProto.js');
-
-// An ExampleClass for testing purposes.
-class ExampleComponent extends nodeProto.Component {
-    constructor(el, props, propTypes) {
-        super(el, props, propTypes)
-    }
-
-    getDefaultProps() {
-        return {
-            'anotherProp': 2
-        }
-    }
-}
+var ExampleComponent = require('./../ExampleComponent.js');
 
 describe('NodeProto: Prop API', () => {
     it('should return undefined if no prop was set.', () => {

@@ -1,11 +1,4 @@
-var nodeProto = require('./../../Src/NodeProto.js');
-
-// An ExampleClass for testing purposes.
-class ExampleComponent extends nodeProto.Component {
-    constructor(el, props) {
-        super(el, props)
-    }
-}
+var ExampleComponent = require('./../ExampleComponent.js');
 
 describe('NodeProto: Element API', () => {
     it('should return a DOM element even if none was passed directly to the Constructor.', () => {
