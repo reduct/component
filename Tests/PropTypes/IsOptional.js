@@ -1,9 +1,6 @@
-var propType;
+import nodeProto from './../../Dist/NodeProto.js';
 
-beforeEach(function() {
-    var nodeProto = require('./../../Dist/NodeProto.js');
-    propType = nodeProto.propTypes.isOptional;
-});
+const propType = nodeProto.propTypes.isOptional;
 
 describe('NodeProto: propTypes.isOptional', function () {
     it('should be defined', function () {
@@ -24,8 +21,4 @@ describe('NodeProto: propTypes.isOptional', function () {
     it('should return the passed argument as the returning value', function () {
         expect(propType('Prop').value).toBe('Prop');
     });
-});
-
-afterEach(function() {
-    propType = null;
 });

@@ -1,9 +1,6 @@
-var propType;
+import nodeProto from './../../../Dist/NodeProto.js';
 
-beforeEach(function() {
-    var nodeProto = require('./../../../Dist/NodeProto.js');
-    propType = nodeProto.propTypes.isNumber.isOptional;
-});
+const propType = nodeProto.propTypes.isNumber.isOptional;
 
 describe('NodeProto: propTypes.isNumber.isOptional', function () {
     it('should be defined', function () {
@@ -41,8 +38,4 @@ describe('NodeProto: propTypes.isNumber.isOptional', function () {
     it('should return a Number as the returning value if the passed argument is a String but Contains a Number', function () {
         expect(propType('0').value).toBe(0);
     });
-});
-
-afterEach(function() {
-    propType = null;
 });

@@ -4,8 +4,9 @@
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/NodeProto.js",
   "scripts": {
-    "test": "npm run build && jest",
-    "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js"
+    "test": "npm run build && npm run fixBabelJestScopeIssue && jest",
+    "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
+    "fixBabelJestScopeIssue": "rm Tests/NodeProto.js && cp -i Src/NodeProto.js Tests"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,9 @@
     "jest-cli": "^0.4.13"
   },
   "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": ["js"],
+    "moduleFileExtensions": ["js", "json"],
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
       "./Src",
