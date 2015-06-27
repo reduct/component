@@ -38,11 +38,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var _isObject = function _isObject(obj) {
-        return typeof obj === "object" && obj !== null;
-    };
-
-    var _isDefinedInObject = function _isDefinedInObject(key, object) {
-        return object[key] !== null;
+        return typeof obj === "object";
     };
 
     var _isDefined = function _isDefined(val) {
@@ -256,7 +252,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "hasProp",
             value: function hasProp(propName) {
-                return _isDefinedInObject(this.props, propName);
+                return _isDefined(this.props[propName]);
             }
         }, {
             key: "setState",
@@ -279,6 +275,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }, {
             key: "trigger",
+
+            // ToDo: Support for multiple arguments.
             value: function trigger(event, data) {
                 var value = undefined;
                 var key = undefined;
