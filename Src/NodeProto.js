@@ -1,4 +1,4 @@
-/* ComponentPrototype 0.0.1 | @license ISC */
+/* NodeProto 1.0.0 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -9,13 +9,13 @@
 
     // If the env is AMD, register the Module as 'componentprototype'.
     } else if (global.define && typeof global.define === "function" && global.define.amd) {
-        global.define("componentprototype", [], function() {
+        global.define("nodeProto", [], function() {
             return factory(global);
         });
 
     // If the env is a browser(without CJS or AMD support), export the factory into the global window object.
     } else {
-        global.componentPrototype = factory(global);
+        global.nodeProto = factory(global);
     }
 }(window, function(global) {
     'use strict';
