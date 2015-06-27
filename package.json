@@ -47,8 +47,7 @@
     "scriptPreprocessor": "node_modules/babel-jest",
     "collectCoverage": true,
     "collectCoverageOnlyFrom": {
-      "Src/NodeProto.js" : true,
-      "Dist/NodeProto.js" : true
+      "Src/NodeProto.js": true
     },
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
