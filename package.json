@@ -1,11 +1,14 @@
 {
   "name": "nodeproto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/NodeProto.js",
   "scripts": {
-    "test": "npm run build",
-    "build": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js"
+    "test": "npm run build && npm run fixBabelJestScopeIssue && jest",
+    "build": "npm run babel && npm run uglify",
+    "babel": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
+    "uglify": "node_modules/.bin/uglifyjs Dist/NodeProto.js -o Dist/NodeProto.min.js --comments -c -m",
+    "fixBabelJestScopeIssue": "cp -i Src/NodeProto.js Tests"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,25 @@
   },
   "homepage": "https://github.com/Inkdpixels/NodeProto#readme",
   "devDependencies": {
-    "babel": "^5.6.14"
+    "babel": "^5.6.14",
+    "babel-jest": "^5.3.0",
+    "jest-cli": "^0.4.13",
+    "uglify-js": "^2.4.23"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": [
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testDirectoryName": "Tests",
+    "unmockedModulePathPatterns": [
+      "./Src",
+      "./Build",
+      "./Dist"
+    ]
   }
 }

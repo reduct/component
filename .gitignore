@@ -1,3 +1,6 @@
 # General ignores.
 node_modules
 lcov.info
+
+# The NodeProto-Copy for Jest - see https://github.com/Inkdpixels/NodeProto/issues/3
+Tests/NodeProto.js

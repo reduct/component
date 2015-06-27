@@ -5,6 +5,10 @@ node_js:
 notifications:
   email: false
 
+branches:
+  only:
+    - development
+
 cache:
   directories:
     - node_modules

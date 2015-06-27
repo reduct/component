@@ -1,4 +1,4 @@
-/* NodeProto 1.0.0 | @license MIT */
+/* NodeProto 1.0.1 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -37,24 +37,29 @@
         return object[key] !== null;
     };
 
+    const _isDefined = function(val) {
+        return val !== null & val !== undefined;
+    };
+
     const propTypes = {
         isRequired: function(propValue, propName, el) {
-            const isPropInProps = propValue !== null & propValue !== undefined;
+            const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
-                console.error('ComponentPrototype Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
+                logger.error('NodeProto Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
+            // ToDo: Returns 0 and not false as a result if no argument was passed.
             return {
                 result: isPropInProps,
                 value: propValue
             };
         },
         isOptional: function(propValue, propName, el) {
-            const isPropInProps = propValue !== null;
+            const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
-                console.info('ComponentPrototype Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
+                logger.info('NodeProto Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
             }
 
             return {
@@ -71,7 +76,7 @@
                 propTypes.isRequired.apply(this, arguments);
 
                 if(!isNumber) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    logger.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 } else {
                     propValue = Math.abs(propValue);
@@ -87,7 +92,7 @@
                 let result = true;
 
                 if(propValue && !isNumber) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    logger.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 }
 
@@ -95,7 +100,7 @@
 
                 return {
                     result: result,
-                    value: propValue
+                    value: _isNumeric(propValue) ? propValue : undefined
                 };
             }
         },
@@ -116,7 +121,7 @@
                 isObject = _isObject(propValue);
 
                 if(!isObject) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    logger.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -128,6 +133,7 @@
             isOptional: function(propValue, propName, el) {
                 let isObject;
                 let result = true;
+                let isPropValueDefined = _isDefined(propValue);
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -137,8 +143,8 @@
                 // Verify the type of the value.
                 isObject = _isObject(propValue);
 
-                if(propValue && !isObject) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                if(isPropValueDefined && !isObject) {
+                    logger.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -150,10 +156,49 @@
         }
     };
 
+    const logger = {
+        log: (message) => {
+            if(process && process.env) {
+                return;
+            }
+
+            try {
+                console.log(message);
+            } catch(e) {}
+        },
+        info: (message) => {
+            if(process && process.env) {
+                return;
+            }
+
+            try {
+                console.info(message);
+            } catch(e) {}
+        },
+        warn: (message) => {
+            if(process && process.env) {
+                return;
+            }
+
+            try {
+                console.info(message);
+            } catch(e) {}
+        },
+        error: (message) => {
+            if(process && process.env) {
+                return;
+            }
+
+            try {
+                console.info(message);
+            } catch(e) {}
+        }
+    };
+
     class Component {
         constructor(element, props, propTypes) {
             if(!element) {
-                console.warning('ComponentPrototype: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+                logger.warning('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
             }
 
             this._passedProps = props || {};
