@@ -104,10 +104,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 propValue = Math.abs(propValue);
 
-                // ToDo: Returns NaN as a value if no argument was passed.
                 return {
                     result: result,
-                    value: propValue
+                    value: _isNumeric(propValue) ? propValue : undefined
                 };
             }
         },

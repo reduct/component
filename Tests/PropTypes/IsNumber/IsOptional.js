@@ -8,11 +8,10 @@ describe('NodeProto: propTypes.isNumber.isOptional', function () {
     });
 
     it('should return an object containing a result and value when called.', function () {
-        // ToDo: Re-Enable as soon as the returned result value is undefined when no argument was passed.
-        //expect(propType()).toEqual({
-        //    result: true,
-        //    value: NaN
-        //});
+        expect(propType()).toEqual({
+            result: true,
+            value: undefined
+        });
     });
 
     it('should return a positive result with no arguments passed.', function () {
