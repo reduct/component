@@ -42,7 +42,7 @@
             const isPropInProps = propValue !== null & propValue !== undefined;
 
             if(!isPropInProps) {
-                console.error('ComponentPrototype Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
+                console.error('NodeProto Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
             // ToDo: Returns 0 and not false as a result if no argument was passed.
@@ -55,7 +55,7 @@
             const isPropInProps = propValue !== null;
 
             if(!isPropInProps) {
-                console.info('ComponentPrototype Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
+                console.info('NodeProto Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
             }
 
             return {
@@ -72,7 +72,7 @@
                 propTypes.isRequired.apply(this, arguments);
 
                 if(!isNumber) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    console.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 } else {
                     propValue = Math.abs(propValue);
@@ -88,7 +88,7 @@
                 let result = true;
 
                 if(propValue && !isNumber) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not a number. ', el);
+                    console.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 }
 
@@ -117,7 +117,7 @@
                 isObject = _isObject(propValue);
 
                 if(!isObject) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    console.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -139,7 +139,7 @@
                 isObject = _isObject(propValue);
 
                 if(propValue && !isObject) {
-                    console.error('ComponentPrototype Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    console.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -154,7 +154,7 @@
     class Component {
         constructor(element, props, propTypes) {
             if(!element) {
-                console.warning('ComponentPrototype: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+                console.warning('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
             }
 
             this._passedProps = props || {};
