@@ -19,7 +19,7 @@ function moveFile(oldPath, newPath) {
 function publishToCodeClimate(filePath) {
     exec('cat ' + filePath + ' | codeclimate', function (err, stdout) {
         if (err) {
-          throw err;
+            throw err;
         }
 
         console.log(stdout);
