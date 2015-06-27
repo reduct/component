@@ -19,7 +19,7 @@ describe('NodeProto: propTypes.isOptional', function () {
         });
     });
 
-    it('should return an positive result with no arguments passed.', function () {
+    it('should return a positive result with no arguments passed.', function () {
         expect(propType().result).toBeTruthy();
     });
 

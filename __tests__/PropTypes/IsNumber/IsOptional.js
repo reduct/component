@@ -20,19 +20,19 @@ describe('NodeProto: propTypes.isNumber.isOptional', function () {
         //});
     });
 
-    it('should return an positive result with no arguments passed.', function () {
+    it('should return a positive result with no arguments passed.', function () {
         expect(propType().result).toBeTruthy();
     });
 
-    it('should return an negative result if the argument which was passed isNaN.', function () {
+    it('should return a negative result if the argument which was passed isNaN.', function () {
         expect(propType('Prop').result).toBeFalsy();
     });
 
-    it('should return an positive result if the argument which was passed is a Number.', function () {
+    it('should return a positive result if the argument which was passed is a Number.', function () {
         expect(propType(0).result).toBeTruthy();
     });
 
-    it('should return an positive result if the argument which was passed is a String but contains a Number.', function () {
+    it('should return a positive result if the argument which was passed is a String but contains a Number.', function () {
         expect(propType('0').result).toBeTruthy();
     });
 
