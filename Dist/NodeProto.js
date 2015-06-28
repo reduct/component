@@ -199,20 +199,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var Component = (function () {
-        function Component(element, props, propTypes) {
+        function Component(element, opts) {
             _classCallCheck(this, Component);
+
+            // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
+            opts = _isObject(opts) ? opts : {};
 
             if (!element) {
                 logger.warn("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
             }
 
-            this._passedProps = props || {};
+            this._passedProps = opts.props || {};
             this.props = {};
             this.states = {};
             this.observers = {};
             this.el = element || doc.createElement("div");
 
-            this._validateAndSetProps(propTypes);
+            this._validateAndSetProps(opts.propTypes);
         }
 
         _createClass(Component, [{

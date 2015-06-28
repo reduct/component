@@ -24,9 +24,12 @@ describe('NodeProto: Prop API', () => {
 
     it('should validate and set the passed props when propTypes are given.', () => {
         let instance = new ExampleComponent(null, {
-            'myProp': 2
-        }, {
-            'myProp': nodeProto.propTypes.isRequired
+            'props': {
+                'myProp': 2
+            },
+            'propTypes': {
+                'myProp': nodeProto.propTypes.isRequired
+            }
         });
 
         expect(instance.getProp('myProp')).toBe(2);
@@ -38,8 +41,10 @@ describe('NodeProto: Prop API', () => {
 
         element.setAttribute('data-myprop', 'value');
 
-        instance = new ExampleComponent(element, null, {
-            'myProp': nodeProto.propTypes.isRequired
+        instance = new ExampleComponent(element, {
+            'propTypes': {
+                'myProp': nodeProto.propTypes.isRequired
+            }
         });
 
         expect(instance.getProp('myProp')).toBe('value');
@@ -48,8 +53,10 @@ describe('NodeProto: Prop API', () => {
     it('should fall back to the getDefaultProps method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
         let instance;
 
-        instance = new ExampleComponent(null, null, {
-            'anotherProp': nodeProto.propTypes.isRequired
+        instance = new ExampleComponent(null, {
+            'propTypes': {
+                'anotherProp': nodeProto.propTypes.isRequired
+            }
         });
 
         expect(instance.getProp('anotherProp')).toBe(2);

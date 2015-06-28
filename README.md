@@ -44,7 +44,10 @@ const myComponentPropTypes = {
 
 class MyComponent extends nodeProto.Component {
   constructor(el, props) {
-    super(el, props, myComponentPropTypes);
+    super(el, {
+        'props': props,
+        'propTypes': myComponentPropTypes
+    });
 
     this.on('logSomething', this.doSomething.bind(this));
   }
@@ -63,8 +66,8 @@ import MyComponent from 'MyComponent.js';
 // Create a new instance, and pass in optional props.
 const targetElement = document.querySelectorAll('[data-myComponent]')[0];
 const instance = new MyComponent(targetElement, {
-  'myProp': 'myString',
-  'myPropNumber': 2
+    'myProp': 'myString',
+    'myPropNumber': 2
 });
 
 instance.trigger('logSomething') // LOG: 'myString'
