@@ -1,8 +1,16 @@
-languages:
-  Ruby: false
-  JavaScript: true
-  PHP: false
-  Python: false
+engines:
+  rubocop:
+    enabled: false
+  eslint:
+    enabled: true
+  csslint:
+    enabled: false
+  bundler-audit:
+    enabled: false
+ratings:
+  paths:
+    - "Src/**"
 exclude_paths:
-  - "Dist"
-  - "Build"
+ - "Tests/**"
+ - "Dist/**"
+ - "Build/**"
