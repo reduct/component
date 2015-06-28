@@ -11,6 +11,12 @@ class ExampleComponent extends nodeProto.Component {
             'anotherProp': 2
         }
     }
+
+    getInitialState() {
+        return {
+            'anotherState': true
+        }
+    }
 }
 
 module.exports = ExampleComponent;

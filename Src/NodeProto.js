@@ -208,6 +208,7 @@
             this.el = element || doc.createElement('div');
 
             this._validateAndSetProps(opts.propTypes);
+            this._setInitialState();
         }
 
         _validateAndSetProps(propTypes) {
@@ -223,6 +224,16 @@
                 if(hasPropPassedValidator.result) {
                     this._setProp(propName, hasPropPassedValidator.value);
                 }
+            }
+        }
+
+        _setInitialState() {
+            const initialStates = this.getInitialState();
+
+            for (let stateKey in initialStates) {
+                const value = initialStates[stateKey]
+
+                this.setState(stateKey, value);
             }
         }
 
@@ -244,6 +255,10 @@
         }
 
         // State related methods.
+        getInitialState() {
+            return {};
+        }
+
         setState(stateName, stateVal) {
             this.states[stateName] = stateVal;
         }

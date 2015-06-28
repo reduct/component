@@ -17,6 +17,10 @@ describe('NodeProto: State API', () => {
         expect(instance.getState('myState')).toBe(1);
     });
 
+    it('should return the initial state if present.', () => {
+        expect(instance.getState('anotherState')).toBe(true);
+    });
+
     afterEach(() => {
         instance = null;
     });

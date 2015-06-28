@@ -216,6 +216,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.el = element || doc.createElement("div");
 
             this._validateAndSetProps(opts.propTypes);
+            this._setInitialState();
         }
 
         _createClass(Component, [{
@@ -233,6 +234,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     if (hasPropPassedValidator.result) {
                         this._setProp(propName, hasPropPassedValidator.value);
                     }
+                }
+            }
+        }, {
+            key: "_setInitialState",
+            value: function _setInitialState() {
+                var initialStates = this.getInitialState();
+
+                for (var stateKey in initialStates) {
+                    var value = initialStates[stateKey];
+
+                    this.setState(stateKey, value);
                 }
             }
         }, {
@@ -258,9 +270,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return _isDefined(this.props[propName]);
             }
         }, {
-            key: "setState",
+            key: "getInitialState",
 
             // State related methods.
+            value: function getInitialState() {
+                return {};
+            }
+        }, {
+            key: "setState",
             value: function setState(stateName, stateVal) {
                 this.states[stateName] = stateVal;
             }
