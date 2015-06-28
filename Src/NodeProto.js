@@ -1,4 +1,4 @@
-/* NodeProto 1.0.2 | @license MIT */
+/* NodeProto 1.0.3 | @license MIT */
 
 (function(global, factory) {
     'use strict';
