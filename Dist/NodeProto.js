@@ -1,4 +1,4 @@
-/* NodeProto 1.0.2 | @license MIT */
+/* NodeProto 1.0.3 | @license MIT */
 
 "use strict";
 
@@ -26,31 +26,34 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 })(window, function (global) {
     "use strict";
 
+    var _this = this,
+        _arguments = arguments;
+
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
 
-    var _isFunction = function _isFunction(func) {
+    function _isFunction(func) {
         return typeof func === "function";
-    };
+    }
 
-    var _isNumeric = function _isNumeric(num) {
+    function _isNumeric(num) {
         return !isNaN(num);
-    };
+    }
 
-    var _isObject = function _isObject(obj) {
+    function _isObject(obj) {
         return typeof obj === "object";
-    };
+    }
 
-    var _isDefined = function _isDefined(val) {
+    function _isDefined(val) {
         return val !== null && val !== undefined;
-    };
+    }
 
     var propTypes = {
         isRequired: function isRequired(propValue, propName, el) {
             var isPropInProps = _isDefined(propValue);
 
             if (!isPropInProps) {
-                logger.error("NodeProto Error: The prop \"" + propName + "\" is required and wasn‘t found on: ", el);
+                logger.error("The prop \"" + propName + "\" is required and wasn‘t found on: ", el);
             }
 
             return {
@@ -62,7 +65,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var isPropInProps = _isDefined(propValue);
 
             if (!isPropInProps) {
-                logger.info("NodeProto Info: The prop \"" + propName + "\" is optional and wasn‘t found on: ", el);
+                logger.info("The prop \"" + propName + "\" is optional and wasn‘t found on: ", el);
             }
 
             return {
@@ -76,10 +79,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
+                propTypes.isRequired.apply(_this, _arguments);
 
                 if (!isNumber) {
-                    logger.error("NodeProto Error: The prop \"" + propName + "\" is not a number. ", el);
+                    logger.error("The prop \"" + propName + "\" is not a number. ", el);
                     result = false;
                 } else {
                     propValue = Math.abs(propValue);
@@ -95,7 +98,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var result = true;
 
                 if (propValue && !isNumber) {
-                    logger.error("NodeProto Error: The prop \"" + propName + "\" is not a number. ", el);
+                    logger.error("The prop \"" + propName + "\" is not a number. ", el);
                     result = false;
                 }
 
@@ -113,7 +116,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
+                propTypes.isRequired.apply(_this, _arguments);
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -124,7 +127,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 isObject = _isObject(propValue);
 
                 if (!isObject) {
-                    logger.error("NodeProto Error: The prop \"" + propName + "\" is not an valid JSON object. ", el);
+                    logger.error("The prop \"" + propName + "\" is not an valid JSON object. ", el);
                     result = false;
                 }
 
@@ -147,7 +150,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 isObject = _isObject(propValue);
 
                 if (isPropValueDefined && !isObject) {
-                    logger.error("NodeProto Error: The prop \"" + propName + "\" is not an valid JSON object. ", el);
+                    logger.error("The prop \"" + propName + "\" is not an valid JSON object. ", el);
                     result = false;
                 }
 
@@ -160,59 +163,83 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var logger = {
+        // 2: Every message is displayed
+        // 1: Only severe messages are displayed
+        // 0: No messages are displayed
+        _logLevel: 2,
+        setLogLevel: function setLogLevel(int) {
+            logger._logLevel = _isNumeric(int) ? int : 2;
+        },
+
         log: function log(message) {
-            if (isScriptExecutedByNode) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
+            if (logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.log(message);
+                console.log("NodeProto: " + message, targetElement);
             } catch (e) {}
         },
         info: function info(message) {
-            if (isScriptExecutedByNode) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
+            if (logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.info("NodeProto Info: " + message, targetElement);
             } catch (e) {}
         },
         warn: function warn(message) {
-            if (isScriptExecutedByNode) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
+            if (logger._logLevel <= 1) {
                 return;
             }
 
             try {
-                console.warn(message);
+                console.warn("NodeProto Warning: " + message, targetElement);
             } catch (e) {}
         },
         error: function error(message) {
-            if (isScriptExecutedByNode) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
+            if (logger._logLevel <= 0) {
                 return;
             }
 
             try {
-                console.error(message);
+                console.error("NodeProto Error: " + message, targetElement);
             } catch (e) {}
         }
     };
 
+    if (isScriptExecutedByNode) {
+        logger.setLogLevel(0);
+    }
+
     var Component = (function () {
-        function Component(element, props, propTypes) {
+        function Component(element, opts) {
             _classCallCheck(this, Component);
 
-            if (!element) {
-                logger.warn("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
+            // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
+            opts = _isObject(opts) ? opts : {};
+
+            if (!_isDefined(element)) {
+                logger.warn("No element was specified while creating a new instance of a Class. Creating a virtual DOM Element instead.");
             }
 
-            this._passedProps = props || {};
+            this._passedProps = opts.props || {};
             this.props = {};
             this.states = {};
             this.observers = {};
             this.el = element || doc.createElement("div");
 
-            this._validateAndSetProps(propTypes);
+            this._validateAndSetProps(opts.propTypes);
+            this._setInitialStates();
         }
 
         _createClass(Component, [{
@@ -220,7 +247,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function _validateAndSetProps(propTypes) {
                 var el = this.el;
                 var _passedProps = this._passedProps;
-                var defaultProps = _isFunction(this.getDefaultProps) ? this.getDefaultProps() : {};
+                var _defaultProps = this.getDefaultProps();
+                var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
                 for (var propName in propTypes) {
                     var propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
@@ -233,14 +261,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
             }
         }, {
+            key: "_setInitialStates",
+            value: function _setInitialStates() {
+                var _initialStates = this.getInitialState();
+                var initialStates = _isObject(_initialStates) ? _initialStates : {};
+
+                for (var stateKey in initialStates) {
+                    var value = initialStates[stateKey];
+
+                    this.setState(stateKey, value);
+                }
+            }
+        }, {
             key: "getElement",
             value: function getElement() {
                 return this.el;
             }
         }, {
-            key: "_setProp",
+            key: "getDefaultProps",
 
             // Prop related methods.
+            value: function getDefaultProps() {
+                return {};
+            }
+        }, {
+            key: "_setProp",
             value: function _setProp(propName, propVal) {
                 this.props[propName] = propVal;
             }
@@ -255,9 +300,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return _isDefined(this.props[propName]);
             }
         }, {
-            key: "setState",
+            key: "getInitialState",
 
             // State related methods.
+            value: function getInitialState() {
+                return {};
+            }
+        }, {
+            key: "setState",
             value: function setState(stateName, stateVal) {
                 this.states[stateName] = stateVal;
             }

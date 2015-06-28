@@ -1,4 +1,4 @@
-/* NodeProto 1.0.2 | @license MIT */
+/* NodeProto 1.0.3 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -23,28 +23,28 @@
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
 
-    const _isFunction = function(func) {
+    function _isFunction(func) {
         return typeof func === 'function';
-    };
+    }
 
-    const _isNumeric = function(num){
+    function _isNumeric(num){
         return !isNaN(num);
-    };
+    }
 
-    const _isObject = function(obj){
+    function _isObject(obj){
         return typeof obj === 'object';
-    };
+    }
 
-    const _isDefined = function(val) {
+    function _isDefined(val) {
         return val !== null && val !== undefined;
-    };
+    }
 
     const propTypes = {
-        isRequired: function(propValue, propName, el) {
+        isRequired: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
-                logger.error('NodeProto Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
+                logger.error('The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
             return {
@@ -52,11 +52,11 @@
                 value: propValue
             };
         },
-        isOptional: function(propValue, propName, el) {
+        isOptional: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
-                logger.info('NodeProto Info: The prop "' + propName + '" is optional and wasn‘t found on: ', el);
+                logger.info('The prop "' + propName + '" is optional and wasn‘t found on: ', el);
             }
 
             return {
@@ -65,7 +65,7 @@
             };
         },
         isNumber: {
-            isRequired: function(propValue, propName, el) {
+            isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 let result = true;
 
@@ -73,7 +73,7 @@
                 propTypes.isRequired.apply(this, arguments);
 
                 if(!isNumber) {
-                    logger.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
+                    logger.error('The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 } else {
                     propValue = Math.abs(propValue);
@@ -84,12 +84,12 @@
                     value: propValue
                 };
             },
-            isOptional: function(propValue, propName, el) {
+            isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 let result = true;
 
                 if(propValue && !isNumber) {
-                    logger.error('NodeProto Error: The prop "' + propName + '" is not a number. ', el);
+                    logger.error('The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 }
 
@@ -102,7 +102,7 @@
             }
         },
         isObject: {
-            isRequired: function(propValue, propName, el) {
+            isRequired: (propValue, propName, el) => {
                 let isObject;
                 let result = true;
 
@@ -118,7 +118,7 @@
                 isObject = _isObject(propValue);
 
                 if(!isObject) {
-                    logger.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -127,7 +127,7 @@
                     value: propValue
                 };
             },
-            isOptional: function(propValue, propName, el) {
+            isOptional: (propValue, propName, el) => {
                 let isObject;
                 let result = true;
                 let isPropValueDefined = _isDefined(propValue);
@@ -141,7 +141,7 @@
                 isObject = _isObject(propValue);
 
                 if(isPropValueDefined && !isObject) {
-                    logger.error('NodeProto Error: The prop "' + propName + '" is not an valid JSON object. ', el);
+                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
 
@@ -154,63 +154,80 @@
     };
 
     const logger = {
-        log: (message) => {
-            if(isScriptExecutedByNode) {
+        // 2: Every message is displayed
+        // 1: Only severe messages are displayed
+        // 0: No messages are displayed
+        _logLevel: 2,
+        setLogLevel: (int) => {
+            logger._logLevel = _isNumeric(int) ? int : 2;
+        },
+
+        log: (message, targetElement = '') => {
+            if(logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.log(message);
+                console.log('NodeProto: ' + message, targetElement);
             } catch(e) {}
         },
-        info: (message) => {
-            if(isScriptExecutedByNode) {
+        info: (message, targetElement = '') => {
+            if(logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.info('NodeProto Info: ' + message, targetElement);
             } catch(e) {}
         },
-        warn: (message) => {
-            if(isScriptExecutedByNode) {
+        warn: (message, targetElement = '') => {
+            if(logger._logLevel <= 1) {
                 return;
             }
 
             try {
-                console.warn(message);
+                console.warn('NodeProto Warning: ' + message, targetElement);
             } catch(e) {}
         },
-        error: (message) => {
-            if(isScriptExecutedByNode) {
+        error: (message, targetElement = '') => {
+            if(logger._logLevel <= 0) {
                 return;
             }
 
             try {
-                console.error(message);
+                console.error('NodeProto Error: ' + message, targetElement);
             } catch(e) {}
         }
     };
 
+    if(isScriptExecutedByNode) {
+        logger.setLogLevel(0);
+    }
+
     class Component {
-        constructor(element, props, propTypes) {
-            if(!element) {
-                logger.warn('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+        constructor(element, opts) {
+            // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
+            opts = _isObject(opts) ? opts : {};
+
+            if(!_isDefined(element)) {
+                logger.warn('No element was specified while creating a new instance of a Class. Creating a virtual DOM Element instead.');
             }
 
-            this._passedProps = props || {};
+            this._passedProps = opts.props || {};
             this.props = {};
             this.states = {};
             this.observers = {};
             this.el = element || doc.createElement('div');
 
-            this._validateAndSetProps(propTypes);
+            this._validateAndSetProps(opts.propTypes);
+            this._setInitialStates();
         }
 
         _validateAndSetProps(propTypes) {
             const el = this.el;
             const _passedProps = this._passedProps;
-            const defaultProps = _isFunction(this.getDefaultProps) ? this.getDefaultProps() : {};
+            const _defaultProps = this.getDefaultProps();
+            const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
             for (let propName in propTypes) {
                 const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
@@ -223,11 +240,26 @@
             }
         }
 
+        _setInitialStates() {
+            const _initialStates = this.getInitialState();
+            const initialStates = _isObject(_initialStates) ? _initialStates : {};
+
+            for (let stateKey in initialStates) {
+                const value = initialStates[stateKey]
+
+                this.setState(stateKey, value);
+            }
+        }
+
         getElement() {
             return this.el;
         }
 
         // Prop related methods.
+        getDefaultProps() {
+            return {};
+        }
+
         _setProp(propName, propVal) {
             this.props[propName] = propVal;
         }
@@ -241,6 +273,10 @@
         }
 
         // State related methods.
+        getInitialState() {
+            return {};
+        }
+
         setState(stateName, stateVal) {
             this.states[stateName] = stateVal;
         }

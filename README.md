@@ -44,7 +44,10 @@ const myComponentPropTypes = {
 
 class MyComponent extends nodeProto.Component {
   constructor(el, props) {
-    super(el, props, myComponentPropTypes);
+    super(el, {
+        'props': props,
+        'propTypes': myComponentPropTypes
+    });
 
     this.on('logSomething', this.doSomething.bind(this));
   }
@@ -63,8 +66,8 @@ import MyComponent from 'MyComponent.js';
 // Create a new instance, and pass in optional props.
 const targetElement = document.querySelectorAll('[data-myComponent]')[0];
 const instance = new MyComponent(targetElement, {
-  'myProp': 'myString',
-  'myPropNumber': 2
+    'myProp': 'myString',
+    'myPropNumber': 2
 });
 
 instance.trigger('logSomething') // LOG: 'myString'
@@ -116,7 +119,7 @@ Will return a boolean regarding the existence of the prop for the given key.
 #### instance.getDefaultProps();
 Type: `Function`
 
-Should return an object with all defaultProps you want to specify.
+Should return an object with all default props you want to set.
 
 #### instance.setState(key, val);
 Type: `Function`
@@ -130,6 +133,11 @@ Type: `Function`
 Argument `key`: `String`
 
 Will return the given state of the component.
+
+#### instance.getInitialState();
+Type: `Function`
+
+Should return an object with all initial states you want to set.
 
 #### instance.on(eventName, listener);
 Type: `Function`
