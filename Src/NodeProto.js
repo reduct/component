@@ -210,7 +210,7 @@
             opts = _isObject(opts) ? opts : {};
 
             if(!_isDefined(element)) {
-                logger.warn('No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+                logger.warn('No element was specified while creating a new instance of a Class. Creating a virtual DOM Element instead.');
             }
 
             this._passedProps = opts.props || {};
