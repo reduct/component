@@ -160,8 +160,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var logger = {
+        // 2: Every message is displayed
+        // 1: Only severe messages are displayed
+        // 0: No messages are displayed
+        _logLevel: 0,
+        setLogLevel: function setLogLevel(int) {
+            logger._logLevel = _isNumeric(int) ? int : 2;
+        },
+
         log: function log(message) {
-            if (isScriptExecutedByNode) {
+            if (logger._logLevel <= 2) {
                 return;
             }
 
@@ -170,7 +178,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         info: function info(message) {
-            if (isScriptExecutedByNode) {
+            if (logger._logLevel <= 2) {
                 return;
             }
 
@@ -179,7 +187,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         warn: function warn(message) {
-            if (isScriptExecutedByNode) {
+            if (logger._logLevel <= 1) {
                 return;
             }
 
@@ -188,7 +196,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         error: function error(message) {
-            if (isScriptExecutedByNode) {
+            if (logger._logLevel <= 0) {
                 return;
             }
 
@@ -197,6 +205,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         }
     };
+
+    if (isScriptExecutedByNode) {
+        logger.setLogLevel(0);
+    }
 
     var Component = (function () {
         function Component(element, opts) {

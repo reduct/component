@@ -154,8 +154,16 @@
     };
 
     const logger = {
+        // 2: Every message is displayed
+        // 1: Only severe messages are displayed
+        // 0: No messages are displayed
+        _logLevel: 0,
+        setLogLevel: function(int) {
+            logger._logLevel = _isNumeric(int) ? int : 2;
+        },
+
         log: (message) => {
-            if(isScriptExecutedByNode) {
+            if(logger._logLevel <= 2) {
                 return;
             }
 
@@ -164,7 +172,7 @@
             } catch(e) {}
         },
         info: (message) => {
-            if(isScriptExecutedByNode) {
+            if(logger._logLevel <= 2) {
                 return;
             }
 
@@ -173,7 +181,7 @@
             } catch(e) {}
         },
         warn: (message) => {
-            if(isScriptExecutedByNode) {
+            if(logger._logLevel <= 1) {
                 return;
             }
 
@@ -182,7 +190,7 @@
             } catch(e) {}
         },
         error: (message) => {
-            if(isScriptExecutedByNode) {
+            if(logger._logLevel <= 0) {
                 return;
             }
 
@@ -191,6 +199,10 @@
             } catch(e) {}
         }
     };
+
+    if(isScriptExecutedByNode) {
+        logger.setLogLevel(0);
+    }
 
     class Component {
         constructor(element, opts) {
