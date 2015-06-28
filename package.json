@@ -54,7 +54,7 @@
     "unmockedModulePathPatterns": [
       "./Src",
       "./Dist",
-      "./Tests/ExampleComponent.js"
+      "./Tests/ExampleComponents"
     ]
   }
 }
