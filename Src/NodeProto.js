@@ -23,21 +23,21 @@
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
 
-    const _isFunction = function(func) {
+    function _isFunction(func) {
         return typeof func === 'function';
-    };
+    }
 
-    const _isNumeric = function(num){
+    function _isNumeric(num){
         return !isNaN(num);
-    };
+    }
 
-    const _isObject = function(obj){
+    function _isObject(obj){
         return typeof obj === 'object';
-    };
+    }
 
-    const _isDefined = function(val) {
+    function _isDefined(val) {
         return val !== null && val !== undefined;
-    };
+    }
 
     const propTypes = {
         isRequired: function(propValue, propName, el) {

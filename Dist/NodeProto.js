@@ -29,21 +29,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
 
-    var _isFunction = function _isFunction(func) {
+    function _isFunction(func) {
         return typeof func === "function";
-    };
+    }
 
-    var _isNumeric = function _isNumeric(num) {
+    function _isNumeric(num) {
         return !isNaN(num);
-    };
+    }
 
-    var _isObject = function _isObject(obj) {
+    function _isObject(obj) {
         return typeof obj === "object";
-    };
+    }
 
-    var _isDefined = function _isDefined(val) {
+    function _isDefined(val) {
         return val !== null && val !== undefined;
-    };
+    }
 
     var propTypes = {
         isRequired: function isRequired(propValue, propName, el) {
