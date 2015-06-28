@@ -162,7 +162,7 @@
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 
-        log: (message, targetElement) => {
+        log: (message, targetElement = '') => {
             if(logger._logLevel <= 2) {
                 return;
             }
@@ -171,7 +171,7 @@
                 console.log('NodeProto: ' + message, targetElement);
             } catch(e) {}
         },
-        info: (message, targetElement) => {
+        info: (message, targetElement = '') => {
             if(logger._logLevel <= 2) {
                 return;
             }
@@ -180,7 +180,7 @@
                 console.info('NodeProto Info: ' + message, targetElement);
             } catch(e) {}
         },
-        warn: (message, targetElement) => {
+        warn: (message, targetElement = '') => {
             if(logger._logLevel <= 1) {
                 return;
             }
@@ -189,7 +189,7 @@
                 console.warn('NodeProto Warning: ' + message, targetElement);
             } catch(e) {}
         },
-        error: (message, targetElement) => {
+        error: (message, targetElement = '') => {
             if(logger._logLevel <= 0) {
                 return;
             }

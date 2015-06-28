@@ -171,7 +171,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 
-        log: function log(message, targetElement) {
+        log: function log(message) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
             if (logger._logLevel <= 2) {
                 return;
             }
@@ -180,7 +182,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.log("NodeProto: " + message, targetElement);
             } catch (e) {}
         },
-        info: function info(message, targetElement) {
+        info: function info(message) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
             if (logger._logLevel <= 2) {
                 return;
             }
@@ -189,7 +193,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.info("NodeProto Info: " + message, targetElement);
             } catch (e) {}
         },
-        warn: function warn(message, targetElement) {
+        warn: function warn(message) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
             if (logger._logLevel <= 1) {
                 return;
             }
@@ -198,7 +204,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.warn("NodeProto Warning: " + message, targetElement);
             } catch (e) {}
         },
-        error: function error(message, targetElement) {
+        error: function error(message) {
+            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+
             if (logger._logLevel <= 0) {
                 return;
             }
