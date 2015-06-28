@@ -157,45 +157,45 @@
         // 2: Every message is displayed
         // 1: Only severe messages are displayed
         // 0: No messages are displayed
-        _logLevel: 0,
+        _logLevel: 2,
         setLogLevel: (int) => {
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 
-        log: (message) => {
+        log: (message, targetElement) => {
             if(logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.log('NodeProto: ' + message);
+                console.log('NodeProto: ' + message, targetElement);
             } catch(e) {}
         },
-        info: (message) => {
+        info: (message, targetElement) => {
             if(logger._logLevel <= 2) {
                 return;
             }
 
             try {
-                console.info('NodeProto Info: ' + message);
+                console.info('NodeProto Info: ' + message, targetElement);
             } catch(e) {}
         },
-        warn: (message) => {
+        warn: (message, targetElement) => {
             if(logger._logLevel <= 1) {
                 return;
             }
 
             try {
-                console.warn('NodeProto: ' + message);
+                console.warn('NodeProto Warning: ' + message, targetElement);
             } catch(e) {}
         },
-        error: (message) => {
+        error: (message, targetElement) => {
             if(logger._logLevel <= 0) {
                 return;
             }
 
             try {
-                console.error('NodeProto Error: ' + message);
+                console.error('NodeProto Error: ' + message, targetElement);
             } catch(e) {}
         }
     };
@@ -209,7 +209,7 @@
             // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
             opts = _isObject(opts) ? opts : {};
 
-            if(!element) {
+            if(!_isDefined(element)) {
                 logger.warn('No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
             }
 
