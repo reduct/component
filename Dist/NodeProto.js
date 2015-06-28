@@ -231,7 +231,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.el = element || doc.createElement("div");
 
             this._validateAndSetProps(opts.propTypes);
-            this._setInitialState();
+            this._setInitialStates();
         }
 
         _createClass(Component, [{
@@ -253,8 +253,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
             }
         }, {
-            key: "_setInitialState",
-            value: function _setInitialState() {
+            key: "_setInitialStates",
+            value: function _setInitialStates() {
                 var _initialStates = this.getInitialState();
                 var initialStates = _isObject(_initialStates) ? _initialStates : {};
 

@@ -220,7 +220,7 @@
             this.el = element || doc.createElement('div');
 
             this._validateAndSetProps(opts.propTypes);
-            this._setInitialState();
+            this._setInitialStates();
         }
 
         _validateAndSetProps(propTypes) {
@@ -240,7 +240,7 @@
             }
         }
 
-        _setInitialState() {
+        _setInitialStates() {
             const _initialStates = this.getInitialState();
             const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
