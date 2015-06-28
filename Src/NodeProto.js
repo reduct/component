@@ -40,7 +40,7 @@
     }
 
     const propTypes = {
-        isRequired: function(propValue, propName, el) {
+        isRequired: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
@@ -52,7 +52,7 @@
                 value: propValue
             };
         },
-        isOptional: function(propValue, propName, el) {
+        isOptional: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
             if(!isPropInProps) {
@@ -65,7 +65,7 @@
             };
         },
         isNumber: {
-            isRequired: function(propValue, propName, el) {
+            isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 let result = true;
 
@@ -84,7 +84,7 @@
                     value: propValue
                 };
             },
-            isOptional: function(propValue, propName, el) {
+            isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 let result = true;
 
@@ -102,7 +102,7 @@
             }
         },
         isObject: {
-            isRequired: function(propValue, propName, el) {
+            isRequired: (propValue, propName, el) => {
                 let isObject;
                 let result = true;
 
@@ -127,7 +127,7 @@
                     value: propValue
                 };
             },
-            isOptional: function(propValue, propName, el) {
+            isOptional: (propValue, propName, el) => {
                 let isObject;
                 let result = true;
                 let isPropValueDefined = _isDefined(propValue);
@@ -158,7 +158,7 @@
         // 1: Only severe messages are displayed
         // 0: No messages are displayed
         _logLevel: 0,
-        setLogLevel: function(int) {
+        setLogLevel: (int) => {
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 

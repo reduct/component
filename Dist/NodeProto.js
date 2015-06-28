@@ -26,6 +26,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 })(window, function (global) {
     "use strict";
 
+    var _this = this,
+        _arguments = arguments;
+
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
 
@@ -76,7 +79,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
+                propTypes.isRequired.apply(_this, _arguments);
 
                 if (!isNumber) {
                     logger.error("NodeProto Error: The prop \"" + propName + "\" is not a number. ", el);
@@ -113,7 +116,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
+                propTypes.isRequired.apply(_this, _arguments);
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
