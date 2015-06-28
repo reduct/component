@@ -1,7 +1,15 @@
 # Change Log
 
+## 1.0.2
+**Fixed issues:**
+- Fixed the name reference for the logger warn function in the constructor
+- Fixed the `_isDefined` util function and the corresponding `isRequired` validator test
+
+**Implemented enhancements:**
+- Added unit test specs for quality ensurance.
+
 ## 1.0.1
 **Fixed issues:**
-- Fix the return value of the isNumber.isOptional propType validator if no argument was passed.
+- Fixed the return value of the `isNumber.isOptional` propType validator if no argument was passed.
 
 ## 1.0.0 (Initial version)

@@ -1,0 +1,16 @@
+engines:
+  rubocop:
+    enabled: false
+  eslint:
+    enabled: true
+  csslint:
+    enabled: false
+  bundler-audit:
+    enabled: false
+ratings:
+  paths:
+    - "Src/**"
+exclude_paths:
+ - "Tests/**"
+ - "Dist/**"
+ - "Build/**"

@@ -1,4 +1,4 @@
-/* NodeProto 1.0.1 | @license MIT */
+/* NodeProto 1.0.2 | @license MIT */
 
 "use strict";
 
@@ -27,6 +27,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "use strict";
 
     var doc = global.document;
+    var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
+
     var _isFunction = function _isFunction(func) {
         return typeof func === "function";
     };
@@ -36,15 +38,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var _isObject = function _isObject(obj) {
-        return typeof obj === "object" && obj !== null;
-    };
-
-    var _isDefinedInObject = function _isDefinedInObject(key, object) {
-        return object[key] !== null;
+        return typeof obj === "object";
     };
 
     var _isDefined = function _isDefined(val) {
-        return val !== null & val !== undefined;
+        return val !== null && val !== undefined;
     };
 
     var propTypes = {
@@ -55,7 +53,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 logger.error("NodeProto Error: The prop \"" + propName + "\" is required and wasn‘t found on: ", el);
             }
 
-            // ToDo: Returns 0 and not false as a result if no argument was passed.
             return {
                 result: isPropInProps,
                 value: propValue
@@ -164,7 +161,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var logger = {
         log: function log(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
@@ -173,7 +170,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         info: function info(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
@@ -182,21 +179,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         warn: function warn(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.warn(message);
             } catch (e) {}
         },
         error: function error(message) {
-            if (process && process.env) {
+            if (isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.error(message);
             } catch (e) {}
         }
     };
@@ -206,7 +203,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _classCallCheck(this, Component);
 
             if (!element) {
-                logger.warning("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
+                logger.warn("NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.");
             }
 
             this._passedProps = props || {};
@@ -255,7 +252,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "hasProp",
             value: function hasProp(propName) {
-                return _isDefinedInObject(this.props, propName);
+                return _isDefined(this.props[propName]);
             }
         }, {
             key: "setState",
@@ -278,6 +275,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }, {
             key: "trigger",
+
+            // ToDo: Support for multiple arguments.
             value: function trigger(event, data) {
                 var value = undefined;
                 var key = undefined;

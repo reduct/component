@@ -1,4 +1,4 @@
-/* NodeProto 1.0.1 | @license MIT */
+/* NodeProto 1.0.2 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -21,8 +21,10 @@
     'use strict';
 
     const doc = global.document;
+    const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
+
     const _isFunction = function(func) {
-        return typeof(func) === 'function';
+        return typeof func === 'function';
     };
 
     const _isNumeric = function(num){
@@ -30,15 +32,11 @@
     };
 
     const _isObject = function(obj){
-        return (typeof obj === 'object') && (obj !== null);
-    };
-
-    const _isDefinedInObject = function(key, object) {
-        return object[key] !== null;
+        return typeof obj === 'object';
     };
 
     const _isDefined = function(val) {
-        return val !== null & val !== undefined;
+        return val !== null && val !== undefined;
     };
 
     const propTypes = {
@@ -49,7 +47,6 @@
                 logger.error('NodeProto Error: The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
-            // ToDo: Returns 0 and not false as a result if no argument was passed.
             return {
                 result: isPropInProps,
                 value: propValue
@@ -158,7 +155,7 @@
 
     const logger = {
         log: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
@@ -167,7 +164,7 @@
             } catch(e) {}
         },
         info: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
@@ -176,21 +173,21 @@
             } catch(e) {}
         },
         warn: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.warn(message);
             } catch(e) {}
         },
         error: (message) => {
-            if(process && process.env) {
+            if(isScriptExecutedByNode) {
                 return;
             }
 
             try {
-                console.info(message);
+                console.error(message);
             } catch(e) {}
         }
     };
@@ -198,7 +195,7 @@
     class Component {
         constructor(element, props, propTypes) {
             if(!element) {
-                logger.warning('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
+                logger.warn('NodeProto: No element was specified while creating a new Class. Creating a virtual DOM Element instead.');
             }
 
             this._passedProps = props || {};
@@ -240,7 +237,7 @@
         }
 
         hasProp(propName) {
-            return _isDefinedInObject(this.props, propName);
+            return _isDefined(this.props[propName]);
         }
 
         // State related methods.
@@ -257,6 +254,7 @@
             return (this.observers[event] || (this.observers[event] = [])).push(listener);
         }
 
+        // ToDo: Support for multiple arguments.
         trigger(event, data) {
             let value;
             let key;
