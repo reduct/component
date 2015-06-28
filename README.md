@@ -119,7 +119,7 @@ Will return a boolean regarding the existence of the prop for the given key.
 #### instance.getDefaultProps();
 Type: `Function`
 
-Should return an object with all defaultProps you want to specify.
+Should return an object with all default props you want to set.
 
 #### instance.setState(key, val);
 Type: `Function`
@@ -133,6 +133,11 @@ Type: `Function`
 Argument `key`: `String`
 
 Will return the given state of the component.
+
+#### instance.getInitialState();
+Type: `Function`
+
+Should return an object with all initial states you want to set.
 
 #### instance.on(eventName, listener);
 Type: `Function`
