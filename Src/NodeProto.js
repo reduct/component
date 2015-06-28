@@ -214,7 +214,8 @@
         _validateAndSetProps(propTypes) {
             const el = this.el;
             const _passedProps = this._passedProps;
-            const defaultProps = _isFunction(this.getDefaultProps) ? this.getDefaultProps() : {};
+            const _defaultProps = this.getDefaultProps();
+            const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
             for (let propName in propTypes) {
                 const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
@@ -228,7 +229,8 @@
         }
 
         _setInitialState() {
-            const initialStates = this.getInitialState();
+            const _initialStates = this.getInitialState();
+            const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
             for (let stateKey in initialStates) {
                 const value = initialStates[stateKey]
@@ -242,6 +244,10 @@
         }
 
         // Prop related methods.
+        getDefaultProps() {
+            return {};
+        }
+
         _setProp(propName, propVal) {
             this.props[propName] = propVal;
         }

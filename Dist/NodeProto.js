@@ -224,7 +224,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             value: function _validateAndSetProps(propTypes) {
                 var el = this.el;
                 var _passedProps = this._passedProps;
-                var defaultProps = _isFunction(this.getDefaultProps) ? this.getDefaultProps() : {};
+                var _defaultProps = this.getDefaultProps();
+                var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
                 for (var propName in propTypes) {
                     var propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
@@ -239,7 +240,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "_setInitialState",
             value: function _setInitialState() {
-                var initialStates = this.getInitialState();
+                var _initialStates = this.getInitialState();
+                var initialStates = _isObject(_initialStates) ? _initialStates : {};
 
                 for (var stateKey in initialStates) {
                     var value = initialStates[stateKey];
@@ -253,9 +255,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return this.el;
             }
         }, {
-            key: "_setProp",
+            key: "getDefaultProps",
 
             // Prop related methods.
+            value: function getDefaultProps() {
+                return {};
+            }
+        }, {
+            key: "_setProp",
             value: function _setProp(propName, propVal) {
                 this.props[propName] = propVal;
             }

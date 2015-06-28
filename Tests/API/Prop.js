@@ -1,5 +1,6 @@
 var nodeProto = require('./../../Src/NodeProto.js');
 var Component = require('./../ExampleComponents/Default.js');
+var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefault.js');
 
 describe('NodeProto: Prop API', () => {
     it('should return undefined if no prop was set.', () => {
@@ -50,7 +51,7 @@ describe('NodeProto: Prop API', () => {
         expect(instance.getProp('myProp')).toBe('value');
     });
 
-    it('should fall back to the getDefaultProps method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
+    it('should fall back to the getDefaultProps() method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
         let instance;
 
         instance = new Component(null, {
@@ -60,5 +61,11 @@ describe('NodeProto: Prop API', () => {
         });
 
         expect(instance.getProp('anotherProp')).toBe(2);
+    });
+
+    it('should return an empty object if no getDefaultProps() method was present.', () => {
+        let instanceWithoutDefaults = new ComponentWithoutDefaults();
+
+        expect(instanceWithoutDefaults.getDefaultProps()).toEqual({});
     });
 });
