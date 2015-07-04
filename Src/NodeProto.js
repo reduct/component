@@ -232,10 +232,10 @@
             for (let propName in propTypes) {
                 const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
                 const validator = propTypes[propName];
-                const hasPropPassedValidator = validator(propValue, propName, el);
+                const validatorResults = validator(propValue, propName, el);
 
-                if(hasPropPassedValidator.result) {
-                    this._setProp(propName, hasPropPassedValidator.value);
+                if(validatorResults.result) {
+                    this._setProp(propName, validatorResults.value);
                 }
             }
         }
@@ -287,7 +287,9 @@
 
         // Event System
         on(event, listener) {
-            return (this.observers[event] || (this.observers[event] = [])).push(listener);
+            const targetArray = this.observers[event] || (this.observers[event] = []);
+
+            return targetArray.push(listener);
         }
 
         // ToDo: Support for multiple arguments.
