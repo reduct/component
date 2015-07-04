@@ -241,7 +241,7 @@
         }
 
         _setInitialStates() {
-            const _initialStates = this.getInitialState();
+            const _initialStates = this.getInitialStates();
             const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
             for (let stateKey in initialStates) {
@@ -273,7 +273,7 @@
         }
 
         // State related methods.
-        getInitialState() {
+        getInitialStates() {
             return {};
         }
 

@@ -263,7 +263,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "_setInitialStates",
             value: function _setInitialStates() {
-                var _initialStates = this.getInitialState();
+                var _initialStates = this.getInitialStates();
                 var initialStates = _isObject(_initialStates) ? _initialStates : {};
 
                 for (var stateKey in initialStates) {
@@ -300,10 +300,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return _isDefined(this.props[propName]);
             }
         }, {
-            key: "getInitialState",
+            key: "getInitialStates",
 
             // State related methods.
-            value: function getInitialState() {
+            value: function getInitialStates() {
                 return {};
             }
         }, {

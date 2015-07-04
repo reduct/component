@@ -134,7 +134,7 @@ Argument `key`: `String`
 
 Will return the given state of the component.
 
-#### instance.getInitialState();
+#### instance.getInitialStates();
 Type: `Function`
 
 Should return an object with all initial states you want to set.
