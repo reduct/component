@@ -1,5 +1,5 @@
 var Component = require('./../ExampleComponents/Default.js');
-var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefault.js');
+var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefaults.js');
 
 describe('NodeProto: State API', () => {
     let instance;
