@@ -12,7 +12,7 @@ class ExampleComponent extends nodeProto.Component {
         }
     }
 
-    getInitialState() {
+    getInitialStates() {
         return {
             'anotherState': true
         }

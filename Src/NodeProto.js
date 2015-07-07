@@ -1,4 +1,4 @@
-/* NodeProto 1.0.3 | @license MIT */
+/* NodeProto 1.0.4 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -232,16 +232,16 @@
             for (let propName in propTypes) {
                 const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
                 const validator = propTypes[propName];
-                const hasPropPassedValidator = validator(propValue, propName, el);
+                const validatorResults = validator(propValue, propName, el);
 
-                if(hasPropPassedValidator.result) {
-                    this._setProp(propName, hasPropPassedValidator.value);
+                if(validatorResults.result) {
+                    this._setProp(propName, validatorResults.value);
                 }
             }
         }
 
         _setInitialStates() {
-            const _initialStates = this.getInitialState();
+            const _initialStates = this.getInitialStates();
             const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
             for (let stateKey in initialStates) {
@@ -273,7 +273,7 @@
         }
 
         // State related methods.
-        getInitialState() {
+        getInitialStates() {
             return {};
         }
 
@@ -287,7 +287,9 @@
 
         // Event System
         on(event, listener) {
-            return (this.observers[event] || (this.observers[event] = [])).push(listener);
+            const targetArray = this.observers[event] || (this.observers[event] = []);
+
+            return targetArray.push(listener);
         }
 
         // ToDo: Support for multiple arguments.

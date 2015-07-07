@@ -1,5 +1,5 @@
 var Component = require('./../ExampleComponents/Default.js');
-var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefault.js');
+var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefaults.js');
 
 describe('NodeProto: State API', () => {
     let instance;
@@ -22,10 +22,10 @@ describe('NodeProto: State API', () => {
         expect(instance.getState('anotherState')).toBe(true);
     });
 
-    it('should return an empty object if no getInitialState() method was present.', () => {
+    it('should return an empty object if no getInitialStates() method was present.', () => {
         let instanceWithoutDefaults = new ComponentWithoutDefaults();
 
-        expect(instanceWithoutDefaults.getInitialState()).toEqual({});
+        expect(instanceWithoutDefaults.getInitialStates()).toEqual({});
     });
 
     afterEach(() => {

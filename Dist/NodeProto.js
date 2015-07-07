@@ -1,4 +1,4 @@
-/* NodeProto 1.0.3 | @license MIT */
+/* NodeProto 1.0.4 | @license MIT */
 
 "use strict";
 
@@ -253,17 +253,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 for (var propName in propTypes) {
                     var propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
                     var validator = propTypes[propName];
-                    var hasPropPassedValidator = validator(propValue, propName, el);
+                    var validatorResults = validator(propValue, propName, el);
 
-                    if (hasPropPassedValidator.result) {
-                        this._setProp(propName, hasPropPassedValidator.value);
+                    if (validatorResults.result) {
+                        this._setProp(propName, validatorResults.value);
                     }
                 }
             }
         }, {
             key: "_setInitialStates",
             value: function _setInitialStates() {
-                var _initialStates = this.getInitialState();
+                var _initialStates = this.getInitialStates();
                 var initialStates = _isObject(_initialStates) ? _initialStates : {};
 
                 for (var stateKey in initialStates) {
@@ -300,10 +300,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return _isDefined(this.props[propName]);
             }
         }, {
-            key: "getInitialState",
+            key: "getInitialStates",
 
             // State related methods.
-            value: function getInitialState() {
+            value: function getInitialStates() {
                 return {};
             }
         }, {
@@ -321,7 +321,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             // Event System
             value: function on(event, listener) {
-                return (this.observers[event] || (this.observers[event] = [])).push(listener);
+                var targetArray = this.observers[event] || (this.observers[event] = []);
+
+                return targetArray.push(listener);
             }
         }, {
             key: "trigger",

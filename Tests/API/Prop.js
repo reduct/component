@@ -1,6 +1,6 @@
 var nodeProto = require('./../../Src/NodeProto.js');
 var Component = require('./../ExampleComponents/Default.js');
-var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefault.js');
+var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefaults.js');
 
 describe('NodeProto: Prop API', () => {
     it('should return undefined if no prop was set.', () => {
