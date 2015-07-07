@@ -3,14 +3,14 @@
 > A prototypical class that makes it easy to create Components with nodes with a powerfull instance configuration system and a react-like API.
 
 
-## Key-Features
+## Features
 * Clean and simple react-like syntax (states, props, method names)
 * ES6 Class support
-* Clear listings of required props which will be passed in while initiating a new instance.
+* Support for propTypes(required / optional / type of prop) which will be passed in while initiating a new instance.
 * 3-Way prop injection
- * Via the `arguments` array
- * The `dataset` of element if one was passed
- * Or the described `getDefaultProps()` method.
+ * Via the `arguments` array while creating a new instance.
+ * The `dataset` of the element if one was passed to the instance.
+ * Or the described `getDefaultProps()` method of your class.
 * If the props are accessed via the elements dataset, they will automatically be converted into the specified propType type(`String`, `Number` and even `Object`s via `JSON.parse()`)
 * Simple `on`, `off` event observer pattern
 * ~ 400 bytes minified
