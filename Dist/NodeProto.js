@@ -1,4 +1,4 @@
-/* NodeProto 1.0.3 | @license MIT */
+/* NodeProto 1.0.4 | @license MIT */
 
 "use strict";
 
