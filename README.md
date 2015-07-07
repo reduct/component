@@ -23,14 +23,14 @@ With npm, use the familiar syntax e.g.:
 npm install nodeproto --save
 ```
 
-once the nodeproto package is installed, just require it in the main application file.
+once the nodeProto package is installed, just require it in your class/application file.
 ```js
-var nodeProto = require("nodeproto");
+const nodeProto = require("nodeproto");
 ```
 
 This package also supports AMD/RequireJS, it is defined as `nodeProto`. Aren't using AMD/CommonJS? Just grab a [release](https://github.com/Inkdpixels/NodeProto/releases), include the `Dist/NodeProto.min.js` and access the loader via the following global:
 ```js
-var nodeProto = window.nodeProto;
+const nodeProto = window.nodeProto;
 ```
 
 ## Example
@@ -63,7 +63,7 @@ class MyComponent extends nodeProto.Component {
 ```js
 import MyComponent from 'MyComponent.js';
 
-// Create a new instance, and pass in optional props.
+// Create a new instance, and optionally pass in props.
 const targetElement = document.querySelectorAll('[data-myComponent]')[0];
 const instance = new MyComponent(targetElement, {
     'myProp': 'myString',
@@ -75,12 +75,12 @@ instance.trigger('logSomething') // LOG: 'myString'
 
 
 ## PropType validators
-The PropType validators are a key feature of the NodeProto - They validate your props, and optionally transform the values into the requested types by the validator.
+The PropType validators are the key feature of the NodeProto. They validate your props, and optionally transform the values into the requested types by the validator.
 
-F.e. if your component expects a `Number` as a prop with the name `myProp`, and you can't pass in the prop directly via JS, you can create a dataset property with the given name on the target element with a `Number` as the value e.g. `data-myProp="2"`.
+F.e. if your component expects a `Number` as a prop with the name `myProp`, and you can't pass in the prop directly via JS, you can create a dataset property with the given name on the target element with a `Number` as the value e.g. `data-myProp="2"`. Once a instance was created with this element, you can access the prop value via the [getProp()](#instancegetpropkey) method.
 
 ##### propTypes.isRequired
-Will expect that the given key is present in either the passed Props-Object, the elements dataset or in the `getDefaultProps()` method.
+Will expect that the given key is present in either the passed props Object, the elements dataset or in the `getDefaultProps()` method.
 
 ##### propTypes.isOptional
 Will log an info message into the UA's console if the given key is not present in either the passed Props-Object, the elements dataset or in the `getDefaultProps()` method.
