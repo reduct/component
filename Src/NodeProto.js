@@ -32,7 +32,7 @@
     }
 
     function _isBoolean(bol){
-        return ('true' === propValue || 'false' === propValue);
+        return ('true' === bol || 'false' === bol);
     }
 
     function _isObject(obj){
