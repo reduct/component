@@ -40,8 +40,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return !isNaN(num);
     }
 
+    function _isBoolean(bol) {
+        return typeof bol === "boolean" || bol === "true" || bol === "false";
+    }
+
     function _isObject(obj) {
         return typeof obj === "object";
+    }
+
+    function _isString(str) {
+        return typeof str === "string";
     }
 
     function _isDefined(val) {
@@ -72,6 +80,74 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 result: true,
                 value: propValue
             };
+        },
+        isString: {
+            isRequired: function isRequired(propValue, propName, el) {
+                var isString = _isString(propValue);
+                var result = true;
+
+                propTypes.isRequired.apply(_this, _arguments);
+
+                if (!isString) {
+                    logger.error("The prop \"" + propName + "\" is not a string. ", el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: function isOptional(propValue, propName, el) {
+                var isString = _isString(propValue);
+                var result = true;
+
+                if (!isString) {
+                    logger.error("The prop \"" + propName + "\" is not a string. ", el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
+        },
+        isBoolean: {
+            isRequired: function isRequired(propValue, propName, el) {
+                var isBoolean = _isBoolean(propValue);
+                var result = true;
+
+                propTypes.isRequired.apply(_this, _arguments);
+
+                if (!isBoolean) {
+                    logger.error("The prop \"" + propName + "\" is not a boolean. ", el);
+                    result = false;
+                } else {
+                    result = !!propValue;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: function isOptional(propVal, propName, el) {
+                var isBoolean = _isBoolean(propValue);
+                var result = true;
+
+                if (!isBoolean) {
+                    logger.error("The prop \"" + propName + "\" is not a boolean. ", el);
+                    result = false;
+                } else {
+                    result = !!propValue;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
         },
         isNumber: {
             isRequired: function isRequired(propValue, propName, el) {
@@ -251,9 +327,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
                 for (var propName in propTypes) {
-                    var propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
+                    var _propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
                     var validator = propTypes[propName];
-                    var validatorResults = validator(propValue, propName, el);
+                    var validatorResults = validator(_propValue, propName, el);
 
                     if (validatorResults.result) {
                         this._setProp(propName, validatorResults.value);

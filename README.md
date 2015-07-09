@@ -85,6 +85,18 @@ Will expect that the given key is present in either the passed props Object, the
 ##### propTypes.isOptional
 Will log an info message into the UA's console if the given key is not present in either the passed Props-Object, the elements dataset or in the `getDefaultProps()` method.
 
+##### propTypes.isString.isRequired
+Like the basic `propTypes.isRequired` validator, but it also expects that the value is a `String`.
+
+##### propTypes.isString.isOptional
+Like the basic `propTypes.isOptional` validator, but will also expect a `String` as the value.
+
+##### propTypes.isBoolean.isRequired
+Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a `Boolean`, or a `String` containing a `Boolean`.
+
+##### propTypes.isBoolean.isOptional
+Like the basic `propTypes.isOptional` validator, but will also expect a `Boolean` as the value.
+
 ##### propTypes.isNumber.isRequired
 Like the basic `propTypes.isRequired` validator, but it also expects that the value is either a `Number`, or a `String` containing a `Number`.
 

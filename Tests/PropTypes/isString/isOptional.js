@@ -1,0 +1,24 @@
+var nodeProto = require('./../../../Src/NodeProto.js');
+
+const propType = nodeProto.propTypes.isString.isOptional;
+
+describe('NodeProto: propTypes.isString.isOptional', () => {
+    it('should be defined', () => {
+        expect(propType).toBeDefined();
+    });
+
+    it('should return an object containing a result and value when called.', () => {
+        expect(propType()).toEqual({
+            result: false,
+            value: undefined
+        });
+    });
+
+    it('should return a negative result if the argument which was passed is not a string.', () => {
+        expect(propType(123).result).toBeFalsy();
+    });
+
+    it('should return a positive result if the argument which was passed is a string.', () => {
+        expect(propType('foobar').result).toBeTruthy();
+    });
+});

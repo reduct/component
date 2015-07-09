@@ -31,8 +31,16 @@
         return !isNaN(num);
     }
 
+    function _isBoolean(bol){
+        return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
+    }
+
     function _isObject(obj){
         return typeof obj === 'object';
+    }
+
+    function _isString(str) {
+        return typeof str === 'string';
     }
 
     function _isDefined(val) {
@@ -63,6 +71,74 @@
                 result: true,
                 value: propValue
             };
+        },
+        isString: {
+            isRequired: (propValue, propName, el) => {
+                const isString = _isString(propValue);
+                let result = true;
+
+                propTypes.isRequired.apply(this, arguments);
+
+                if (!isString) {
+                    logger.error('The prop "' + propName + '" is not a string. ', el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: (propValue, propName, el) => {
+                const isString = _isString(propValue);
+                let result = true;
+
+                if (!isString) {
+                    logger.error('The prop "' + propName + '" is not a string. ', el);
+                    result = false;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
+        },
+        isBoolean: {
+            isRequired: (propValue, propName, el) => {
+                const isBoolean = _isBoolean(propValue);
+                let result = true;
+
+                propTypes.isRequired.apply(this, arguments);
+
+                if (!isBoolean) {
+                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
+                    result = false;
+                } else {
+                    result = !!propValue;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            },
+            isOptional: (propValue, propName, el) => {
+                const isBoolean = _isBoolean(propValue);
+                let result = true;
+
+                if (!isBoolean) {
+                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
+                    result = false;
+                } else {
+                    result = !!propValue;
+                }
+
+                return {
+                    result: result,
+                    value: propValue
+                };
+            }
         },
         isNumber: {
             isRequired: (propValue, propName, el) => {
