@@ -14,10 +14,6 @@ describe('NodeProto: propTypes.isString.isRequired', () => {
         });
     });
 
-    it('should return a negative result with no arguments passed.', () => {
-        expect(propType().result).toBeFalsy();
-    });
-
     it('should return a negative result if the argument which was passed is not a string.', () => {
         expect(propType(123).result).toBeFalsy();
     });

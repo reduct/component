@@ -91,8 +91,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 if (!isString) {
                     logger.error("The prop \"" + propName + "\" is not a string. ", el);
                     result = false;
-                } else {
-                    result = propValue;
                 }
 
                 return {
@@ -104,11 +102,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var isString = _isString(propValue);
                 var result = true;
 
-                if (propValue && !isString) {
+                if (!isString) {
                     logger.error("The prop \"" + propName + "\" is not a string. ", el);
                     result = false;
-                } else {
-                    result = propValue;
                 }
 
                 return {
@@ -140,7 +136,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var isBoolean = _isBoolean(propValue);
                 var result = true;
 
-                if (propValue && !isBoolean) {
+                if (!isBoolean) {
                     logger.error("The prop \"" + propName + "\" is not a boolean. ", el);
                     result = false;
                 } else {

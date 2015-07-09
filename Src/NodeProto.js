@@ -82,8 +82,6 @@
                 if (!isString) {
                     logger.error('The prop "' + propName + '" is not a string. ', el);
                     result = false;
-                } else {
-                    result = propValue;
                 }
 
                 return {
@@ -95,11 +93,9 @@
                 const isString = _isString(propValue);
                 let result = true;
 
-                if (propValue && !isString) {
+                if (!isString) {
                     logger.error('The prop "' + propName + '" is not a string. ', el);
                     result = false;
-                } else {
-                    result = propValue;
                 }
 
                 return {
@@ -131,7 +127,7 @@
                 const isBoolean = _isBoolean(propValue);
                 let result = true;
 
-                if (propValue && !isBoolean) {
+                if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
                     result = false;
                 } else {
