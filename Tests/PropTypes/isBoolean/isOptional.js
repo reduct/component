@@ -26,7 +26,7 @@ describe('NodeProto: propTypes.isBoolean.isOptional', () => {
         expect(propType('true').result).toBeTruthy();
     });
 
-    it('should return a positive result if the argument which was passed is a boolean as a boolean', () => 
+    it('should return a positive result if the argument which was passed is a boolean as a boolean', () => {
         expect(propType(true).result).toBeTruthy();
     });
 });
