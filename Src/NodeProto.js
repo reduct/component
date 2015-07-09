@@ -123,7 +123,7 @@
                     value: propValue
                 };
             },
-            isOptional: (propVal, propName, el) => {
+            isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
                 let result = true;
 
