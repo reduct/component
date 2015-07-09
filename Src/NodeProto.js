@@ -91,7 +91,7 @@
                     value: propValue
                 };
             },
-            isOptional: (propVal, propName, el) => {
+            isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
                 let result = true;
 
