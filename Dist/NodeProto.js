@@ -41,7 +41,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     function _isBoolean(bol) {
-        return "true" === propValue || "false" === propValue;
+        return typeof bol === "boolean" || bol === "true" || bol === "false";
     }
 
     function _isObject(obj) {
@@ -100,7 +100,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
-            isOptional: function isOptional(propVal, propName, el) {
+            isOptional: function isOptional(propValue, propName, el) {
                 var isString = _isString(propValue);
                 var result = true;
 

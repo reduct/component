@@ -9,13 +9,13 @@ describe('NodeProto: propTypes.isBoolean.isOptional', () => {
 
     it('should return an object containing a result and value when called.', () => {
         expect(propType()).toEqual({
-            result: true,
+            result: false,
             value: undefined
         });
     });
 
-    it('should return a positive result with no arguments passed.', () => {
-        expect(propType().result).toBeTruthy();
+    it('should return a negative result with no arguments passed.', () => {
+        expect(propType().result).toBeFalsy();
     });
 
     it('should return a negative result if the argument which was passed is not a boolean.', () => {
@@ -24,5 +24,9 @@ describe('NodeProto: propTypes.isBoolean.isOptional', () => {
 
     it('should return a positive result if the argument which was passed is a boolean as string.', () => {
         expect(propType('true').result).toBeTruthy();
+    });
+
+    it('should return a positive result if the argument which was passed is a boolean as a boolean', () => 
+        expect(propType(true).result).toBeTruthy();
     });
 });

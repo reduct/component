@@ -32,7 +32,7 @@
     }
 
     function _isBoolean(bol){
-        return (typeof bol === 'boolean') || (bol === 'true' || bol === 'false');
+        return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
     function _isObject(obj){
