@@ -1,8 +1,12 @@
 # Change Log
 
+## 1.0.5
+**Implemented enhancements:**
+- Added the `isString` and `isBoolean` propType validators.
+
 ## 1.0.4
 **Implemented enhancements:**
-- Renamed the getInitialState() method (Added an trailing 's')
+- Renamed the getInitialState() method (Added an trailing 's').
 
 ## 1.0.3
 **Implemented enhancements:**
