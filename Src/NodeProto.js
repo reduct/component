@@ -20,6 +20,11 @@
 }(window, function(global) {
     'use strict';
 
+    const nodeProtoVersion = {
+      'major': 1,
+      'minor': 0,
+      'patch': 5
+    };
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
 
@@ -405,6 +410,7 @@
 
     return {
         Component: Component,
-        propTypes: propTypes
+        propTypes: propTypes,
+        version: nodeProtoVersion
     };
 }));

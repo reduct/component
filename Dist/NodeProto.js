@@ -29,6 +29,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _this = this,
         _arguments = arguments;
 
+    var nodeProtoVersion = {
+        "major": 1,
+        "minor": 0,
+        "patch": 5
+    };
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf("node") > -1;
 
@@ -446,6 +451,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     return {
         Component: Component,
-        propTypes: propTypes
+        propTypes: propTypes,
+        version: nodeProtoVersion
     };
 });
