@@ -193,8 +193,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
         isObject: {
             isRequired: function isRequired(propValue, propName, el) {
-                var isObject = undefined;
                 var result = true;
+                var isObject = undefined;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(_this, _arguments);
@@ -218,9 +218,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             },
             isOptional: function isOptional(propValue, propName, el) {
-                var isObject = undefined;
-                var result = true;
                 var isPropValueDefined = _isDefined(propValue);
+                var result = true;
+                var isObject = undefined;
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -411,8 +411,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             // ToDo: Support for multiple arguments.
             value: function trigger(event, data) {
-                var value = undefined;
-                var key = undefined;
+                var value;
+                var key;
 
                 for (value = this.observers[event], key = 0; value && key < value.length;) {
                     value[key++](data);
@@ -421,8 +421,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "off",
             value: function off(event, listener) {
-                var value = undefined;
-                var key = undefined;
+                var value;
+                var key;
 
                 for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
                     value.splice(key, 1);

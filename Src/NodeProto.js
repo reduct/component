@@ -80,7 +80,7 @@
         isString: {
             isRequired: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                let result = true;
+                var result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -96,7 +96,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                let result = true;
+                var result = true;
 
                 if (!isString) {
                     logger.error('The prop "' + propName + '" is not a string. ', el);
@@ -112,7 +112,7 @@
         isBoolean: {
             isRequired: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                let result = true;
+                var result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -130,7 +130,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                let result = true;
+                var result = true;
 
                 if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
@@ -148,7 +148,7 @@
         isNumber: {
             isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                let result = true;
+                var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
@@ -167,7 +167,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                let result = true;
+                var result = true;
 
                 if(propValue && !isNumber) {
                     logger.error('The prop "' + propName + '" is not a number. ', el);
@@ -184,8 +184,8 @@
         },
         isObject: {
             isRequired: (propValue, propName, el) => {
+                var result = true;
                 let isObject;
-                let result = true;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
@@ -209,9 +209,10 @@
                 };
             },
             isOptional: (propValue, propName, el) => {
+                const isPropValueDefined = _isDefined(propValue);
+                var result = true;
                 let isObject;
-                let result = true;
-                let isPropValueDefined = _isDefined(propValue);
+
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -375,8 +376,8 @@
 
         // ToDo: Support for multiple arguments.
         trigger(event, data) {
-            let value;
-            let key;
+            var value;
+            var key;
 
             for (value = this.observers[event], key = 0; value && key < value.length;) {
                 value[key++](data);
@@ -384,8 +385,8 @@
         }
 
         off(event, listener) {
-            let value;
-            let key;
+            var value;
+            var key;
 
             for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
                 value.splice(key, 1);
@@ -396,7 +397,7 @@
 
         extend(instance, mixinObject) {
             for (let name in mixinObject) {
-                let mixinFunction = mixinObject[name];
+                const mixinFunction = mixinObject[name];
 
                 if(_isFunction(mixinFunction)) {
                     // ToDo: __proto__ shouldn't be used, find a better way to mixin functionality into ES6 classes.
