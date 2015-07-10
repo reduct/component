@@ -1,4 +1,4 @@
-/* NodeProto 1.0.4 | @license MIT */
+/* NodeProto 1.0.5 | @license MIT */
 
 "use strict";
 
@@ -132,7 +132,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
-            isOptional: function isOptional(propVal, propName, el) {
+            isOptional: function isOptional(propValue, propName, el) {
                 var isBoolean = _isBoolean(propValue);
                 var result = true;
 
@@ -248,7 +248,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
 
         log: function log(message) {
-            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+            var targetElement = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
 
             if (logger._logLevel <= 2) {
                 return;
@@ -259,7 +259,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         info: function info(message) {
-            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+            var targetElement = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
 
             if (logger._logLevel <= 2) {
                 return;
@@ -270,7 +270,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         warn: function warn(message) {
-            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+            var targetElement = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
 
             if (logger._logLevel <= 1) {
                 return;
@@ -281,7 +281,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
         error: function error(message) {
-            var targetElement = arguments[1] === undefined ? "" : arguments[1];
+            var targetElement = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
 
             if (logger._logLevel <= 0) {
                 return;
@@ -327,9 +327,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
                 for (var propName in propTypes) {
-                    var _propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
+                    var propValue = _passedProps[propName] || el.getAttribute("data-" + propName.toLowerCase()) || defaultProps[propName];
                     var validator = propTypes[propName];
-                    var validatorResults = validator(_propValue, propName, el);
+                    var validatorResults = validator(propValue, propName, el);
 
                     if (validatorResults.result) {
                         this._setProp(propName, validatorResults.value);
