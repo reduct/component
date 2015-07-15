@@ -310,7 +310,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             opts = _isObject(opts) ? opts : {};
 
             if (!_isDefined(element)) {
-                logger.warn("No element was specified while creating a new instance of a Class. Creating a virtual DOM Element instead.");
+                logger.warn("No element was specified while creating a new instance of a Class. Creating a detached DOM Element instead.");
             }
 
             this._passedProps = opts.props || {};

@@ -114,7 +114,7 @@ Like the basic `propTypes.isOptional` validator, but will also expect a `Object`
 #### instance.getElement();
 Type: `Function`
 
-Will retrieve the element on which the component was mounted upon, if no element was specified, a virtual DOM element will be created.
+Will retrieve the element on which the component was mounted upon, if no element was specified, a detached DOM element will be created.
 
 #### instance.getProp(key);
 Type: `Function`
