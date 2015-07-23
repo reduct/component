@@ -48,9 +48,9 @@
     "scriptPreprocessor": "node_modules/babel-jest",
     "collectCoverage": true,
     "collectCoverageOnlyFrom": {
-      "Src/Component.js": true
+      "<rootDir>/Src/Component.js": true
     },
-    "testDirectoryName": "Tests",
+    "testDirectoryName": "<rootDir>/Tests",
     "unmockedModulePathPatterns": [
       "./Src",
       "./Dist",
