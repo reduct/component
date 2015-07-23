@@ -26,7 +26,7 @@ npm install @reduct/component --save
 
 once the component package is installed, just require it in your class/application file.
 ```js
-const component = require("component");
+const component = require('@reduct/component');
 ```
 
 This package also supports AMD/RequireJS, it is defined as `reductComponent`. Aren't using AMD/CommonJS? Just grab a [release](https://github.com/reduct/component/releases), include the `Dist/Component.min.js` and access the loader via the following global:
