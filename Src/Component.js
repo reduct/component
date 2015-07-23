@@ -286,6 +286,49 @@
         logger.setLogLevel(0);
     }
 
+    /**
+     * Helper function to move passed props via constructor into the component
+     * instance and validate them along the way
+     *
+     * @param {Component} component The component instance
+     * @param {Object} propTypes A map of propTypes
+     * @returns {Void}
+     */
+    function _validateAndSetProps(component, propTypes) {
+      const el = component.el;
+      const _passedProps = component._passedProps;
+      const _defaultProps = component.getDefaultProps();
+      const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+
+      for (let propName in propTypes) {
+          const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+          const validator = propTypes[propName];
+          const validatorResults = validator(propValue, propName, el);
+
+          if(validatorResults.result) {
+              component._setProp(propName, validatorResults.value);
+          }
+      }
+    }
+
+    /**
+     * Helper function to set initial state variables in the component
+     * instance
+     *
+     * @param {Component} component The component instance
+     * @returns {Void}
+     */
+    function _setInitialStates(component) {
+      const _initialStates = component.getInitialStates();
+      const initialStates = _isObject(_initialStates) ? _initialStates : {};
+
+      for (let stateKey in initialStates) {
+          const value = initialStates[stateKey];
+
+          component.setState(stateKey, value);
+      }
+    }
+
     class Component {
         constructor(element, opts) {
             // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
@@ -301,36 +344,8 @@
             this.observers = {};
             this.el = element || doc.createElement('div');
 
-            this._validateAndSetProps(opts.propTypes);
-            this._setInitialStates();
-        }
-
-        _validateAndSetProps(propTypes) {
-            const el = this.el;
-            const _passedProps = this._passedProps;
-            const _defaultProps = this.getDefaultProps();
-            const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
-
-            for (let propName in propTypes) {
-                const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
-                const validator = propTypes[propName];
-                const validatorResults = validator(propValue, propName, el);
-
-                if(validatorResults.result) {
-                    this._setProp(propName, validatorResults.value);
-                }
-            }
-        }
-
-        _setInitialStates() {
-            const _initialStates = this.getInitialStates();
-            const initialStates = _isObject(_initialStates) ? _initialStates : {};
-
-            for (let stateKey in initialStates) {
-                const value = initialStates[stateKey];
-
-                this.setState(stateKey, value);
-            }
+            _validateAndSetProps(this, opts.propTypes);
+            _setInitialStates(this);
         }
 
         getElement() {

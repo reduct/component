@@ -300,6 +300,49 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         logger.setLogLevel(0);
     }
 
+    /**
+     * Helper function to move passed props via constructor into the component
+     * instance and validate them along the way
+     *
+     * @param {Component} component The component instance
+     * @param {Object} propTypes A map of propTypes
+     * @returns {Void}
+     */
+    function _validateAndSetProps(component, propTypes) {
+        var el = component.el;
+        var _passedProps = component._passedProps;
+        var _defaultProps = component.getDefaultProps();
+        var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+
+        for (var propName in propTypes) {
+            var propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            var validator = propTypes[propName];
+            var validatorResults = validator(propValue, propName, el);
+
+            if (validatorResults.result) {
+                component._setProp(propName, validatorResults.value);
+            }
+        }
+    }
+
+    /**
+     * Helper function to set initial state variables in the component
+     * instance
+     *
+     * @param {Component} component The component instance
+     * @returns {Void}
+     */
+    function _setInitialStates(component) {
+        var _initialStates = component.getInitialStates();
+        var initialStates = _isObject(_initialStates) ? _initialStates : {};
+
+        for (var stateKey in initialStates) {
+            var value = initialStates[stateKey];
+
+            component.setState(stateKey, value);
+        }
+    }
+
     var Component = (function () {
         function Component(element, opts) {
             _classCallCheck(this, Component);
@@ -317,41 +360,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.observers = {};
             this.el = element || doc.createElement('div');
 
-            this._validateAndSetProps(opts.propTypes);
-            this._setInitialStates();
+            _validateAndSetProps(this, opts.propTypes);
+            _setInitialStates(this);
         }
 
         _createClass(Component, [{
-            key: "_validateAndSetProps",
-            value: function _validateAndSetProps(propTypes) {
-                var el = this.el;
-                var _passedProps = this._passedProps;
-                var _defaultProps = this.getDefaultProps();
-                var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
-
-                for (var propName in propTypes) {
-                    var propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
-                    var validator = propTypes[propName];
-                    var validatorResults = validator(propValue, propName, el);
-
-                    if (validatorResults.result) {
-                        this._setProp(propName, validatorResults.value);
-                    }
-                }
-            }
-        }, {
-            key: "_setInitialStates",
-            value: function _setInitialStates() {
-                var _initialStates = this.getInitialStates();
-                var initialStates = _isObject(_initialStates) ? _initialStates : {};
-
-                for (var stateKey in initialStates) {
-                    var value = initialStates[stateKey];
-
-                    this.setState(stateKey, value);
-                }
-            }
-        }, {
             key: "getElement",
             value: function getElement() {
                 return this.el;
