@@ -1,4 +1,4 @@
-/* @reduct/component 1.0.5 | @license MIT */
+/* @reduct/component 1.0.6 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -23,7 +23,7 @@
     const version = {
       'major': 1,
       'minor': 0,
-      'patch': 5
+      'patch': 6
     };
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;

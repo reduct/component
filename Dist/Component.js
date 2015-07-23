@@ -30,7 +30,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var version = {
         'major': 1,
         'minor': 0,
-        'patch': 5
+        'patch': 6
     };
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
@@ -453,4 +453,4 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         version: version
     };
 });
-/* @reduct/component 1.0.5 | @license MIT */
+/* @reduct/component 1.0.6 | @license MIT */
