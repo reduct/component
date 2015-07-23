@@ -1,7 +1,7 @@
-var nodeProto = require('./../../Src/NodeProto.js');
+var component = require('./../../Src/Component.js');
 
 // An ExampleClass for testing purposes.
-class ExampleComponent extends nodeProto.Component {
+class ExampleComponent extends component.Component {
     constructor(el, opts) {
         super(el, opts);
     }

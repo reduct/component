@@ -1,7 +1,7 @@
-var nodeProto = require('./../../Src/NodeProto.js');
+var component = require('./../../Src/Component.js');
 
 // An ExampleClass without defaults
-class ComponentWithoutDefaults extends nodeProto.Component {
+class ComponentWithoutDefaults extends component.Component {
     constructor(el, opts) {
         super(el, opts);
     }

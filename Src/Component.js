@@ -1,4 +1,4 @@
-/* NodeProto 1.0.5 | @license MIT */
+/* @reduct/component 1.0.6 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -9,17 +9,22 @@
 
     // If the env is AMD, register the Module as 'componentprototype'.
     } else if (global.define && typeof global.define === "function" && global.define.amd) {
-        global.define("nodeProto", [], function() {
+        global.define("reductComponent", [], function() {
             return factory(global);
         });
 
     // If the env is a browser(without CJS or AMD support), export the factory into the global window object.
     } else {
-        global.nodeProto = factory(global);
+        global.reductComponent = factory(global);
     }
 }(window, function(global) {
     'use strict';
 
+    const version = {
+      'major': 1,
+      'minor': 0,
+      'patch': 6
+    };
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
 
@@ -75,7 +80,7 @@
         isString: {
             isRequired: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                let result = true;
+                var result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -91,7 +96,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                let result = true;
+                var result = true;
 
                 if (!isString) {
                     logger.error('The prop "' + propName + '" is not a string. ', el);
@@ -107,7 +112,7 @@
         isBoolean: {
             isRequired: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                let result = true;
+                var result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -125,7 +130,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                let result = true;
+                var result = true;
 
                 if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
@@ -143,7 +148,7 @@
         isNumber: {
             isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                let result = true;
+                var result = true;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
@@ -162,7 +167,7 @@
             },
             isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                let result = true;
+                var result = true;
 
                 if(propValue && !isNumber) {
                     logger.error('The prop "' + propName + '" is not a number. ', el);
@@ -179,8 +184,8 @@
         },
         isObject: {
             isRequired: (propValue, propName, el) => {
+                var result = true;
                 let isObject;
-                let result = true;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
@@ -204,9 +209,10 @@
                 };
             },
             isOptional: (propValue, propName, el) => {
+                const isPropValueDefined = _isDefined(propValue);
+                var result = true;
                 let isObject;
-                let result = true;
-                let isPropValueDefined = _isDefined(propValue);
+
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
@@ -244,7 +250,7 @@
             }
 
             try {
-                console.log('NodeProto: ' + message, targetElement);
+                console.log('@reduct/component: ' + message, targetElement);
             } catch(e) {}
         },
         info: (message, targetElement = '') => {
@@ -253,7 +259,7 @@
             }
 
             try {
-                console.info('NodeProto Info: ' + message, targetElement);
+                console.info('@reduct/component Info: ' + message, targetElement);
             } catch(e) {}
         },
         warn: (message, targetElement = '') => {
@@ -262,7 +268,7 @@
             }
 
             try {
-                console.warn('NodeProto Warning: ' + message, targetElement);
+                console.warn('@reduct/component Warning: ' + message, targetElement);
             } catch(e) {}
         },
         error: (message, targetElement = '') => {
@@ -271,7 +277,7 @@
             }
 
             try {
-                console.error('NodeProto Error: ' + message, targetElement);
+                console.error('@reduct/component Error: ' + message, targetElement);
             } catch(e) {}
         }
     };
@@ -286,7 +292,7 @@
             opts = _isObject(opts) ? opts : {};
 
             if(!_isDefined(element)) {
-                logger.warn('No element was specified while creating a new instance of a Class. Creating a virtual DOM Element instead.');
+                logger.warn('No element was specified while creating a new instance of a Class. Creating a detached DOM Element instead.');
             }
 
             this._passedProps = opts.props || {};
@@ -321,7 +327,7 @@
             const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
             for (let stateKey in initialStates) {
-                const value = initialStates[stateKey]
+                const value = initialStates[stateKey];
 
                 this.setState(stateKey, value);
             }
@@ -370,8 +376,8 @@
 
         // ToDo: Support for multiple arguments.
         trigger(event, data) {
-            let value;
-            let key;
+            var value;
+            var key;
 
             for (value = this.observers[event], key = 0; value && key < value.length;) {
                 value[key++](data);
@@ -379,8 +385,8 @@
         }
 
         off(event, listener) {
-            let value;
-            let key;
+            var value;
+            var key;
 
             for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
                 value.splice(key, 1);
@@ -391,7 +397,7 @@
 
         extend(instance, mixinObject) {
             for (let name in mixinObject) {
-                let mixinFunction = mixinObject[name];
+                const mixinFunction = mixinObject[name];
 
                 if(_isFunction(mixinFunction)) {
                     // ToDo: __proto__ shouldn't be used, find a better way to mixin functionality into ES6 classes.
@@ -405,6 +411,7 @@
 
     return {
         Component: Component,
-        propTypes: propTypes
+        propTypes: propTypes,
+        version: version
     };
 }));

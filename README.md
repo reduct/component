@@ -1,4 +1,5 @@
-# NodeProto [![Build Status](https://travis-ci.org/Inkdpixels/NodeProto.svg)](https://travis-ci.org/Inkdpixels/NodeProto) [![Dependency Status](https://david-dm.org/Inkdpixels/NodeProto.svg)](https://david-dm.org/Inkdpixels/NodeProto) [![devDependency Status](https://david-dm.org/Inkdpixels/NodeProto/dev-status.svg)](https://david-dm.org/Inkdpixels/NodeProto#info=devDependencies) [![Code Climate](https://codeclimate.com/github/Inkdpixels/NodeProto/badges/gpa.svg)](https://codeclimate.com/github/Inkdpixels/NodeProto) [![Test Coverage](https://codeclimate.com/github/Inkdpixels/NodeProto/badges/coverage.svg)](https://codeclimate.com/github/Inkdpixels/NodeProto/coverage)
+# @reduct/component 
+[![Build Status](https://travis-ci.org/reduct/component.svg)](https://travis-ci.org/reduct/component) [![Dependency Status](https://david-dm.org/reduct/component.svg)](https://david-dm.org/reduct/component) [![devDependency Status](https://david-dm.org/reduct/component/dev-status.svg)](https://david-dm.org/reduct/component#info=devDependencies) [![Code Climate](https://codeclimate.com/github/reduct/component/badges/gpa.svg)](https://codeclimate.com/github/reduct/component) [![Test Coverage](https://codeclimate.com/github/reduct/component/badges/coverage.svg)](https://codeclimate.com/github/reduct/component/coverage)
 
 > A prototypical class that makes it easy to create Components with nodes with a powerfull instance configuration system and a react-like API.
 
@@ -20,29 +21,29 @@
 ## Install
 With npm, use the familiar syntax e.g.:
 ```shell
-npm install nodeproto --save
+npm install @reduct/component --save
 ```
 
-once the nodeProto package is installed, just require it in your class/application file.
+once the component package is installed, just require it in your class/application file.
 ```js
-const nodeProto = require("nodeproto");
+const component = require("component");
 ```
 
-This package also supports AMD/RequireJS, it is defined as `nodeProto`. Aren't using AMD/CommonJS? Just grab a [release](https://github.com/Inkdpixels/NodeProto/releases), include the `Dist/NodeProto.min.js` and access the loader via the following global:
+This package also supports AMD/RequireJS, it is defined as `reductComponent`. Aren't using AMD/CommonJS? Just grab a [release](https://github.com/reduct/component/releases), include the `Dist/Component.min.js` and access the loader via the following global:
 ```js
-const nodeProto = window.nodeProto;
+const component = window.reductComponent;
 ```
 
 ## Example
 ```js
 // MyComponent.js
 const myComponentPropTypes = {
-  'myProp'              : nodeProto.propTypes.isRequired,
-  'myPropNumber'        : nodeProto.propTypes.isNumber.isRequired,
-  'myOptionalObjectProp': nodeProto.propTypes.isObject.isOptional
+  'myProp'              : component.propTypes.isRequired,
+  'myPropNumber'        : component.propTypes.isNumber.isRequired,
+  'myOptionalObjectProp': component.propTypes.isObject.isOptional
 }
 
-class MyComponent extends nodeProto.Component {
+class MyComponent extends component.Component {
   constructor(el, props) {
     super(el, {
         'props': props,
@@ -75,7 +76,7 @@ instance.trigger('logSomething') // LOG: 'myString'
 
 
 ## PropType validators
-The PropType validators are the key feature of the NodeProto. They validate your props, and optionally transform the values into the requested types by the validator.
+The PropType validators are the key feature of the component. They validate your props, and optionally transform the values into the requested types by the validator.
 
 F.e. if your component expects a `Number` as a prop with the name `myProp`, and you can't pass in the prop directly via JS, you can create a dataset property with the given name on the target element with a `Number` as the value e.g. `data-myProp="2"`. Once a instance was created with this element, you can access the prop value via the [getProp()](#instancegetpropkey) method.
 
@@ -114,7 +115,7 @@ Like the basic `propTypes.isOptional` validator, but will also expect a `Object`
 #### instance.getElement();
 Type: `Function`
 
-Will retrieve the element on which the component was mounted upon, if no element was specified, a virtual DOM element will be created.
+Will retrieve the element on which the component was mounted upon, if no element was specified, a detached DOM element will be created.
 
 #### instance.getProp(key);
 Type: `Function`

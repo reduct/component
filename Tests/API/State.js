@@ -1,11 +1,11 @@
-var Component = require('./../ExampleComponents/Default.js');
+var DefaultComponent = require('./../ExampleComponents/Default.js');
 var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefaults.js');
 
-describe('NodeProto: State API', () => {
+describe('@reduct/component: State API', () => {
     let instance;
 
     beforeEach(() => {
-        instance = new Component();
+        instance = new DefaultComponent();
     });
 
     it('should return undefined if no state was set.', () => {

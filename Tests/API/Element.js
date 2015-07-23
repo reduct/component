@@ -1,8 +1,8 @@
-var Component = require('./../ExampleComponents/Default.js');
+var DefaultComponent = require('./../ExampleComponents/Default.js');
 
-describe('NodeProto: Element API', () => {
+describe('@reduct/component: Element API', () => {
     it('should return a DOM element even if none was passed directly to the Constructor.', () => {
-        var componentInstance = new Component();
+        var componentInstance = new DefaultComponent();
 
         expect(componentInstance.getElement()).toBeDefined();
     });

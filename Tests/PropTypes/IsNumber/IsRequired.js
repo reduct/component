@@ -1,7 +1,8 @@
-var nodeProto = require('./../../../Src/NodeProto.js');
-const propType = nodeProto.propTypes.isNumber.isRequired;
+var component = require('./../../../Src/Component.js');
 
-describe('NodeProto: propTypes.isNumber.isRequired', () => {
+const propType = component.propTypes.isNumber.isRequired;
+
+describe('@reduct/component: propTypes.isNumber.isRequired', () => {
     it('should be defined', () => {
         expect(propType).toBeDefined();
     });

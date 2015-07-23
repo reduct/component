@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.6
+**Implemented enhancements:**
+- Renamed the package to @reduct/component
+- Added a semver oriented version object to the module exports.
+
 ## 1.0.5
 **Implemented enhancements:**
 - Added the `isString` and `isBoolean` propType validators.

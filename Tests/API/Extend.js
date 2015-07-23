@@ -1,8 +1,8 @@
-var Component = require('./../ExampleComponents/Default.js');
+var DefaultComponent = require('./../ExampleComponents/Default.js');
 
-describe('NodeProto: Extend API', () => {
+describe('@reduct/component: Extend API', () => {
     it('should extend the instances prototype when given a mixin.', () => {
-        let instance = new Component();
+        let instance = new DefaultComponent();
         const myFunction = jest.genMockFunction();
 
         instance.extend(instance, {
