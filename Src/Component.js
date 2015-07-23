@@ -1,4 +1,4 @@
-/* NodeProto 1.0.5 | @license MIT */
+/* @reduct/component 1.0.5 | @license MIT */
 
 (function(global, factory) {
     'use strict';
@@ -9,18 +9,18 @@
 
     // If the env is AMD, register the Module as 'componentprototype'.
     } else if (global.define && typeof global.define === "function" && global.define.amd) {
-        global.define("nodeProto", [], function() {
+        global.define("reductComponent", [], function() {
             return factory(global);
         });
 
     // If the env is a browser(without CJS or AMD support), export the factory into the global window object.
     } else {
-        global.nodeProto = factory(global);
+        global.reductComponent = factory(global);
     }
 }(window, function(global) {
     'use strict';
 
-    const nodeProtoVersion = {
+    const version = {
       'major': 1,
       'minor': 0,
       'patch': 5
@@ -250,7 +250,7 @@
             }
 
             try {
-                console.log('NodeProto: ' + message, targetElement);
+                console.log('@reduct/component: ' + message, targetElement);
             } catch(e) {}
         },
         info: (message, targetElement = '') => {
@@ -259,7 +259,7 @@
             }
 
             try {
-                console.info('NodeProto Info: ' + message, targetElement);
+                console.info('@reduct/component Info: ' + message, targetElement);
             } catch(e) {}
         },
         warn: (message, targetElement = '') => {
@@ -268,7 +268,7 @@
             }
 
             try {
-                console.warn('NodeProto Warning: ' + message, targetElement);
+                console.warn('@reduct/component Warning: ' + message, targetElement);
             } catch(e) {}
         },
         error: (message, targetElement = '') => {
@@ -277,7 +277,7 @@
             }
 
             try {
-                console.error('NodeProto Error: ' + message, targetElement);
+                console.error('@reduct/component Error: ' + message, targetElement);
             } catch(e) {}
         }
     };
@@ -327,7 +327,7 @@
             const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
             for (let stateKey in initialStates) {
-                const value = initialStates[stateKey]
+                const value = initialStates[stateKey];
 
                 this.setState(stateKey, value);
             }
@@ -412,6 +412,6 @@
     return {
         Component: Component,
         propTypes: propTypes,
-        version: nodeProtoVersion
+        version: version
     };
 }));

@@ -1,11 +1,11 @@
-var Component = require('./../ExampleComponents/Default.js');
+var DefaultComponent = require('./../ExampleComponents/Default.js');
 
-describe('NodeProto: Events API', () => {
+describe('@reduct/component: Events API', () => {
     let instance;
     let eventCallback;
 
     beforeEach(() => {
-        instance = new Component();
+        instance = new DefaultComponent();
         eventCallback = jest.genMockFunction();
     });
 

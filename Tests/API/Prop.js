@@ -1,22 +1,22 @@
-var nodeProto = require('./../../Src/NodeProto.js');
-var Component = require('./../ExampleComponents/Default.js');
+var component = require('./../../Src/Component.js');
+var DefaultComponent = require('./../ExampleComponents/Default.js');
 var ComponentWithoutDefaults = require('./../ExampleComponents/WithoutDefaults.js');
 
-describe('NodeProto: Prop API', () => {
+describe('@reduct/component: Prop API', () => {
     it('should return undefined if no prop was set.', () => {
-        let instance = new Component();
+        let instance = new DefaultComponent();
 
         expect(instance.getProp('myProp')).toBeUndefined();
     });
 
     it('should check if a prop is present.', () => {
-        let instance = new Component();
+        let instance = new DefaultComponent();
 
         expect(instance.hasProp('myProp')).toBeFalsy();
     });
 
     it('should return the value of a state which was previously set.', () => {
-        let instance = new Component();
+        let instance = new DefaultComponent();
 
         instance.setState('myState', 1);
 
@@ -24,12 +24,12 @@ describe('NodeProto: Prop API', () => {
     });
 
     it('should validate and set the passed props when propTypes are given.', () => {
-        let instance = new Component(null, {
+        let instance = new DefaultComponent(null, {
             'props': {
                 'myProp': 2
             },
             'propTypes': {
-                'myProp': nodeProto.propTypes.isRequired
+                'myProp': component.propTypes.isRequired
             }
         });
 
@@ -42,9 +42,9 @@ describe('NodeProto: Prop API', () => {
 
         element.setAttribute('data-myprop', 'value');
 
-        instance = new Component(element, {
+        instance = new DefaultComponent(element, {
             'propTypes': {
-                'myProp': nodeProto.propTypes.isRequired
+                'myProp': component.propTypes.isRequired
             }
         });
 
@@ -54,9 +54,9 @@ describe('NodeProto: Prop API', () => {
     it('should fall back to the getDefaultProps() method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
         let instance;
 
-        instance = new Component(null, {
+        instance = new DefaultComponent(null, {
             'propTypes': {
-                'anotherProp': nodeProto.propTypes.isRequired
+                'anotherProp': component.propTypes.isRequired
             }
         });
 

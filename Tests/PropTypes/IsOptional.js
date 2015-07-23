@@ -1,8 +1,8 @@
-var nodeProto = require('./../../Src/NodeProto.js');
+var component = require('./../../Src/Component.js');
 
-const propType = nodeProto.propTypes.isOptional;
+const propType = component.propTypes.isOptional;
 
-describe('NodeProto: propTypes.isOptional', () => {
+describe('@reduct/component: propTypes.isOptional', () => {
     it('should be defined', () => {
         expect(propType).toBeDefined();
     });

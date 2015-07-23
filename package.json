@@ -1,18 +1,18 @@
 {
-  "name": "nodeproto",
+  "name": "@reduct/component",
   "version": "1.0.5",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
-  "main": "Dist/NodeProto.js",
+  "main": "Dist/Component.js",
   "scripts": {
     "test": "npm run build && npm run jest",
     "build": "npm run babel && npm run uglify",
     "jest": "jest",
-    "babel": "./node_modules/.bin/babel Src/NodeProto.js --out-file Dist/NodeProto.js",
-    "uglify": "node_modules/.bin/uglifyjs Dist/NodeProto.js -o Dist/NodeProto.min.js --comments -c -m"
+    "babel": "./node_modules/.bin/babel Src/Component.js --out-file Dist/Component.js",
+    "uglify": "node_modules/.bin/uglifyjs Dist/Component.js -o Dist/Component.min.js --comments -c -m"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Inkdpixels/NodeProto.git"
+    "url": "git+https://github.com/reduct/component.git"
   },
   "keywords": [
     "prototype",
@@ -34,9 +34,9 @@
     "url": "http://www.opensource.org/licenses/mit-license.php"
   },
   "bugs": {
-    "url": "https://github.com/Inkdpixels/NodeProto/issues"
+    "url": "https://github.com/reduct/component/issues"
   },
-  "homepage": "https://github.com/Inkdpixels/NodeProto#readme",
+  "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
     "babel": "^5.6.14",
     "babel-jest": "^5.3.0",
@@ -48,7 +48,7 @@
     "scriptPreprocessor": "node_modules/babel-jest",
     "collectCoverage": true,
     "collectCoverageOnlyFrom": {
-      "Src/NodeProto.js": true
+      "Src/Component.js": true
     },
     "testDirectoryName": "Tests",
     "unmockedModulePathPatterns": [
