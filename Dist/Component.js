@@ -430,17 +430,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }, {
             key: "extend",
-            value: function extend(instance, mixinObject) {
-                for (var _name in mixinObject) {
-                    var mixinFunction = mixinObject[_name];
-
-                    if (_isFunction(mixinFunction)) {
-                        // ToDo: __proto__ shouldn't be used, find a better way to mixin functionality into ES6 classes.
-                        if (!instance.__proto__.hasOwnProperty(_name)) {
-                            instance.__proto__[_name] = mixinFunction;
-                        }
-                    }
-                }
+            value: function extend() {
+                logger.error('@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.');
             }
         }]);
 

@@ -395,17 +395,8 @@
             this.observers[event] = listener ? value : [];
         }
 
-        extend(instance, mixinObject) {
-            for (let name in mixinObject) {
-                const mixinFunction = mixinObject[name];
-
-                if(_isFunction(mixinFunction)) {
-                    // ToDo: __proto__ shouldn't be used, find a better way to mixin functionality into ES6 classes.
-                    if (!instance.__proto__.hasOwnProperty(name)) {
-                        instance.__proto__[name] = mixinFunction;
-                    }
-                }
-            }
+        extend() {
+            logger.error('@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.');
         }
     }
 
