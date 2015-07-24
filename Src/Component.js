@@ -4,12 +4,12 @@
     'use strict';
 
     // If the env is browserify, export the factory using the module object.
-    if (typeof module === "object" && typeof module.exports === "object") {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = factory(global);
 
     // If the env is AMD, register the Module as 'componentprototype'.
-    } else if (global.define && typeof global.define === "function" && global.define.amd) {
-        global.define("reductComponent", [], function() {
+    } else if (global.define && typeof global.define === 'function' && global.define.amd) {
+        global.define('reductComponent', [], function() {
             return factory(global);
         });
 
@@ -27,20 +27,24 @@
     };
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
+    var messages = {
+        'noElement': 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
+        'extendDeprecate': '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
+    };
 
     function _isFunction(func) {
         return typeof func === 'function';
     }
 
-    function _isNumeric(num){
+    function _isNumeric(num) {
         return !isNaN(num);
     }
 
-    function _isBoolean(bol){
+    function _isBoolean(bol) {
         return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
-    function _isObject(obj){
+    function _isObject(obj) {
         return typeof obj === 'object';
     }
 
@@ -335,7 +339,7 @@
             opts = _isObject(opts) ? opts : {};
 
             if(!_isDefined(element)) {
-                logger.warn('No element was specified while creating a new instance of a Class. Creating a detached DOM Element instead.');
+                logger.warn(messages.noElement);
             }
 
             this._passedProps = opts.props || {};
@@ -411,7 +415,7 @@
         }
 
         extend() {
-            logger.error('@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.');
+            logger.error(messages.extendDeprecate);
         }
     }
 
