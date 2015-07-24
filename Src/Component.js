@@ -21,15 +21,15 @@
     'use strict';
 
     const version = {
-      'major': 1,
-      'minor': 0,
-      'patch': 6
+        major: 1,
+        minor: 0,
+        patch: 6
     };
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
-        'noElement': 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
-        'extendDeprecate': '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
+        noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
+        extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
 
     function _isFunction(func) {
@@ -60,7 +60,7 @@
         isRequired: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
-            if(!isPropInProps) {
+            if (!isPropInProps) {
                 logger.error('The prop "' + propName + '" is required and wasn‘t found on: ', el);
             }
 
@@ -69,10 +69,11 @@
                 value: propValue
             };
         },
+
         isOptional: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
-            if(!isPropInProps) {
+            if (!isPropInProps) {
                 logger.info('The prop "' + propName + '" is optional and wasn‘t found on: ', el);
             }
 
@@ -81,6 +82,7 @@
                 value: propValue
             };
         },
+
         isString: {
             isRequired: (propValue, propName, el) => {
                 const isString = _isString(propValue);
@@ -98,6 +100,7 @@
                     value: propValue
                 };
             },
+
             isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
                 var result = true;
@@ -113,6 +116,7 @@
                 };
             }
         },
+
         isBoolean: {
             isRequired: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
@@ -132,6 +136,7 @@
                     value: propValue
                 };
             },
+
             isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -149,6 +154,7 @@
                 };
             }
         },
+
         isNumber: {
             isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
@@ -157,7 +163,7 @@
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
 
-                if(!isNumber) {
+                if (!isNumber) {
                     logger.error('The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 } else {
@@ -169,11 +175,12 @@
                     value: propValue
                 };
             },
+
             isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 var result = true;
 
-                if(propValue && !isNumber) {
+                if (propValue && !isNumber) {
                     logger.error('The prop "' + propName + '" is not a number. ', el);
                     result = false;
                 }
@@ -186,6 +193,7 @@
                 };
             }
         },
+
         isObject: {
             isRequired: (propValue, propName, el) => {
                 var result = true;
@@ -197,12 +205,12 @@
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
                     propValue = JSON.parse(propValue);
-                } catch(e) {}
+                } catch (e) {}
 
                 // Verify the type of the value.
                 isObject = _isObject(propValue);
 
-                if(!isObject) {
+                if (!isObject) {
                     logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
@@ -212,21 +220,21 @@
                     value: propValue
                 };
             },
+
             isOptional: (propValue, propName, el) => {
                 const isPropValueDefined = _isDefined(propValue);
                 var result = true;
                 let isObject;
 
-
                 // If the passed Property is a string, convert it to a JSON object beforehand.
                 try {
                     propValue = JSON.parse(propValue);
-                } catch(e) {}
+                } catch (e) {}
 
                 // Verify the type of the value.
                 isObject = _isObject(propValue);
 
-                if(isPropValueDefined && !isObject) {
+                if (isPropValueDefined && !isObject) {
                     logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
                     result = false;
                 }
@@ -249,44 +257,47 @@
         },
 
         log: (message, targetElement = '') => {
-            if(logger._logLevel <= 2) {
+            if (logger._logLevel <= 2) {
                 return;
             }
 
             try {
                 console.log('@reduct/component: ' + message, targetElement);
-            } catch(e) {}
+            } catch (e) {}
         },
+
         info: (message, targetElement = '') => {
-            if(logger._logLevel <= 2) {
+            if (logger._logLevel <= 2) {
                 return;
             }
 
             try {
                 console.info('@reduct/component Info: ' + message, targetElement);
-            } catch(e) {}
+            } catch (e) {}
         },
+
         warn: (message, targetElement = '') => {
-            if(logger._logLevel <= 1) {
+            if (logger._logLevel <= 1) {
                 return;
             }
 
             try {
                 console.warn('@reduct/component Warning: ' + message, targetElement);
-            } catch(e) {}
+            } catch (e) {}
         },
+
         error: (message, targetElement = '') => {
-            if(logger._logLevel <= 0) {
+            if (logger._logLevel <= 0) {
                 return;
             }
 
             try {
                 console.error('@reduct/component Error: ' + message, targetElement);
-            } catch(e) {}
+            } catch (e) {}
         }
     };
 
-    if(isScriptExecutedByNode) {
+    if (isScriptExecutedByNode) {
         logger.setLogLevel(0);
     }
 
@@ -299,20 +310,20 @@
      * @returns {Void}
      */
     function _validateAndSetProps(component, propTypes) {
-      const el = component.el;
-      const _passedProps = component._passedProps;
-      const _defaultProps = component.getDefaultProps();
-      const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+        const el = component.el;
+        const _passedProps = component._passedProps;
+        const _defaultProps = component.getDefaultProps();
+        const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
-      for (let propName in propTypes) {
-          const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
-          const validator = propTypes[propName];
-          const validatorResults = validator(propValue, propName, el);
+        for (let propName in propTypes) {
+            const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            const validator = propTypes[propName];
+            const validatorResults = validator(propValue, propName, el);
 
-          if(validatorResults.result) {
-              component._setProp(propName, validatorResults.value);
-          }
-      }
+            if (validatorResults.result) {
+                component._setProp(propName, validatorResults.value);
+            }
+        }
     }
 
     /**
@@ -323,14 +334,14 @@
      * @returns {Void}
      */
     function _setInitialStates(component) {
-      const _initialStates = component.getInitialStates();
-      const initialStates = _isObject(_initialStates) ? _initialStates : {};
+        const _initialStates = component.getInitialStates();
+        const initialStates = _isObject(_initialStates) ? _initialStates : {};
 
-      for (let stateKey in initialStates) {
-          const value = initialStates[stateKey];
+        for (let stateKey in initialStates) {
+            const value = initialStates[stateKey];
 
-          component.setState(stateKey, value);
-      }
+            component.setState(stateKey, value);
+        }
     }
 
     class Component {
@@ -338,7 +349,7 @@
             // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
             opts = _isObject(opts) ? opts : {};
 
-            if(!_isDefined(element)) {
+            if (!_isDefined(element)) {
                 logger.warn(messages.noElement);
             }
 
