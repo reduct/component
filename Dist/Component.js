@@ -1,42 +1,42 @@
-'use strict';
+/* @reduct/component 1.0.6 | @license MIT */
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+"use strict";
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-(function (global, factory) {
-    'use strict';
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    // If the env is browserify, export the factory using the module object.
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = factory(global);
-
-        // If the env is AMD, register the Module as 'componentprototype'.
-    } else if (global.define && typeof global.define === 'function' && global.define.amd) {
-            global.define('reductComponent', [], function () {
-                return factory(global);
-            });
-
-            // If the env is a browser(without CJS or AMD support), export the factory into the global window object.
+(function (f) {
+    if (typeof exports === "object" && typeof module !== "undefined") {
+        module.exports = f();
+    } else if (typeof define === "function" && define.amd) {
+        define([], f);
+    } else {
+        var g;if (typeof window !== "undefined") {
+            g = window;
+        } else if (typeof global !== "undefined") {
+            g = global;
+        } else if (typeof self !== "undefined") {
+            g = self;
         } else {
-                global.reductComponent = factory(global);
-            }
-})(window, function (global) {
-    'use strict';
-
+            g = this;
+        }g.reductComponent = f();
+    }
+})(function () {
     var _this = this,
         _arguments = arguments;
 
+    var define, module, exports;
     var version = {
-        'major': 1,
-        'minor': 0,
-        'patch': 6
+        major: 1,
+        minor: 0,
+        patch: 6
     };
     var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
-        'noElement': 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
-        'extendDeprecate': '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
+        noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
+        extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
 
     function _isFunction(func) {
@@ -76,6 +76,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: propValue
             };
         },
+
         isOptional: function isOptional(propValue, propName, el) {
             var isPropInProps = _isDefined(propValue);
 
@@ -88,6 +89,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: propValue
             };
         },
+
         isString: {
             isRequired: function isRequired(propValue, propName, el) {
                 var isString = _isString(propValue);
@@ -105,6 +107,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
+
             isOptional: function isOptional(propValue, propName, el) {
                 var isString = _isString(propValue);
                 var result = true;
@@ -120,6 +123,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             }
         },
+
         isBoolean: {
             isRequired: function isRequired(propValue, propName, el) {
                 var isBoolean = _isBoolean(propValue);
@@ -139,6 +143,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
+
             isOptional: function isOptional(propValue, propName, el) {
                 var isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -156,6 +161,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             }
         },
+
         isNumber: {
             isRequired: function isRequired(propValue, propName, el) {
                 var isNumber = _isNumeric(propValue);
@@ -176,6 +182,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
+
             isOptional: function isOptional(propValue, propName, el) {
                 var isNumber = _isNumeric(propValue);
                 var result = true;
@@ -193,6 +200,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             }
         },
+
         isObject: {
             isRequired: function isRequired(propValue, propName, el) {
                 var result = true;
@@ -219,6 +227,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value: propValue
                 };
             },
+
             isOptional: function isOptional(propValue, propName, el) {
                 var isPropValueDefined = _isDefined(propValue);
                 var result = true;
@@ -265,6 +274,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.log('@reduct/component: ' + message, targetElement);
             } catch (e) {}
         },
+
         info: function info(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -276,6 +286,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.info('@reduct/component Info: ' + message, targetElement);
             } catch (e) {}
         },
+
         warn: function warn(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -287,6 +298,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.warn('@reduct/component Warning: ' + message, targetElement);
             } catch (e) {}
         },
+
         error: function error(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -369,53 +381,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(Component, [{
-            key: 'getElement',
+            key: "getElement",
             value: function getElement() {
                 return this.el;
             }
 
             // Prop related methods.
         }, {
-            key: 'getDefaultProps',
+            key: "getDefaultProps",
             value: function getDefaultProps() {
                 return {};
             }
         }, {
-            key: '_setProp',
+            key: "_setProp",
             value: function _setProp(propName, propVal) {
                 this.props[propName] = propVal;
             }
         }, {
-            key: 'getProp',
+            key: "getProp",
             value: function getProp(propName) {
                 return this.props[propName];
             }
         }, {
-            key: 'hasProp',
+            key: "hasProp",
             value: function hasProp(propName) {
                 return _isDefined(this.props[propName]);
             }
 
             // State related methods.
         }, {
-            key: 'getInitialStates',
+            key: "getInitialStates",
             value: function getInitialStates() {
                 return {};
             }
         }, {
-            key: 'setState',
+            key: "setState",
             value: function setState(stateName, stateVal) {
                 this.states[stateName] = stateVal;
             }
         }, {
-            key: 'getState',
+            key: "getState",
             value: function getState(stateName) {
                 return this.states[stateName];
             }
 
             // Event System
         }, {
-            key: 'on',
+            key: "on",
             value: function on(event, listener) {
                 var targetArray = this.observers[event] || (this.observers[event] = []);
 
@@ -424,7 +436,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             // ToDo: Support for multiple arguments.
         }, {
-            key: 'trigger',
+            key: "trigger",
             value: function trigger(event, data) {
                 var value;
                 var key;
@@ -434,7 +446,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
             }
         }, {
-            key: 'off',
+            key: "off",
             value: function off(event, listener) {
                 var value;
                 var key;
@@ -446,7 +458,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.observers[event] = listener ? value : [];
             }
         }, {
-            key: 'extend',
+            key: "extend",
             value: function extend() {
                 logger.error(messages.extendDeprecate);
             }
@@ -461,4 +473,3 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         version: version
     };
 });
-/* @reduct/component 1.0.6 | @license MIT */

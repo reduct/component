@@ -1,438 +1,415 @@
-/* @reduct/component 1.0.6 | @license MIT */
+const version = {
+    major: 1,
+    minor: 0,
+    patch: 6
+};
+const doc = global.document;
+const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
+var messages = {
+    noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
+    extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
+};
 
-(function(global, factory) {
-    'use strict';
+function _isFunction(func) {
+    return typeof func === 'function';
+}
 
-    // If the env is browserify, export the factory using the module object.
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = factory(global);
+function _isNumeric(num) {
+    return !isNaN(num);
+}
 
-    // If the env is AMD, register the Module as 'componentprototype'.
-    } else if (global.define && typeof global.define === 'function' && global.define.amd) {
-        global.define('reductComponent', [], function() {
-            return factory(global);
-        });
+function _isBoolean(bol) {
+    return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
+}
 
-    // If the env is a browser(without CJS or AMD support), export the factory into the global window object.
-    } else {
-        global.reductComponent = factory(global);
-    }
-}(window, function(global) {
-    'use strict';
+function _isObject(obj) {
+    return typeof obj === 'object';
+}
 
-    const version = {
-        major: 1,
-        minor: 0,
-        patch: 6
-    };
-    const doc = global.document;
-    const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
-    var messages = {
-        noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
-        extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
-    };
+function _isString(str) {
+    return typeof str === 'string';
+}
 
-    function _isFunction(func) {
-        return typeof func === 'function';
-    }
+function _isDefined(val) {
+    return val !== null && val !== undefined;
+}
 
-    function _isNumeric(num) {
-        return !isNaN(num);
-    }
+const propTypes = {
+    isRequired: (propValue, propName, el) => {
+        const isPropInProps = _isDefined(propValue);
 
-    function _isBoolean(bol) {
-        return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
-    }
+        if (!isPropInProps) {
+            logger.error('The prop "' + propName + '" is required and wasn‘t found on: ', el);
+        }
 
-    function _isObject(obj) {
-        return typeof obj === 'object';
-    }
+        return {
+            result: isPropInProps,
+            value: propValue
+        };
+    },
 
-    function _isString(str) {
-        return typeof str === 'string';
-    }
+    isOptional: (propValue, propName, el) => {
+        const isPropInProps = _isDefined(propValue);
 
-    function _isDefined(val) {
-        return val !== null && val !== undefined;
-    }
+        if (!isPropInProps) {
+            logger.info('The prop "' + propName + '" is optional and wasn‘t found on: ', el);
+        }
 
-    const propTypes = {
+        return {
+            result: true,
+            value: propValue
+        };
+    },
+
+    isString: {
         isRequired: (propValue, propName, el) => {
-            const isPropInProps = _isDefined(propValue);
+            const isString = _isString(propValue);
+            var result = true;
 
-            if (!isPropInProps) {
-                logger.error('The prop "' + propName + '" is required and wasn‘t found on: ', el);
+            propTypes.isRequired.apply(this, arguments);
+
+            if (!isString) {
+                logger.error('The prop "' + propName + '" is not a string. ', el);
+                result = false;
             }
 
             return {
-                result: isPropInProps,
+                result: result,
                 value: propValue
             };
         },
 
         isOptional: (propValue, propName, el) => {
-            const isPropInProps = _isDefined(propValue);
+            const isString = _isString(propValue);
+            var result = true;
 
-            if (!isPropInProps) {
-                logger.info('The prop "' + propName + '" is optional and wasn‘t found on: ', el);
+            if (!isString) {
+                logger.error('The prop "' + propName + '" is not a string. ', el);
+                result = false;
             }
 
             return {
-                result: true,
+                result: result,
+                value: propValue
+            };
+        }
+    },
+
+    isBoolean: {
+        isRequired: (propValue, propName, el) => {
+            const isBoolean = _isBoolean(propValue);
+            var result = true;
+
+            propTypes.isRequired.apply(this, arguments);
+
+            if (!isBoolean) {
+                logger.error('The prop "' + propName + '" is not a boolean. ', el);
+                result = false;
+            } else {
+                result = !!propValue;
+            }
+
+            return {
+                result: result,
                 value: propValue
             };
         },
 
-        isString: {
-            isRequired: (propValue, propName, el) => {
-                const isString = _isString(propValue);
-                var result = true;
+        isOptional: (propValue, propName, el) => {
+            const isBoolean = _isBoolean(propValue);
+            var result = true;
 
-                propTypes.isRequired.apply(this, arguments);
-
-                if (!isString) {
-                    logger.error('The prop "' + propName + '" is not a string. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            isOptional: (propValue, propName, el) => {
-                const isString = _isString(propValue);
-                var result = true;
-
-                if (!isString) {
-                    logger.error('The prop "' + propName + '" is not a string. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
+            if (!isBoolean) {
+                logger.error('The prop "' + propName + '" is not a boolean. ', el);
+                result = false;
+            } else {
+                result = !!propValue;
             }
-        },
 
-        isBoolean: {
-            isRequired: (propValue, propName, el) => {
-                const isBoolean = _isBoolean(propValue);
-                var result = true;
+            return {
+                result: result,
+                value: propValue
+            };
+        }
+    },
 
-                propTypes.isRequired.apply(this, arguments);
+    isNumber: {
+        isRequired: (propValue, propName, el) => {
+            const isNumber = _isNumeric(propValue);
+            var result = true;
 
-                if (!isBoolean) {
-                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
-                    result = false;
-                } else {
-                    result = !!propValue;
-                }
+            // Since The prop is required, check for it's value beforehand.
+            propTypes.isRequired.apply(this, arguments);
 
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            isOptional: (propValue, propName, el) => {
-                const isBoolean = _isBoolean(propValue);
-                var result = true;
-
-                if (!isBoolean) {
-                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
-                    result = false;
-                } else {
-                    result = !!propValue;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            }
-        },
-
-        isNumber: {
-            isRequired: (propValue, propName, el) => {
-                const isNumber = _isNumeric(propValue);
-                var result = true;
-
-                // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
-
-                if (!isNumber) {
-                    logger.error('The prop "' + propName + '" is not a number. ', el);
-                    result = false;
-                } else {
-                    propValue = Math.abs(propValue);
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            isOptional: (propValue, propName, el) => {
-                const isNumber = _isNumeric(propValue);
-                var result = true;
-
-                if (propValue && !isNumber) {
-                    logger.error('The prop "' + propName + '" is not a number. ', el);
-                    result = false;
-                }
-
+            if (!isNumber) {
+                logger.error('The prop "' + propName + '" is not a number. ', el);
+                result = false;
+            } else {
                 propValue = Math.abs(propValue);
-
-                return {
-                    result: result,
-                    value: _isNumeric(propValue) ? propValue : undefined
-                };
             }
+
+            return {
+                result: result,
+                value: propValue
+            };
         },
 
-        isObject: {
-            isRequired: (propValue, propName, el) => {
-                var result = true;
-                let isObject;
+        isOptional: (propValue, propName, el) => {
+            const isNumber = _isNumeric(propValue);
+            var result = true;
 
-                // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(this, arguments);
-
-                // If the passed Property is a string, convert it to a JSON object beforehand.
-                try {
-                    propValue = JSON.parse(propValue);
-                } catch (e) {}
-
-                // Verify the type of the value.
-                isObject = _isObject(propValue);
-
-                if (!isObject) {
-                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            isOptional: (propValue, propName, el) => {
-                const isPropValueDefined = _isDefined(propValue);
-                var result = true;
-                let isObject;
-
-                // If the passed Property is a string, convert it to a JSON object beforehand.
-                try {
-                    propValue = JSON.parse(propValue);
-                } catch (e) {}
-
-                // Verify the type of the value.
-                isObject = _isObject(propValue);
-
-                if (isPropValueDefined && !isObject) {
-                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
+            if (propValue && !isNumber) {
+                logger.error('The prop "' + propName + '" is not a number. ', el);
+                result = false;
             }
+
+            propValue = Math.abs(propValue);
+
+            return {
+                result: result,
+                value: _isNumeric(propValue) ? propValue : undefined
+            };
         }
-    };
+    },
 
-    const logger = {
-        // 2: Every message is displayed
-        // 1: Only severe messages are displayed
-        // 0: No messages are displayed
-        _logLevel: 2,
-        setLogLevel: (int) => {
-            logger._logLevel = _isNumeric(int) ? int : 2;
+    isObject: {
+        isRequired: (propValue, propName, el) => {
+            var result = true;
+            let isObject;
+
+            // Since The prop is required, check for it's value beforehand.
+            propTypes.isRequired.apply(this, arguments);
+
+            // If the passed Property is a string, convert it to a JSON object beforehand.
+            try {
+                propValue = JSON.parse(propValue);
+            } catch (e) {}
+
+            // Verify the type of the value.
+            isObject = _isObject(propValue);
+
+            if (!isObject) {
+                logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
+                result = false;
+            }
+
+            return {
+                result: result,
+                value: propValue
+            };
         },
 
-        log: (message, targetElement = '') => {
-            if (logger._logLevel <= 2) {
-                return;
-            }
+        isOptional: (propValue, propName, el) => {
+            const isPropValueDefined = _isDefined(propValue);
+            var result = true;
+            let isObject;
 
+            // If the passed Property is a string, convert it to a JSON object beforehand.
             try {
-                console.log('@reduct/component: ' + message, targetElement);
+                propValue = JSON.parse(propValue);
             } catch (e) {}
-        },
 
-        info: (message, targetElement = '') => {
-            if (logger._logLevel <= 2) {
-                return;
+            // Verify the type of the value.
+            isObject = _isObject(propValue);
+
+            if (isPropValueDefined && !isObject) {
+                logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
+                result = false;
             }
 
-            try {
-                console.info('@reduct/component Info: ' + message, targetElement);
-            } catch (e) {}
-        },
-
-        warn: (message, targetElement = '') => {
-            if (logger._logLevel <= 1) {
-                return;
-            }
-
-            try {
-                console.warn('@reduct/component Warning: ' + message, targetElement);
-            } catch (e) {}
-        },
-
-        error: (message, targetElement = '') => {
-            if (logger._logLevel <= 0) {
-                return;
-            }
-
-            try {
-                console.error('@reduct/component Error: ' + message, targetElement);
-            } catch (e) {}
-        }
-    };
-
-    if (isScriptExecutedByNode) {
-        logger.setLogLevel(0);
-    }
-
-    /**
-     * Helper function to move passed props via constructor into the component
-     * instance and validate them along the way
-     *
-     * @param {Component} component The component instance
-     * @param {Object} propTypes A map of propTypes
-     * @returns {Void}
-     */
-    function _validateAndSetProps(component, propTypes) {
-        const el = component.el;
-        const _passedProps = component._passedProps;
-        const _defaultProps = component.getDefaultProps();
-        const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
-
-        for (let propName in propTypes) {
-            const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
-            const validator = propTypes[propName];
-            const validatorResults = validator(propValue, propName, el);
-
-            if (validatorResults.result) {
-                component._setProp(propName, validatorResults.value);
-            }
+            return {
+                result: result,
+                value: propValue
+            };
         }
     }
+};
 
-    /**
-     * Helper function to set initial state variables in the component
-     * instance
-     *
-     * @param {Component} component The component instance
-     * @returns {Void}
-     */
-    function _setInitialStates(component) {
-        const _initialStates = component.getInitialStates();
-        const initialStates = _isObject(_initialStates) ? _initialStates : {};
+const logger = {
+    // 2: Every message is displayed
+    // 1: Only severe messages are displayed
+    // 0: No messages are displayed
+    _logLevel: 2,
+    setLogLevel: (int) => {
+        logger._logLevel = _isNumeric(int) ? int : 2;
+    },
 
-        for (let stateKey in initialStates) {
-            const value = initialStates[stateKey];
+    log: (message, targetElement = '') => {
+        if (logger._logLevel <= 2) {
+            return;
+        }
 
-            component.setState(stateKey, value);
+        try {
+            console.log('@reduct/component: ' + message, targetElement);
+        } catch (e) {}
+    },
+
+    info: (message, targetElement = '') => {
+        if (logger._logLevel <= 2) {
+            return;
+        }
+
+        try {
+            console.info('@reduct/component Info: ' + message, targetElement);
+        } catch (e) {}
+    },
+
+    warn: (message, targetElement = '') => {
+        if (logger._logLevel <= 1) {
+            return;
+        }
+
+        try {
+            console.warn('@reduct/component Warning: ' + message, targetElement);
+        } catch (e) {}
+    },
+
+    error: (message, targetElement = '') => {
+        if (logger._logLevel <= 0) {
+            return;
+        }
+
+        try {
+            console.error('@reduct/component Error: ' + message, targetElement);
+        } catch (e) {}
+    }
+};
+
+if (isScriptExecutedByNode) {
+    logger.setLogLevel(0);
+}
+
+/**
+ * Helper function to move passed props via constructor into the component
+ * instance and validate them along the way
+ *
+ * @param {Component} component The component instance
+ * @param {Object} propTypes A map of propTypes
+ * @returns {Void}
+ */
+function _validateAndSetProps(component, propTypes) {
+    const el = component.el;
+    const _passedProps = component._passedProps;
+    const _defaultProps = component.getDefaultProps();
+    const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+
+    for (let propName in propTypes) {
+        const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+        const validator = propTypes[propName];
+        const validatorResults = validator(propValue, propName, el);
+
+        if (validatorResults.result) {
+            component._setProp(propName, validatorResults.value);
+        }
+    }
+}
+
+/**
+ * Helper function to set initial state variables in the component
+ * instance
+ *
+ * @param {Component} component The component instance
+ * @returns {Void}
+ */
+function _setInitialStates(component) {
+    const _initialStates = component.getInitialStates();
+    const initialStates = _isObject(_initialStates) ? _initialStates : {};
+
+    for (let stateKey in initialStates) {
+        const value = initialStates[stateKey];
+
+        component.setState(stateKey, value);
+    }
+}
+
+class Component {
+    constructor(element, opts) {
+        // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
+        opts = _isObject(opts) ? opts : {};
+
+        if (!_isDefined(element)) {
+            logger.warn(messages.noElement);
+        }
+
+        this._passedProps = opts.props || {};
+        this.props = {};
+        this.states = {};
+        this.observers = {};
+        this.el = element || doc.createElement('div');
+
+        _validateAndSetProps(this, opts.propTypes);
+        _setInitialStates(this);
+    }
+
+    getElement() {
+        return this.el;
+    }
+
+    // Prop related methods.
+    getDefaultProps() {
+        return {};
+    }
+
+    _setProp(propName, propVal) {
+        this.props[propName] = propVal;
+    }
+
+    getProp(propName) {
+        return this.props[propName];
+    }
+
+    hasProp(propName) {
+        return _isDefined(this.props[propName]);
+    }
+
+    // State related methods.
+    getInitialStates() {
+        return {};
+    }
+
+    setState(stateName, stateVal) {
+        this.states[stateName] = stateVal;
+    }
+
+    getState(stateName) {
+        return this.states[stateName];
+    }
+
+    // Event System
+    on(event, listener) {
+        const targetArray = this.observers[event] || (this.observers[event] = []);
+
+        return targetArray.push(listener);
+    }
+
+    // ToDo: Support for multiple arguments.
+    trigger(event, data) {
+        var value;
+        var key;
+
+        for (value = this.observers[event], key = 0; value && key < value.length;) {
+            value[key++](data);
         }
     }
 
-    class Component {
-        constructor(element, opts) {
-            // Fail-Safe mechanism if someone is passing an array or the like as a second argument.
-            opts = _isObject(opts) ? opts : {};
+    off(event, listener) {
+        var value;
+        var key;
 
-            if (!_isDefined(element)) {
-                logger.warn(messages.noElement);
-            }
-
-            this._passedProps = opts.props || {};
-            this.props = {};
-            this.states = {};
-            this.observers = {};
-            this.el = element || doc.createElement('div');
-
-            _validateAndSetProps(this, opts.propTypes);
-            _setInitialStates(this);
+        for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
+            value.splice(key, 1);
         }
 
-        getElement() {
-            return this.el;
-        }
-
-        // Prop related methods.
-        getDefaultProps() {
-            return {};
-        }
-
-        _setProp(propName, propVal) {
-            this.props[propName] = propVal;
-        }
-
-        getProp(propName) {
-            return this.props[propName];
-        }
-
-        hasProp(propName) {
-            return _isDefined(this.props[propName]);
-        }
-
-        // State related methods.
-        getInitialStates() {
-            return {};
-        }
-
-        setState(stateName, stateVal) {
-            this.states[stateName] = stateVal;
-        }
-
-        getState(stateName) {
-            return this.states[stateName];
-        }
-
-        // Event System
-        on(event, listener) {
-            const targetArray = this.observers[event] || (this.observers[event] = []);
-
-            return targetArray.push(listener);
-        }
-
-        // ToDo: Support for multiple arguments.
-        trigger(event, data) {
-            var value;
-            var key;
-
-            for (value = this.observers[event], key = 0; value && key < value.length;) {
-                value[key++](data);
-            }
-        }
-
-        off(event, listener) {
-            var value;
-            var key;
-
-            for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
-                value.splice(key, 1);
-            }
-
-            this.observers[event] = listener ? value : [];
-        }
-
-        extend() {
-            logger.error(messages.extendDeprecate);
-        }
+        this.observers[event] = listener ? value : [];
     }
 
-    return {
-        Component: Component,
-        propTypes: propTypes,
-        version: version
-    };
-}));
+    extend() {
+        logger.error(messages.extendDeprecate);
+    }
+}
+
+return {
+    Component: Component,
+    propTypes: propTypes,
+    version: version
+};
