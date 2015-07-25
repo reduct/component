@@ -6,34 +6,39 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-(function (f) {
-    if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = f();
-    } else if (typeof define === "function" && define.amd) {
-        define([], f);
-    } else {
-        var g;if (typeof window !== "undefined") {
-            g = window;
-        } else if (typeof global !== "undefined") {
-            g = global;
-        } else if (typeof self !== "undefined") {
-            g = self;
-        } else {
-            g = this;
-        }g.reductComponent = f();
-    }
-})(function () {
-    var _this = this,
-        _arguments = arguments;
-
-    var define, module, exports;
+(function (factory) {
     var version = {
         major: 1,
         minor: 0,
         patch: 6
     };
+    var global;
+
+    if (typeof window !== "undefined") {
+        global = window;
+    } else if (typeof global !== "undefined") {
+        global = global;
+    } else if (typeof self !== "undefined") {
+        global = self;
+    } else {
+        global = this;
+    }
+
+    if (typeof exports === "object" && typeof module !== "undefined") {
+        module.exports = factory(global, version);
+    } else if (typeof define === "function" && define.amd) {
+        define([], function () {
+            return factory(global, version);
+        });
+    } else {
+        global.reductComponent = factory(global, version);
+    }
+})(function factory(global, version) {
+    var _this = this,
+        _arguments = arguments;
+
     var doc = global.document;
-    var isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
+    var isScriptExecutedByNode = global.process && global.process.title && global.process.title.indexOf('node') > -1;
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
