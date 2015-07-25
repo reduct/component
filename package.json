@@ -44,6 +44,13 @@
     "jest-cli": "^0.4.13",
     "uglify-js": "^2.4.23"
   },
+  "reduct": {
+    "sourceFolder": "Src/",
+    "distributionFolder": "Dist/",
+    "entryFile": "Component.js",
+    "globalPackageName": "reductComponent",
+    "coverageReportFile": "lcov.info"
+  },
   "jest": {
     "scriptPreprocessor": "node_modules/babel-jest",
     "collectCoverage": true,
