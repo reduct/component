@@ -4,11 +4,9 @@
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {
-    "test": "npm run build && npm run jest",
-    "build": "npm run babel && npm run uglify",
-    "jest": "jest",
-    "babel": "./node_modules/.bin/babel Src/Component.js --out-file Dist/Component.js",
-    "uglify": "node_modules/.bin/uglifyjs Dist/Component.js -o Dist/Component.min.js --comments -c -m"
+    "test": "reduct test && reduct build",
+    "reduct": "reduct",
+    "jest": "jest"
   },
   "repository": {
     "type": "git",
@@ -38,6 +36,7 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
+    "@reduct/build-tools": "^1.0.2",
     "babel": "^5.6.14",
     "babel-jest": "^5.3.0",
     "glob": "^5.0.12",
@@ -63,5 +62,12 @@
       "./Dist",
       "./Tests/ExampleComponents"
     ]
+  },
+  "reduct": {
+    "sourceFolder": "Src/",
+    "distributionFolder": "Dist/",
+    "entryFile": "Component.js",
+    "globalPackageName": "reductAssembler",
+    "coverageReportFile": "lcov.info"
   }
 }

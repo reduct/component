@@ -1,4 +1,4 @@
-function factory(global, version) {
+function factory (global, version) {
     const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
@@ -6,27 +6,27 @@ function factory(global, version) {
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
 
-    function _isFunction(func) {
+    function _isFunction (func) {
         return typeof func === 'function';
     }
 
-    function _isNumeric(num) {
+    function _isNumeric (num) {
         return !isNaN(num);
     }
 
-    function _isBoolean(bol) {
+    function _isBoolean (bol) {
         return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
-    function _isObject(obj) {
+    function _isObject (obj) {
         return typeof obj === 'object';
     }
 
-    function _isString(str) {
+    function _isString (str) {
         return typeof str === 'string';
     }
 
-    function _isDefined(val) {
+    function _isDefined (val) {
         return val !== null && val !== undefined;
     }
 
@@ -283,7 +283,7 @@ function factory(global, version) {
      * @param {Object} propTypes A map of propTypes
      * @returns {Void}
      */
-    function _validateAndSetProps(component, propTypes) {
+    function _validateAndSetProps (component, propTypes) {
         const el = component.el;
         const _passedProps = component._passedProps;
         const _defaultProps = component.getDefaultProps();
@@ -307,7 +307,7 @@ function factory(global, version) {
      * @param {Component} component The component instance
      * @returns {Void}
      */
-    function _setInitialStates(component) {
+    function _setInitialStates (component) {
         const _initialStates = component.getInitialStates();
         const initialStates = _isObject(_initialStates) ? _initialStates : {};
 

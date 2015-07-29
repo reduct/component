@@ -31,14 +31,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return factory(global, version);
         });
     } else {
-        global.reductComponent = factory(global, version);
+        global.reductAssembler = factory(global, version);
     }
 })(function factory(global, version) {
     var _this = this,
         _arguments = arguments;
 
     var doc = global.document;
-    var isScriptExecutedByNode = global.process && global.process.title && global.process.title.indexOf('node') > -1;
+    var isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
