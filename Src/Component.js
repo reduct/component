@@ -4,31 +4,94 @@ function factory (global, version) {
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a function.
+     *
+     * @param func {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isFunction (func) {
         return typeof func === 'function';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a Number.
+     *
+     * @param num {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isNumeric (num) {
         return !isNaN(num);
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a boolean or a string containing a boolean.
+     *
+     * @param bol {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isBoolean (bol) {
         return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a object.
+     *
+     * @param obj {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isObject (obj) {
         return typeof obj === 'object';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a string.
+     *
+     * @param str {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isString (str) {
         return typeof str === 'string';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is defined and not `null`.
+     *
+     * @param val {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isDefined (val) {
         return val !== null && val !== undefined;
     }
 
     const propTypes = {
+        /**
+         * Represents a general required check against a value.
+         *
+         * @param propValue {*} The value which will be validated.
+         * @param propName {String} The name which will be logged in case of errors.
+         * @param el {HTMLElement} The element on which the value was expected on.
+         * @returns {{result: boolean, value: *}}
+         *
+         */
         isRequired: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
@@ -42,6 +105,15 @@ function factory (global, version) {
             };
         },
 
+        /**
+         * Represents a general optional check against a value.
+         *
+         * @param propValue {*} The value which will be validated.
+         * @param propName{String} The name which will be logged in case of errors.
+         * @param el {HTMLElement} The element on which the value was expected on.
+         * @returns {{result: boolean, value: *}}
+         *
+         */
         isOptional: (propValue, propName, el) => {
             const isPropInProps = _isDefined(propValue);
 
@@ -56,6 +128,15 @@ function factory (global, version) {
         },
 
         isString: {
+            /**
+             * Extends the general required validator for the type `String`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: (propValue, propName, el) => {
                 const isString = _isString(propValue);
                 var result = true;
@@ -73,6 +154,15 @@ function factory (global, version) {
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `String`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
                 var result = true;
@@ -90,6 +180,15 @@ function factory (global, version) {
         },
 
         isBoolean: {
+            /**
+             * Extends the general required validator for the type `Boolean`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -109,6 +208,15 @@ function factory (global, version) {
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Boolean`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -128,6 +236,15 @@ function factory (global, version) {
         },
 
         isNumber: {
+            /**
+             * Extends the general required validator for the type `Number`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 var result = true;
@@ -148,6 +265,15 @@ function factory (global, version) {
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Number`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
                 var result = true;
@@ -167,6 +293,15 @@ function factory (global, version) {
         },
 
         isObject: {
+            /**
+             * Extends the general required validator for the type `Object`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: (propValue, propName, el) => {
                 var result = true;
                 let isObject;
@@ -193,6 +328,15 @@ function factory (global, version) {
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Object`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: (propValue, propName, el) => {
                 const isPropValueDefined = _isDefined(propValue);
                 var result = true;
@@ -220,14 +364,30 @@ function factory (global, version) {
     };
 
     const logger = {
-        // 2: Every message is displayed
-        // 1: Only severe messages are displayed
-        // 0: No messages are displayed
         _logLevel: 2,
+
+        /**
+         * Adjusts the noise of the logger.
+         * 0 => No messages are displayed
+         * 1 => Only severe messages are displayed
+         * 2 => Every message is displayed
+         *
+         * @param int {Number} The new log level.
+         * @returns {Void}
+         *
+         */
         setLogLevel: (int) => {
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 
+        /**
+         * Logs a message to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the log.
+         * @returns {Void}
+         *
+         */
         log: (message, targetElement = '') => {
             if (logger._logLevel <= 2) {
                 return;
@@ -238,6 +398,14 @@ function factory (global, version) {
             } catch (e) {}
         },
 
+        /**
+         * Logs a info to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the info.
+         * @returns {Void}
+         *
+         */
         info: (message, targetElement = '') => {
             if (logger._logLevel <= 2) {
                 return;
@@ -248,6 +416,14 @@ function factory (global, version) {
             } catch (e) {}
         },
 
+        /**
+         * Logs a warning to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the warning.
+         * @returns {Void}
+         *
+         */
         warn: (message, targetElement = '') => {
             if (logger._logLevel <= 1) {
                 return;
@@ -258,6 +434,14 @@ function factory (global, version) {
             } catch (e) {}
         },
 
+        /**
+         * Logs a error to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the error.
+         * @returns {Void}
+         *
+         */
         error: (message, targetElement = '') => {
             if (logger._logLevel <= 0) {
                 return;
@@ -338,48 +522,115 @@ function factory (global, version) {
             _setInitialStates(this);
         }
 
+        /**
+         * Returns the HTML Element on which the Component was mounted upon.
+         *
+         * @returns {HTMLElement}
+         *
+         */
         getElement() {
             return this.el;
         }
 
-        // Prop related methods.
+        /**
+         * The default method which declares the default properties of the Component.
+         *
+         * @returns {Object} The object containing default props.
+         *
+         */
         getDefaultProps() {
             return {};
         }
 
+        /**
+         * @private
+         *
+         * Sets a property to the Component.
+         *
+         * @param propName {String} The name under which the value will be saved under.
+         * @param propVal {*} The value of the property.
+         *
+         */
         _setProp(propName, propVal) {
             this.props[propName] = propVal;
         }
 
+        /**
+         * Returns the property for the given name.
+         *
+         * @param propName {String} The name of the property.
+         * @returns {*} The value of the property.
+         *
+         */
         getProp(propName) {
             return this.props[propName];
         }
 
+        /**
+         * Returns a boolean regarding the existence of the property.
+         *
+         * @param propName {String} The name of the property.
+         * @returns {boolean} The result of the check.
+         *
+         */
         hasProp(propName) {
             return _isDefined(this.props[propName]);
         }
 
-        // State related methods.
+        /**
+         * The default method which declares the default state of the Component.
+         *
+         * @returns {Object} The object containing default state.
+         *
+         */
         getInitialStates() {
             return {};
         }
 
+        /**
+         * Sets a property to the Component.
+         *
+         * @param stateName {String} The name under which the value will be saved under.
+         * @param stateVal {*} The value of the property.
+         *
+         */
         setState(stateName, stateVal) {
             this.states[stateName] = stateVal;
         }
 
+        /**
+         * Returns the property for the given name.
+         *
+         * @param stateName {String} The name of the property.
+         * @returns {*} The value of the property.
+         *
+         */
         getState(stateName) {
             return this.states[stateName];
         }
 
-        // Event System
+        /**
+         * Declares a event listener on the given event name.
+         *
+         * @param event {String} The name of the event under which the listener will be saved under.
+         * @param listener {Function} The listener which will be executed once the event will be fired.
+         * @returns {Number} The length of the event listener array.
+         *
+         */
         on(event, listener) {
             const targetArray = this.observers[event] || (this.observers[event] = []);
 
             return targetArray.push(listener);
         }
 
-        // ToDo: Support for multiple arguments.
+        /**
+         * Triggers the event of the given name with optional data.
+         *
+         * @todo Support for multiple arguments.
+         * @param event {String} The name of the event to trigger.
+         * @param data {*} The data to pass to all listeners.
+         *
+         */
         trigger(event, data) {
             var value;
             var key;
@@ -389,6 +640,11 @@ function factory (global, version) {
             }
         }
 
+        /**
+         * Removes the given listener function from the event of the given name.
+         * @param event {String} Name of the event.
+         * @param listener {Function} The listener function to remove.
+         */
         off(event, listener) {
             var value;
             var key;
@@ -400,6 +656,11 @@ function factory (global, version) {
             this.observers[event] = listener ? value : [];
         }
 
+        /**
+         * Extends the Components prototype.
+         *
+         * @deprecated since version 1.1.0
+         */
         extend() {
             logger.error(messages.extendDeprecate);
         }

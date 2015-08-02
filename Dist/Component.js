@@ -42,31 +42,94 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a function.
+     *
+     * @param func {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isFunction(func) {
         return typeof func === 'function';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a Number.
+     *
+     * @param num {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isNumeric(num) {
         return !isNaN(num);
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a boolean or a string containing a boolean.
+     *
+     * @param bol {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isBoolean(bol) {
         return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a object.
+     *
+     * @param obj {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isObject(obj) {
         return typeof obj === 'object';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is a string.
+     *
+     * @param str {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isString(str) {
         return typeof str === 'string';
     }
 
+    /**
+     * @private
+     *
+     * Checks if the given argument is defined and not `null`.
+     *
+     * @param val {*} The argument which will be validated.
+     * @returns {boolean}
+     *
+     */
     function _isDefined(val) {
         return val !== null && val !== undefined;
     }
 
     var propTypes = {
+        /**
+         * Represents a general required check against a value.
+         *
+         * @param propValue {*} The value which will be validated.
+         * @param propName {String} The name which will be logged in case of errors.
+         * @param el {HTMLElement} The element on which the value was expected on.
+         * @returns {{result: boolean, value: *}}
+         *
+         */
         isRequired: function isRequired(propValue, propName, el) {
             var isPropInProps = _isDefined(propValue);
 
@@ -80,6 +143,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             };
         },
 
+        /**
+         * Represents a general optional check against a value.
+         *
+         * @param propValue {*} The value which will be validated.
+         * @param propName{String} The name which will be logged in case of errors.
+         * @param el {HTMLElement} The element on which the value was expected on.
+         * @returns {{result: boolean, value: *}}
+         *
+         */
         isOptional: function isOptional(propValue, propName, el) {
             var isPropInProps = _isDefined(propValue);
 
@@ -94,6 +166,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
 
         isString: {
+            /**
+             * Extends the general required validator for the type `String`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: function isRequired(propValue, propName, el) {
                 var isString = _isString(propValue);
                 var result = true;
@@ -111,6 +192,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `String`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: function isOptional(propValue, propName, el) {
                 var isString = _isString(propValue);
                 var result = true;
@@ -128,6 +218,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
 
         isBoolean: {
+            /**
+             * Extends the general required validator for the type `Boolean`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: function isRequired(propValue, propName, el) {
                 var isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -147,6 +246,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Boolean`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: function isOptional(propValue, propName, el) {
                 var isBoolean = _isBoolean(propValue);
                 var result = true;
@@ -166,6 +274,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
 
         isNumber: {
+            /**
+             * Extends the general required validator for the type `Number`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: function isRequired(propValue, propName, el) {
                 var isNumber = _isNumeric(propValue);
                 var result = true;
@@ -186,6 +303,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Number`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: function isOptional(propValue, propName, el) {
                 var isNumber = _isNumeric(propValue);
                 var result = true;
@@ -205,6 +331,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         },
 
         isObject: {
+            /**
+             * Extends the general required validator for the type `Object`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isRequired: function isRequired(propValue, propName, el) {
                 var result = true;
                 var isObject = undefined;
@@ -231,6 +366,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 };
             },
 
+            /**
+             * Extends the general optional validator for the type `Object`.
+             *
+             * @param propValue {*} The value which will be validated.
+             * @param propName {String} The name which will be logged in case of errors.
+             * @param el {HTMLElement} The element on which the value was expected on.
+             * @returns {{result: boolean, value: *}}
+             *
+             */
             isOptional: function isOptional(propValue, propName, el) {
                 var isPropValueDefined = _isDefined(propValue);
                 var result = true;
@@ -258,14 +402,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var logger = {
-        // 2: Every message is displayed
-        // 1: Only severe messages are displayed
-        // 0: No messages are displayed
         _logLevel: 2,
+
+        /**
+         * Adjusts the noise of the logger.
+         * 0 => No messages are displayed
+         * 1 => Only severe messages are displayed
+         * 2 => Every message is displayed
+         *
+         * @param int {Number} The new log level.
+         * @returns {Void}
+         *
+         */
         setLogLevel: function setLogLevel(int) {
             logger._logLevel = _isNumeric(int) ? int : 2;
         },
 
+        /**
+         * Logs a message to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the log.
+         * @returns {Void}
+         *
+         */
         log: function log(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -278,6 +438,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
 
+        /**
+         * Logs a info to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the info.
+         * @returns {Void}
+         *
+         */
         info: function info(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -290,6 +458,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
 
+        /**
+         * Logs a warning to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the warning.
+         * @returns {Void}
+         *
+         */
         warn: function warn(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -302,6 +478,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             } catch (e) {}
         },
 
+        /**
+         * Logs a error to the console API if possible.
+         *
+         * @param message {String} The message to log.
+         * @param targetElement {HTMLElement} An optional target element which will be appended to the error.
+         * @returns {Void}
+         *
+         */
         error: function error(message) {
             var targetElement = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
@@ -386,52 +570,118 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _setInitialStates(this);
         }
 
+        /**
+         * Returns the HTML Element on which the Component was mounted upon.
+         *
+         * @returns {HTMLElement}
+         *
+         */
+
         _createClass(Component, [{
             key: "getElement",
             value: function getElement() {
                 return this.el;
             }
 
-            // Prop related methods.
+            /**
+             * The default method which declares the default properties of the Component.
+             *
+             * @returns {Object} The object containing default props.
+             *
+             */
         }, {
             key: "getDefaultProps",
             value: function getDefaultProps() {
                 return {};
             }
+
+            /**
+             * @private
+             *
+             * Sets a property to the Component.
+             *
+             * @param propName {String} The name under which the value will be saved under.
+             * @param propVal {*} The value of the property.
+             *
+             */
         }, {
             key: "_setProp",
             value: function _setProp(propName, propVal) {
                 this.props[propName] = propVal;
             }
+
+            /**
+             * Returns the property for the given name.
+             *
+             * @param propName {String} The name of the property.
+             * @returns {*} The value of the property.
+             *
+             */
         }, {
             key: "getProp",
             value: function getProp(propName) {
                 return this.props[propName];
             }
+
+            /**
+             * Returns a boolean regarding the existence of the property.
+             *
+             * @param propName {String} The name of the property.
+             * @returns {boolean} The result of the check.
+             *
+             */
         }, {
             key: "hasProp",
             value: function hasProp(propName) {
                 return _isDefined(this.props[propName]);
             }
 
-            // State related methods.
+            /**
+             * The default method which declares the default state of the Component.
+             *
+             * @returns {Object} The object containing default state.
+             *
+             */
         }, {
             key: "getInitialStates",
             value: function getInitialStates() {
                 return {};
             }
+
+            /**
+             * Sets a property to the Component.
+             *
+             * @param stateName {String} The name under which the value will be saved under.
+             * @param stateVal {*} The value of the property.
+             *
+             */
         }, {
             key: "setState",
             value: function setState(stateName, stateVal) {
                 this.states[stateName] = stateVal;
             }
+
+            /**
+             * Returns the property for the given name.
+             *
+             * @param stateName {String} The name of the property.
+             * @returns {*} The value of the property.
+             *
+             */
         }, {
             key: "getState",
             value: function getState(stateName) {
                 return this.states[stateName];
             }
 
-            // Event System
+            /**
+             * Declares a event listener on the given event name.
+             *
+             * @param event {String} The name of the event under which the listener will be saved under.
+             * @param listener {Function} The listener which will be executed once the event will be fired.
+             * @returns {Number} The length of the event listener array.
+             *
+             */
         }, {
             key: "on",
             value: function on(event, listener) {
@@ -440,7 +690,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 return targetArray.push(listener);
             }
 
-            // ToDo: Support for multiple arguments.
+            /**
+             * Triggers the event of the given name with optional data.
+             *
+             * @todo Support for multiple arguments.
+             * @param event {String} The name of the event to trigger.
+             * @param data {*} The data to pass to all listeners.
+             *
+             */
         }, {
             key: "trigger",
             value: function trigger(event, data) {
@@ -451,6 +708,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     value[key++](data);
                 }
             }
+
+            /**
+             * Removes the given listener function from the event of the given name.
+             * @param event {String} Name of the event.
+             * @param listener {Function} The listener function to remove.
+             */
         }, {
             key: "off",
             value: function off(event, listener) {
@@ -463,6 +726,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 this.observers[event] = listener ? value : [];
             }
+
+            /**
+             * Extends the Components prototype.
+             *
+             * @deprecated since version 1.1.0
+             */
         }, {
             key: "extend",
             value: function extend() {
