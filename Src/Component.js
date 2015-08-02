@@ -1,5 +1,4 @@
 function factory (global, version) {
-    const doc = global.document;
     const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
@@ -331,7 +330,7 @@ function factory (global, version) {
             this.props = {};
             this.states = {};
             this.observers = {};
-            this.el = element || doc.createElement('div');
+            this.el = element || global.document.createElement('div');
 
             _validateAndSetProps(this, opts.propTypes);
             _setInitialStates(this);

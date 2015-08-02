@@ -1,4 +1,4 @@
-var component = require('./../../Src/Component.js');
+var component = require('./../../../Dist/Component.js');
 
 // An ExampleClass without defaults
 class ComponentWithoutDefaults extends component.Component {

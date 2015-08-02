@@ -1,4 +1,4 @@
-var component = require('./../../Src/Component.js');
+var component = require('./../../../Dist/Component.js');
 
 // An ExampleClass for testing purposes.
 class ExampleComponent extends component.Component {

@@ -12,32 +12,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         minor: 0,
         patch: 6
     };
-    var global;
+    var world;
 
-    if (typeof window !== "undefined") {
-        global = window;
-    } else if (typeof global !== "undefined") {
-        global = global;
+    if(typeof global !== "undefined") {
+        world = global;
+    } else if (typeof window !== "undefined") {
+        world = window;
+    } else if (typeof world !== "undefined") {
+        world = world;
     } else if (typeof self !== "undefined") {
-        global = self;
+        world = self;
     } else {
-        global = this;
+        world = this;
     }
 
     if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = factory(global, version);
+        module.exports = factory(world, version);
     } else if (typeof define === "function" && define.amd) {
         define([], function () {
-            return factory(global, version);
+            return factory(world, version);
         });
     } else {
-        global.reductComponent = factory(global, version);
+        world.reductComponent = factory(world, version);
     }
 })(function factory(global, version) {
     var _this = this,
         _arguments = arguments;
 
-    var doc = global.document;
     var isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
@@ -379,7 +380,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.props = {};
             this.states = {};
             this.observers = {};
-            this.el = element || doc.createElement('div');
+            this.el = element || global.document.createElement('div');
 
             _validateAndSetProps(this, opts.propTypes);
             _setInitialStates(this);
