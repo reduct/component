@@ -31,7 +31,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return factory(global, version);
         });
     } else {
-        global.reductAssembler = factory(global, version);
+        global.reductComponent = factory(global, version);
     }
 })(function factory(global, version) {
     var _this = this,
