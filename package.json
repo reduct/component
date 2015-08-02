@@ -4,9 +4,9 @@
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {
-    "test": "jest && reduct build",
-    "reduct": "reduct",
-    "jest": "jest"
+    "test": "reduct build && npm run build-tests && reduct test",
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist",
+    "reduct": "reduct"
   },
   "repository": {
     "type": "git",
@@ -47,9 +47,7 @@
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
     "@reduct/build-tools": "^1.0.2",
-    "babel-jest": "^5.3.0",
-    "glob": "^5.0.12",
-    "jest-cli": "^0.4.13"
+    "chai-spies": "^0.7.0"
   },
   "reduct": {
     "sourceFolder": "Src/",
@@ -57,18 +55,5 @@
     "entryFile": "Component.js",
     "globalPackageName": "reductComponent",
     "coverageReportFile": "lcov.info"
-  },
-  "jest": {
-    "scriptPreprocessor": "node_modules/babel-jest",
-    "collectCoverage": true,
-    "collectCoverageOnlyFrom": {
-      "<rootDir>/Src/Component.js": true
-    },
-    "testDirectoryName": "<rootDir>/Tests",
-    "unmockedModulePathPatterns": [
-      "./Src",
-      "./Dist",
-      "./Tests/ExampleComponents"
-    ]
   }
 }
