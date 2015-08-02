@@ -1,5 +1,4 @@
 function factory (global, version) {
-    const isScriptExecutedByNode = process && process.title && process.title.indexOf('node') > -1;
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
@@ -270,7 +269,10 @@ function factory (global, version) {
         }
     };
 
-    if (isScriptExecutedByNode) {
+    //
+    // Reduce the logging noise for the unit tests.
+    //
+    if (process && process.title && !!~process.title.indexOf('reduct')) {
         logger.setLogLevel(0);
     }
 
