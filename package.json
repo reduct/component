@@ -5,7 +5,7 @@
   "main": "Dist/Component.js",
   "scripts": {
     "test": "reduct build && npm run build-tests && reduct test",
-    "build-tests": "./node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist",
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist",
     "reduct": "reduct"
   },
   "repository": {
