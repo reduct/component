@@ -1,6 +1,7 @@
-var chai = require('@reduct/build-tools').chai;
-var DOM = require('./../Helpers/DOM');
+var buildTools = require('@reduct/build-tools');
 var DefaultComponent = require('./../ExampleComponents/Dist/Default.js');
+var chai = buildTools.chai;
+var DOM = buildTools.mock;
 var expect = chai.expect;
 
 describe('@reduct/component: Element API', function () {

@@ -1,7 +1,8 @@
-var chai = require('@reduct/build-tools').chai;
-var spies = require('chai-spies');
-var DOM = require('./../Helpers/DOM');
+var buildTools = require('@reduct/build-tools');
 var DefaultComponent = require('./../ExampleComponents/Dist/Default.js');
+var chai = buildTools.chai;
+var DOM = buildTools.mock;
+var spies = buildTools.spies;
 var expect = chai.expect;
 
 chai.use(spies);
