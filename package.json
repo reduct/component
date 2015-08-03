@@ -4,9 +4,9 @@
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {
-    "test": "reduct build && npm run build-tests && reduct test",
-    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist",
-    "reduct": "reduct"
+    "test": "npm run build-tests && reduct",
+    "reduct": "reduct",
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist"
   },
   "repository": {
     "type": "git",
