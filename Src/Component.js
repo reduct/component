@@ -601,7 +601,16 @@ function factory (global, version) {
          *
          */
         setState(stateName, stateVal) {
+            const payload = {
+                key: stateName,
+                value: stateVal
+            };
+
             this.states[stateName] = stateVal;
+
+            // Trigger events
+            this.trigger('change', payload);
+            this.trigger('change:' + stateName, payload);
         }
 
         /**

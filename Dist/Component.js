@@ -543,7 +543,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
         }
 
-        // Freeze the props object to avoid further editing on the object.
+        // Freeze the props object to avoid further editing off the object.
         component.props = Object.freeze(component.props);
     }
 
@@ -674,7 +674,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "setState",
             value: function setState(stateName, stateVal) {
+                var payload = {
+                    key: stateName,
+                    value: stateVal
+                };
+
                 this.states[stateName] = stateVal;
+
+                // Trigger events
+                this.trigger('change', payload);
+                this.trigger('change:' + stateName, payload);
             }
 
             /**
