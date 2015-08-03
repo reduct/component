@@ -23,7 +23,15 @@ describe('@reduct/component: propTypes.isBoolean.isRequired', function () {
         expect(propType('true').result).to.be.true;
     });
 
-    it('should return a positive result if the argument which was passed is a boolean as a boolean', function () {
+    it('should return a boolean as the value if the argument which was passed is a boolean as string.', function () {
+        expect(propType('true').value).to.be.true;
+    });
+
+    it('should return a positive result if the argument which was passed is a boolean.', function () {
         expect(propType(true).result).to.be.true;
+    });
+
+    it('should return a positive result if the argument which was passed is a false boolean.', function () {
+        expect(propType(false).result).to.be.true;
     });
 });

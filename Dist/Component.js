@@ -130,6 +130,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return val !== null && val !== undefined;
     }
 
+    /**
+     * Converts a string containing a boolean to a real boolean if necessary.
+     * @param val
+     * @returns {*}
+     * @private
+     */
+    function _convertStringBoolean(val) {
+        if (val === 'false') {
+            val = false;
+        }
+
+        if (val === 'true') {
+            val = true;
+        }
+
+        return val;
+    }
+
     var propTypes = {
         /**
          * Represents a general required check against a value.
@@ -246,9 +264,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
                     result = false;
-                } else {
-                    result = !!propValue;
                 }
+
+                propValue = _convertStringBoolean(propValue);
 
                 return {
                     result: result,
@@ -272,9 +290,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
                     result = false;
-                } else {
-                    result = !!propValue;
                 }
+
+                propValue = _convertStringBoolean(propValue);
 
                 return {
                     result: result,
