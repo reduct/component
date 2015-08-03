@@ -1,4 +1,14 @@
-/* @reduct/component 1.0.6 | @license MIT */
+/**
+ *
+ * @name @reduct/component
+ * @version 1.0.6
+ * @license MIT
+ *
+ * @author Tyll Weiß <inkdpixels@gmail.com>
+ * @author André König <andre.koenig@posteo.de>
+ * @author Wilhelm Behncke <undefined>
+ *
+ */
 
 "use strict";
 
@@ -12,26 +22,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         minor: 0,
         patch: 6
     };
-    var global;
+    var world;
 
     if (typeof window !== "undefined") {
-        global = window;
+        world = window;
     } else if (typeof global !== "undefined") {
-        global = global;
+        world = global;
     } else if (typeof self !== "undefined") {
-        global = self;
+        world = self;
     } else {
-        global = this;
+        world = this;
     }
 
     if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = factory(global, version);
+        module.exports = factory(world, version);
     } else if (typeof define === "function" && define.amd) {
         define([], function () {
-            return factory(global, version);
+            return factory(world, version);
         });
     } else {
-        global.reductComponent = factory(global, version);
+        world.reductComponent = factory(world, version);
     }
 })(function factory(global, version) {
     var _this = this,

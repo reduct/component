@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@reduct/build-tools": "^1.0.2",
+    "@reduct/build-tools": "^1.2.2",
     "chai-spies": "^0.7.0"
   },
   "reduct": {
