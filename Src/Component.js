@@ -448,8 +448,11 @@ function factory (global, version) {
             }
 
             try {
-                console.error('@reduct/component Error: ' + message, targetElement);
+                // We still need the console.error call since the Error object can't print out references to HTML Elements.
+                console.error(message, targetElement);
             } catch (e) {}
+
+            throw new Error('@reduct/component Error: Details are posted above.');
         }
     };
 
