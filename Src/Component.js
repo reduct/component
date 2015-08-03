@@ -1,5 +1,5 @@
 function factory (global, version) {
-    var messages = {
+    const messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
@@ -157,7 +157,7 @@ function factory (global, version) {
              */
             isRequired: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                var result = true;
+                let result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -183,7 +183,7 @@ function factory (global, version) {
              */
             isOptional: (propValue, propName, el) => {
                 const isString = _isString(propValue);
-                var result = true;
+                let result = true;
 
                 if (!isString) {
                     logger.error('The prop "' + propName + '" is not a string. ', el);
@@ -209,7 +209,7 @@ function factory (global, version) {
              */
             isRequired: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                var result = true;
+                let result = true;
 
                 propTypes.isRequired.apply(this, arguments);
 
@@ -237,7 +237,7 @@ function factory (global, version) {
              */
             isOptional: (propValue, propName, el) => {
                 const isBoolean = _isBoolean(propValue);
-                var result = true;
+                let result = true;
 
                 if (!isBoolean) {
                     logger.error('The prop "' + propName + '" is not a boolean. ', el);
@@ -265,7 +265,7 @@ function factory (global, version) {
              */
             isRequired: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                var result = true;
+                let result = true;
 
                 // Since The prop is required, check for it's value beforehand.
                 propTypes.isRequired.apply(this, arguments);
@@ -294,7 +294,7 @@ function factory (global, version) {
              */
             isOptional: (propValue, propName, el) => {
                 const isNumber = _isNumeric(propValue);
-                var result = true;
+                let result = true;
 
                 if (propValue && !isNumber) {
                     logger.error('The prop "' + propName + '" is not a number. ', el);
@@ -321,7 +321,7 @@ function factory (global, version) {
              *
              */
             isRequired: (propValue, propName, el) => {
-                var result = true;
+                let result = true;
                 let isObject;
 
                 // Since The prop is required, check for it's value beforehand.
@@ -357,7 +357,7 @@ function factory (global, version) {
              */
             isOptional: (propValue, propName, el) => {
                 const isPropValueDefined = _isDefined(propValue);
-                var result = true;
+                let result = true;
                 let isObject;
 
                 // If the passed Property is a string, convert it to a JSON object beforehand.
@@ -665,8 +665,8 @@ function factory (global, version) {
          *
          */
         trigger(event, data) {
-            var value;
-            var key;
+            let value;
+            let key;
 
             for (value = this.observers[event], key = 0; value && key < value.length;) {
                 value[key++](data);
@@ -679,8 +679,8 @@ function factory (global, version) {
          * @param listener {Function} The listener function to remove.
          */
         off(event, listener) {
-            var value;
-            var key;
+            let value;
+            let key;
 
             for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
                 value.splice(key, 1);

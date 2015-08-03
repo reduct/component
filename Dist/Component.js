@@ -744,8 +744,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "trigger",
             value: function trigger(event, data) {
-                var value;
-                var key;
+                var value = undefined;
+                var key = undefined;
 
                 for (value = this.observers[event], key = 0; value && key < value.length;) {
                     value[key++](data);
@@ -760,8 +760,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "off",
             value: function off(event, listener) {
-                var value;
-                var key;
+                var value = undefined;
+                var key = undefined;
 
                 for (value = this.observers[event] || []; listener && (key = value.indexOf(listener)) > -1;) {
                     value.splice(key, 1);
