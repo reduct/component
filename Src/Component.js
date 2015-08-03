@@ -486,6 +486,9 @@ function factory (global, version) {
                 component._setProp(propName, validatorResults.value);
             }
         }
+
+        // Freeze the props object to avoid further editing off the object.
+        component.props = Object.freeze(component.props);
     }
 
     /**
