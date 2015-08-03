@@ -1,8 +1,11 @@
 var chai = require('@reduct/build-tools').chai;
+var spies = require('chai-spies');
 var DOM = require('./../Helpers/DOM');
 var DefaultComponent = require('./../ExampleComponents/Dist/Default.js');
 var ComponentWithoutDefaults = require('./../ExampleComponents/Dist/WithoutDefaults.js');
 var expect = chai.expect;
+
+chai.use(spies);
 
 describe('@reduct/component: State API', function () {
     var instance;
@@ -19,6 +22,32 @@ describe('@reduct/component: State API', function () {
         instance.setState('myState', 1);
 
         expect(instance.getState('myState')).to.equal(1);
+    });
+
+    it('should fire an general change event if any state was set.', function () {
+        const eventCallback = chai.spy(function (payload) { });
+
+        instance.on('change', eventCallback);
+
+        instance.setState('myState', 1);
+
+        expect(eventCallback).to.have.been.called.with({
+            key: 'myState',
+            value: 1
+        });
+    });
+
+    it('should fire a specific change event if a state was set.', function () {
+        const eventCallback = chai.spy(function (payload) { });
+
+        instance.on('change:myState', eventCallback);
+
+        instance.setState('myState', 1);
+
+        expect(eventCallback).to.have.been.called.with({
+            key: 'myState',
+            value: 1
+        });
     });
 
     it('should return the initial state if present.', function () {
