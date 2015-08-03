@@ -542,6 +542,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 component._setProp(propName, validatorResults.value);
             }
         }
+
+        // Freeze the props object to avoid further editing on the object.
+        component.props = Object.freeze(component.props);
     }
 
     /**
