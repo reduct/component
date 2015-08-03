@@ -557,7 +557,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var validatorResults = validator(propValue, propName, el);
 
             if (validatorResults.result) {
-                component._setProp(propName, validatorResults.value);
+                component.props[propName] = validatorResults.value;
             }
         }
 
@@ -627,21 +627,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: "getDefaultProps",
             value: function getDefaultProps() {
                 return {};
-            }
-
-            /**
-             * @private
-             *
-             * Sets a property to the Component.
-             *
-             * @param propName {String} The name under which the value will be saved under.
-             * @param propVal {*} The value of the property.
-             *
-             */
-        }, {
-            key: "_setProp",
-            value: function _setProp(propName, propVal) {
-                this.props[propName] = propVal;
             }
 
             /**

@@ -501,7 +501,7 @@ function factory (global, version) {
             const validatorResults = validator(propValue, propName, el);
 
             if (validatorResults.result) {
-                component._setProp(propName, validatorResults.value);
+                component.props[propName] = validatorResults.value;
             }
         }
 
@@ -564,19 +564,6 @@ function factory (global, version) {
          */
         getDefaultProps() {
             return {};
-        }
-
-        /**
-         * @private
-         *
-         * Sets a property to the Component.
-         *
-         * @param propName {String} The name under which the value will be saved under.
-         * @param propVal {*} The value of the property.
-         *
-         */
-        _setProp(propName, propVal) {
-            this.props[propName] = propVal;
         }
 
         /**
