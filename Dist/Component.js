@@ -6,7 +6,7 @@
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
  * @author André König <andre.koenig@posteo.de>
- * @author Wilhelm Behncke <undefined>
+ * @author Wilhelm Behncke
  *
  */
 
