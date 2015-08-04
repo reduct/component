@@ -1,4 +1,19 @@
-# Change Log
+# Changelog
+
+## 1.1.0
+**Implemented enhancements:**
+- Moved the `_setInitialStates` and `_validateAndSetProps` methods out of the class.
+- Added documentation for all methods.
+- Adjusted the throwing of errors while checking for propTypes.
+- Freezed the props object after setting all props to avoid further editing of them. 
+- The component now triggers events for each state change.
+- Removed the `_setProp` method since it is useless and still consumes memory fo each class instance.
+
+**Fixed issues:**
+- Fixed the `isBoolean` propType result and value.
+
+**Deprecations:**
+- Dropped the extend method since it's behavior was unreliable.
 
 ## 1.0.6
 **Implemented enhancements:**

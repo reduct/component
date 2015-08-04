@@ -173,8 +173,10 @@ Argument `listener`: `Function`
 
 Removes the given listener from the event queue.
 
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style.
+
 
 ## License
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR

@@ -1,14 +1,12 @@
 {
   "name": "@reduct/component",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {
-    "test": "npm run build && npm run jest",
-    "build": "npm run babel && npm run uglify",
-    "jest": "jest",
-    "babel": "./node_modules/.bin/babel Src/Component.js --out-file Dist/Component.js",
-    "uglify": "node_modules/.bin/uglifyjs Dist/Component.js -o Dist/Component.min.js --comments -c -m"
+    "test": "npm run build-tests && reduct",
+    "reduct": "reduct",
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist"
   },
   "repository": {
     "type": "git",
@@ -22,11 +20,21 @@
     "react",
     "dom"
   ],
-  "author": [
+  "author": "reduct",
+  "contributors": [
     {
       "name": "Tyll Weiß",
       "email": "inkdpixels@gmail.com",
       "url": "https://github.com/Inkdpixels/"
+    },
+    {
+      "name": "André König",
+      "email": "andre.koenig@posteo.de",
+      "url": "https://github.com/akoenig/"
+    },
+    {
+      "name": "Wilhelm Behncke",
+      "url": "https://github.com/grebaldi"
     }
   ],
   "license": {
@@ -38,23 +46,13 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "babel": "^5.6.14",
-    "babel-jest": "^5.3.0",
-    "glob": "^5.0.12",
-    "jest-cli": "^0.4.13",
-    "uglify-js": "^2.4.23"
+    "@reduct/build-tools": "^1.3.0"
   },
-  "jest": {
-    "scriptPreprocessor": "node_modules/babel-jest",
-    "collectCoverage": true,
-    "collectCoverageOnlyFrom": {
-      "Src/Component.js": true
-    },
-    "testDirectoryName": "Tests",
-    "unmockedModulePathPatterns": [
-      "./Src",
-      "./Dist",
-      "./Tests/ExampleComponents"
-    ]
+  "reduct": {
+    "sourceFolder": "Src/",
+    "distributionFolder": "Dist/",
+    "entryFile": "Component.js",
+    "globalPackageName": "reductComponent",
+    "coverageReportFile": "lcov.info"
   }
 }
