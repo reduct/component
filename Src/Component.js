@@ -517,14 +517,10 @@ function factory (global, version) {
      * @returns {Void}
      */
     function _setInitialStates (component) {
-        const _initialStates = component.getInitialStates();
-        const initialStates = _isObject(_initialStates) ? _initialStates : {};
+        const _initialState = component.getInitialState();
+        const initialState = _isObject(_initialState) ? _initialState : {};
 
-        for (let stateKey in initialStates) {
-            const value = initialStates[stateKey];
-
-            component.setState(stateKey, value);
-        }
+        component.setState(initialState);
     }
 
     class Component {
@@ -538,7 +534,7 @@ function factory (global, version) {
 
             this._passedProps = opts.props || {};
             this.props = {};
-            this.states = {};
+            this.state = {};
             this.observers = {};
             this.el = element || global.document.createElement('div');
 
@@ -594,28 +590,26 @@ function factory (global, version) {
          * @returns {Object} The object containing default state.
          *
          */
-        getInitialStates() {
+        getInitialState() {
             return {};
         }
 
         /**
          * Sets a property to the Component.
          *
-         * @param stateName {String} The name under which the value will be saved under.
-         * @param stateVal {*} The value of the property.
-         *
+         * @param delta {Object} The name under which the value will be saved under.
          */
-        setState(stateName, stateVal) {
-            const payload = {
-                key: stateName,
-                value: stateVal
-            };
+        setState(delta) {
+            for (let key in delta) {
+                this.state[key] = delta[key];
+                this.trigger('change:' + key, {
+                    key,
+                    value: delta[key]
+                });
+            }
 
-            this.states[stateName] = stateVal;
-
-            // Trigger events
-            this.trigger('change', payload);
-            this.trigger('change:' + stateName, payload);
+            // Trigger event
+            this.trigger('change', delta);
         }
 
         /**
@@ -626,7 +620,7 @@ function factory (global, version) {
          *
          */
         getState(stateName) {
-            return this.states[stateName];
+            return this.state[stateName];
         }
 
         /**

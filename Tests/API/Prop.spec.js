@@ -22,7 +22,7 @@ describe('@reduct/component: Prop API', function () {
     it('should return the value of a state which was previously set.', function () {
         var instance = new DefaultComponent();
 
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 1 });
 
         expect(instance.getState('myState')).to.equal(1);
     });

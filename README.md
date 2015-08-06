@@ -1,4 +1,4 @@
-# @reduct/component 
+# @reduct/component
 [![Build Status](https://travis-ci.org/reduct/component.svg)](https://travis-ci.org/reduct/component) [![Dependency Status](https://david-dm.org/reduct/component.svg)](https://david-dm.org/reduct/component) [![devDependency Status](https://david-dm.org/reduct/component/dev-status.svg)](https://david-dm.org/reduct/component#info=devDependencies) [![Code Climate](https://codeclimate.com/github/reduct/component/badges/gpa.svg)](https://codeclimate.com/github/reduct/component) [![Test Coverage](https://codeclimate.com/github/reduct/component/badges/coverage.svg)](https://codeclimate.com/github/reduct/component/coverage)
 
 > A prototypical class that makes it easy to create Components with nodes with a powerfull instance configuration system and a react-like API.
@@ -134,10 +134,9 @@ Type: `Function`
 
 Should return an object with all default props you want to set.
 
-#### instance.setState(key, val);
+#### instance.setState(delta);
 Type: `Function`
-Argument `key`: `String`
-Argument `val`: `*`
+Argument `delta`: `Object`
 
 Will set the given state of the component.
 
@@ -147,10 +146,10 @@ Argument `key`: `String`
 
 Will return the given state of the component.
 
-#### instance.getInitialStates();
+#### instance.getInitialState();
 Type: `Function`
 
-Should return an object with all initial states you want to set.
+Should return an object representing the initial state of the component.
 
 #### instance.on(eventName, listener);
 Type: `Function`

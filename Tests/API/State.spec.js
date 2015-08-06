@@ -20,7 +20,7 @@ describe('@reduct/component: State API', function () {
     });
 
     it('should return the value of a state which was previously set.', function () {
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 1 });
 
         expect(instance.getState('myState')).to.equal(1);
     });
@@ -30,11 +30,10 @@ describe('@reduct/component: State API', function () {
 
         instance.on('change', eventCallback);
 
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 1 });
 
         expect(eventCallback).to.have.been.called.with({
-            key: 'myState',
-            value: 1
+            'myState': 1
         });
     });
 
@@ -43,7 +42,7 @@ describe('@reduct/component: State API', function () {
 
         instance.on('change:myState', eventCallback);
 
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 1 });
 
         expect(eventCallback).to.have.been.called.with({
             key: 'myState',
@@ -55,10 +54,10 @@ describe('@reduct/component: State API', function () {
         expect(instance.getState('anotherState')).to.be.true;
     });
 
-    it('should return an empty object if no getInitialStates() method was present.', function () {
+    it('should return an empty object if no getInitialState() method was present.', function () {
         var instanceWithoutDefaults = new ComponentWithoutDefaults();
 
-        expect(instanceWithoutDefaults.getInitialStates()).to.be.an('object');
+        expect(instanceWithoutDefaults.getInitialState()).to.be.an('object');
     });
 
     afterEach(function () {
