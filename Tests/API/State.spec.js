@@ -50,6 +50,21 @@ describe('@reduct/component: State API', function () {
         });
     });
 
+    it('should not fire change events if the silent option is true.', function () {
+        const eventCallback = chai.spy(function (payload) { });
+
+        instance.on('change:myState', eventCallback);
+        instance.on('change', eventCallback);
+
+        instance.setState({
+            myState: 1
+        }, {
+            silent: true
+        });
+
+        expect(eventCallback).to.not.have.been.called();
+    });
+
     it('should return the initial state if present.', function () {
         expect(instance.getState('anotherState')).to.be.true;
     });
