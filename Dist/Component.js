@@ -51,7 +51,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     } else {
         world.reduct.component = factory(world, opts);
     }
-})(function factory(global, version) {
+})(function factory(global, factoryOpts) {
     var _this = this,
         _arguments = arguments;
 
@@ -541,7 +541,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     //
     // Reduce the logging noise for the unit tests.
     //
-    if (process && process.title && !! ~process.title.indexOf('reduct')) {
+    if (factoryOpts.isTestingEnv) {
         logger.setLogLevel(0);
     }
 
@@ -777,6 +777,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     return {
         Component: Component,
         propTypes: propTypes,
-        version: version
+        version: factoryOpts.packageVersion
     };
 });
