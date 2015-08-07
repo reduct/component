@@ -680,17 +680,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: "setState",
             value: function setState() {
                 var delta = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+                var opts = arguments.length <= 1 || arguments[1] === undefined ? { silent: false } : arguments[1];
+
+                var isNotSilent = !opts.silent;
 
                 for (var key in delta) {
                     this.state[key] = delta[key];
-                    this.trigger('change:' + key, {
-                        key: key,
-                        value: delta[key]
-                    });
+
+                    if (isNotSilent) {
+                        this.trigger('change:' + key, {
+                            key: key,
+                            value: delta[key]
+                        });
+                    }
                 }
 
                 // Trigger event
-                this.trigger('change', delta);
+                if (isNotSilent) {
+                    this.trigger('change', delta);
+                }
             }
 
             /**

@@ -599,17 +599,24 @@ function factory (global, factoryOpts) {
          *
          * @param delta {Object} The name under which the value will be saved under.
          */
-        setState(delta = {}) {
+        setState(delta = {}, opts = { silent: false }) {
+            const isNotSilent = !opts.silent;
+
             for (let key in delta) {
                 this.state[key] = delta[key];
-                this.trigger('change:' + key, {
-                    key,
-                    value: delta[key]
-                });
+
+                if (isNotSilent) {
+                    this.trigger('change:' + key, {
+                        key,
+                        value: delta[key]
+                    });
+                }
             }
 
             // Trigger event
-            this.trigger('change', delta);
+            if (isNotSilent) {
+                this.trigger('change', delta);
+            }
         }
 
         /**
