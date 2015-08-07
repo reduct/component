@@ -1,7 +1,7 @@
 /**
  *
  * @name @reduct/component
- * @version 1.0.6
+ * @version 1.1.0
  * @license MIT
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
@@ -19,8 +19,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function (factory) {
     var version = {
         major: 1,
-        minor: 0,
-        patch: 6
+        minor: 1,
+        patch: 0
     };
     var world;
 
@@ -573,14 +573,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @returns {Void}
      */
     function _setInitialStates(component) {
-        var _initialStates = component.getInitialStates();
-        var initialStates = _isObject(_initialStates) ? _initialStates : {};
+        var _initialState = component.getInitialState();
+        var initialState = _isObject(_initialState) ? _initialState : {};
 
-        for (var stateKey in initialStates) {
-            var value = initialStates[stateKey];
-
-            component.setState(stateKey, value);
-        }
+        component.setState(initialState);
     }
 
     var Component = (function () {
@@ -596,7 +592,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this._passedProps = opts.props || {};
             this.props = {};
-            this.states = {};
+            this.state = {};
             this.observers = {};
             this.el = element || global.document.createElement('div');
 
@@ -662,31 +658,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              *
              */
         }, {
-            key: "getInitialStates",
-            value: function getInitialStates() {
+            key: "getInitialState",
+            value: function getInitialState() {
                 return {};
             }
 
             /**
              * Sets a property to the Component.
              *
-             * @param stateName {String} The name under which the value will be saved under.
-             * @param stateVal {*} The value of the property.
-             *
+             * @param delta {Object} The name under which the value will be saved under.
              */
         }, {
             key: "setState",
-            value: function setState(stateName, stateVal) {
-                var payload = {
-                    key: stateName,
-                    value: stateVal
-                };
+            value: function setState(delta) {
+                for (var key in delta) {
+                    this.state[key] = delta[key];
+                    this.trigger('change:' + key, {
+                        key: key,
+                        value: delta[key]
+                    });
+                }
 
-                this.states[stateName] = stateVal;
-
-                // Trigger events
-                this.trigger('change', payload);
-                this.trigger('change:' + stateName, payload);
+                // Trigger event
+                this.trigger('change', delta);
             }
 
             /**
@@ -699,7 +693,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "getState",
             value: function getState(stateName) {
-                return this.states[stateName];
+                return this.state[stateName];
             }
 
             /**

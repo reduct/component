@@ -12,7 +12,7 @@ class ExampleComponent extends component.Component {
         }
     }
 
-    getInitialStates() {
+    getInitialState() {
         return {
             'anotherState': true
         }

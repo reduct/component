@@ -29,8 +29,8 @@ var ExampleComponent = (function (_component$Component) {
             };
         }
     }, {
-        key: 'getInitialStates',
-        value: function getInitialStates() {
+        key: 'getInitialState',
+        value: function getInitialState() {
             return {
                 'anotherState': true
             };
