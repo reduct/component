@@ -2,7 +2,7 @@ function _isDefined(val) {
     return val !== null && val !== undefined;
 }
 
-module.exports = function(propValue) {
+module.exports = (propValue) => {
     const isPropInProps = _isDefined(propValue);
 
     return {
