@@ -1,5 +1,5 @@
 var buildTools = require('@reduct/build-tools');
-var propTypes = require('./../../Dist/Component.js').propTypes;
+var validator = require('./../ExampleComponents/Dist/Validator.js');
 var DefaultComponent = require('./../ExampleComponents/Dist/Default.js');
 var ComponentWithoutDefaults = require('./../ExampleComponents/Dist/WithoutDefaults.js');
 var chai = buildTools.chai;
@@ -33,7 +33,7 @@ describe('@reduct/component: Prop API', function () {
                 'myProp': 2
             },
             'propTypes': {
-                'myProp': propTypes.isRequired
+                'myProp': validator
             }
         });
 
@@ -48,7 +48,7 @@ describe('@reduct/component: Prop API', function () {
 
         instance = new DefaultComponent(element, {
             'propTypes': {
-                'myProp': propTypes.isRequired
+                'myProp': validator
             }
         });
 
@@ -58,7 +58,7 @@ describe('@reduct/component: Prop API', function () {
     it('should fall back to the getDefaultProps() method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', function () {
         var instance = new DefaultComponent(null, {
             'propTypes': {
-                'anotherProp': propTypes.isRequired
+                'anotherProp': validator
             }
         });
 
