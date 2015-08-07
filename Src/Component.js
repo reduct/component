@@ -599,7 +599,7 @@ function factory (global, version) {
          *
          * @param delta {Object} The name under which the value will be saved under.
          */
-        setState(delta) {
+        setState(delta = {}) {
             for (let key in delta) {
                 this.state[key] = delta[key];
                 this.trigger('change:' + key, {

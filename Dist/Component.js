@@ -678,7 +678,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              */
         }, {
             key: "setState",
-            value: function setState(delta) {
+            value: function setState() {
+                var delta = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
                 for (var key in delta) {
                     this.state[key] = delta[key];
                     this.trigger('change:' + key, {
