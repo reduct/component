@@ -31,7 +31,7 @@ const component = require('@reduct/component');
 
 This package also supports AMD/RequireJS, it is defined as `reductComponent`. Aren't using AMD/CommonJS? Just grab a [release](https://github.com/reduct/component/releases), include the `Dist/Component.min.js` and access the loader via the following global:
 ```js
-const component = window.reductComponent;
+const component = window.reduct.component;
 ```
 
 ## Example

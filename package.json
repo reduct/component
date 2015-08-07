@@ -46,13 +46,12 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@reduct/build-tools": "^1.4.3"
+    "@reduct/build-tools": "^1.4.5"
   },
   "reduct": {
     "sourceFolder": "Src/",
     "distributionFolder": "Dist/",
     "entryFile": "Component.js",
-    "globalPackageName": "reductComponent",
-    "coverageReportFile": "lcov.info"
+    "globalPackageName": "component"
   }
 }
