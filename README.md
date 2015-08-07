@@ -34,6 +34,7 @@ This package also supports AMD/RequireJS, it is defined as `reductComponent`. Ar
 const component = window.reduct.component;
 ```
 
+
 ## Example
 ```js
 // MyComponent.js
