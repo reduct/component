@@ -78,7 +78,7 @@ instance.trigger('logSomething') // LOG: 'myString'
 ```
 
 
-## Methods
+## API
 #### instance.getElement();
 Type: `Function`
 
