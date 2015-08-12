@@ -353,7 +353,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             /**
              * Sets a property to the Component.
              *
-             * @param delta {Object} The name under which the value will be saved under.
+             * @param delta {Object} The diff object which holds all state changes for the component.
+             * @param opts {Object} Optional options object which f.e. could turn off state events from firing.
              */
         }, {
             key: "setState",
