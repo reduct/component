@@ -22,9 +22,9 @@ describe('@reduct/component: Prop API', function () {
     it('should return the value of a state which was previously set.', function () {
         var instance = new DefaultComponent();
 
-        instance.setState({ 'myState': 1 });
+        instance.setState({ 'myState': 2 });
 
-        expect(instance.getState('myState')).to.equal(1);
+        expect(instance.getState('myState')).to.equal(2);
     });
 
     it('should validate and set the passed props when propTypes are given.', function () {
@@ -58,11 +58,11 @@ describe('@reduct/component: Prop API', function () {
     it('should fall back to the getDefaultProps() method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', function () {
         var instance = new DefaultComponent(null, {
             'propTypes': {
-                'anotherProp': validator
+                'myProp': validator
             }
         });
 
-        expect(instance.getProp('anotherProp')).to.equal(2);
+        expect(instance.getProp('myProp')).to.equal(1);
     });
 
     it('should return an empty object if no getDefaultProps() method was present.', function () {

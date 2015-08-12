@@ -25,14 +25,14 @@ var ExampleComponent = (function (_component$Component) {
         key: 'getDefaultProps',
         value: function getDefaultProps() {
             return {
-                'anotherProp': 2
+                'myProp': 1
             };
         }
     }, {
         key: 'getInitialState',
         value: function getInitialState() {
             return {
-                'anotherState': true
+                'myState': 1
             };
         }
     }]);

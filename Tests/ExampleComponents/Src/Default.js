@@ -8,13 +8,13 @@ class ExampleComponent extends component.Component {
 
     getDefaultProps() {
         return {
-            'anotherProp': 2
+            'myProp': 1
         }
     }
 
     getInitialState() {
         return {
-            'anotherState': true
+            'myState': 1
         }
     }
 }
