@@ -43,6 +43,26 @@ function factory (global, factoryOpts) {
         return val !== null && val !== undefined;
     }
 
+    /**
+     * @private
+     *
+     * Deep-Clones a object.
+     *
+     * @param obj {Object} The object to clone.
+     * @returns {Object} The cloned object.
+     */
+    function _cloneObject (obj) {
+        let target = {};
+
+        for (let i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                target[i] = obj[i];
+            }
+        }
+
+        return target;
+    }
+
     const logger = {
         _logLevel: 2,
 
@@ -263,15 +283,21 @@ function factory (global, factoryOpts) {
          */
         setState(delta = {}, opts = { silent: false }) {
             const isNotSilent = !opts.silent;
+            const previousState = _cloneObject(this.state);
 
             for (let key in delta) {
-                this.state[key] = delta[key];
+                let newValue = delta[key];
+                let oldValue = previousState[key];
 
-                if (isNotSilent) {
-                    this.trigger('change:' + key, {
-                        key,
-                        value: delta[key]
-                    });
+                if (newValue !== oldValue) {
+                    this.state[key] = newValue;
+
+                    if (isNotSilent) {
+                        this.trigger('change:' + key, {
+                            key,
+                            value: newValue
+                        });
+                    }
                 }
             }
 
