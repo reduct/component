@@ -296,7 +296,8 @@ function factory (global, factoryOpts) {
                     if (isNotSilent) {
                         this.trigger('change:' + key, {
                             key,
-                            value: newValue
+                            value: newValue,
+                            previousValue: oldValue
                         });
                     }
                 }
@@ -304,7 +305,10 @@ function factory (global, factoryOpts) {
 
             // Trigger event
             if (isNotSilent) {
-                this.trigger('change', delta);
+                this.trigger('change', {
+                    delta,
+                    previousState
+                });
             }
         }
 

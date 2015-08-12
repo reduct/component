@@ -375,7 +375,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         if (isNotSilent) {
                             this.trigger('change:' + key, {
                                 key: key,
-                                value: newValue
+                                value: newValue,
+                                previousValue: oldValue
                             });
                         }
                     }
@@ -383,7 +384,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 // Trigger event
                 if (isNotSilent) {
-                    this.trigger('change', delta);
+                    this.trigger('change', {
+                        delta: delta,
+                        previousState: previousState
+                    });
                 }
             }
 
