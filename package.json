@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@reduct/build-tools": "^1.3.0"
+    "@reduct/build-tools": "^1.4.5"
   },
   "reduct": {
     "sourceFolder": "Src/",

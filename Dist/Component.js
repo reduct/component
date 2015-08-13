@@ -1,7 +1,7 @@
 /**
  *
  * @name @reduct/component
- * @version 1.0.6
+ * @version 1.1.0
  * @license MIT
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
@@ -17,33 +17,41 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 (function (factory) {
-    var version = {
-        major: 1,
-        minor: 0,
-        patch: 6
+    var opts = {
+        isTestingEnv: process && process.title && !! ~process.title.indexOf('reduct'),
+        packageVersion: {
+            major: 1,
+            minor: 1,
+            patch: 0
+        }
     };
-    var world;
+    var world = this;
 
+    // Check for globals.
     if (typeof window !== "undefined") {
         world = window;
     } else if (typeof global !== "undefined") {
         world = global;
     } else if (typeof self !== "undefined") {
         world = self;
-    } else {
-        world = this;
     }
 
+    // Initiate the global reduct object if necessary.
+    if (!world.reduct) {
+        world.reduct = {};
+    }
+
+    // Export the factory with the global and options to all module formats.
     if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = factory(world, version);
+        module.exports = factory(world, opts);
     } else if (typeof define === "function" && define.amd) {
         define([], function () {
-            return factory(world, version);
+            return factory(world, opts);
         });
     } else {
-        world.reductComponent = factory(world, version);
+        world.reduct.reductComponent = factory(world, opts);
     }
-})(function factory(global, version) {
+})(function factory(global, factoryOpts) {
     var _this = this,
         _arguments = arguments;
 
@@ -533,7 +541,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     //
     // Reduce the logging noise for the unit tests.
     //
-    if (process && process.title && !! ~process.title.indexOf('reduct')) {
+    if (factoryOpts.isTestingEnv) {
         logger.setLogLevel(0);
     }
 
@@ -773,6 +781,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     return {
         Component: Component,
         propTypes: propTypes,
-        version: version
+        version: factoryOpts.packageVersion
     };
 });
