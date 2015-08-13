@@ -49,29 +49,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             return factory(world, opts);
         });
     } else {
-        world.reduct.reductComponent = factory(world, opts);
+        world.reduct.component = factory(world, opts);
     }
 })(function factory(global, factoryOpts) {
-    var _this = this,
-        _arguments = arguments;
-
     var messages = {
         noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
         extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
     };
-
-    /**
-     * @private
-     *
-     * Checks if the given argument is a function.
-     *
-     * @param func {*} The argument which will be validated.
-     * @returns {boolean}
-     *
-     */
-    function _isFunction(func) {
-        return typeof func === 'function';
-    }
 
     /**
      * @private
@@ -84,19 +68,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      */
     function _isNumeric(num) {
         return !isNaN(num);
-    }
-
-    /**
-     * @private
-     *
-     * Checks if the given argument is a boolean or a string containing a boolean.
-     *
-     * @param bol {*} The argument which will be validated.
-     * @returns {boolean}
-     *
-     */
-    function _isBoolean(bol) {
-        return typeof bol === 'boolean' || bol === 'true' || bol === 'false';
     }
 
     /**
@@ -115,19 +86,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /**
      * @private
      *
-     * Checks if the given argument is a string.
-     *
-     * @param str {*} The argument which will be validated.
-     * @returns {boolean}
-     *
-     */
-    function _isString(str) {
-        return typeof str === 'string';
-    }
-
-    /**
-     * @private
-     *
      * Checks if the given argument is defined and not `null`.
      *
      * @param val {*} The argument which will be validated.
@@ -139,303 +97,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     /**
-     * Converts a string containing a boolean to a real boolean if necessary.
-     * @param val
-     * @returns {*}
      * @private
+     *
+     * Deep-Clones a object.
+     *
+     * @param obj {Object} The object to clone.
+     * @returns {Object} The cloned object.
      */
-    function _convertStringBoolean(val) {
-        if (val === 'false') {
-            val = false;
+    function _cloneObject(obj) {
+        var target = {};
+
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                target[i] = obj[i];
+            }
         }
 
-        if (val === 'true') {
-            val = true;
-        }
-
-        return val;
+        return target;
     }
-
-    var propTypes = {
-        /**
-         * Represents a general required check against a value.
-         *
-         * @param propValue {*} The value which will be validated.
-         * @param propName {String} The name which will be logged in case of errors.
-         * @param el {HTMLElement} The element on which the value was expected on.
-         * @returns {{result: boolean, value: *}}
-         *
-         */
-        isRequired: function isRequired(propValue, propName, el) {
-            var isPropInProps = _isDefined(propValue);
-
-            if (!isPropInProps) {
-                logger.error('The prop "' + propName + '" is required and wasn‘t found on: ', el);
-            }
-
-            return {
-                result: isPropInProps,
-                value: propValue
-            };
-        },
-
-        /**
-         * Represents a general optional check against a value.
-         *
-         * @param propValue {*} The value which will be validated.
-         * @param propName{String} The name which will be logged in case of errors.
-         * @param el {HTMLElement} The element on which the value was expected on.
-         * @returns {{result: boolean, value: *}}
-         *
-         */
-        isOptional: function isOptional(propValue, propName, el) {
-            var isPropInProps = _isDefined(propValue);
-
-            if (!isPropInProps) {
-                logger.info('The prop "' + propName + '" is optional and wasn‘t found on: ', el);
-            }
-
-            return {
-                result: true,
-                value: propValue
-            };
-        },
-
-        isString: {
-            /**
-             * Extends the general required validator for the type `String`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isRequired: function isRequired(propValue, propName, el) {
-                var isString = _isString(propValue);
-                var result = true;
-
-                propTypes.isRequired.apply(_this, _arguments);
-
-                if (!isString) {
-                    logger.error('The prop "' + propName + '" is not a string. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            /**
-             * Extends the general optional validator for the type `String`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isOptional: function isOptional(propValue, propName, el) {
-                var isString = _isString(propValue);
-                var result = true;
-
-                if (!isString) {
-                    logger.error('The prop "' + propName + '" is not a string. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            }
-        },
-
-        isBoolean: {
-            /**
-             * Extends the general required validator for the type `Boolean`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isRequired: function isRequired(propValue, propName, el) {
-                var isBoolean = _isBoolean(propValue);
-                var result = true;
-
-                propTypes.isRequired.apply(_this, _arguments);
-
-                if (!isBoolean) {
-                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
-                    result = false;
-                }
-
-                propValue = _convertStringBoolean(propValue);
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            /**
-             * Extends the general optional validator for the type `Boolean`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isOptional: function isOptional(propValue, propName, el) {
-                var isBoolean = _isBoolean(propValue);
-                var result = true;
-
-                if (!isBoolean) {
-                    logger.error('The prop "' + propName + '" is not a boolean. ', el);
-                    result = false;
-                }
-
-                propValue = _convertStringBoolean(propValue);
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            }
-        },
-
-        isNumber: {
-            /**
-             * Extends the general required validator for the type `Number`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isRequired: function isRequired(propValue, propName, el) {
-                var isNumber = _isNumeric(propValue);
-                var result = true;
-
-                // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(_this, _arguments);
-
-                if (!isNumber) {
-                    logger.error('The prop "' + propName + '" is not a number. ', el);
-                    result = false;
-                } else {
-                    propValue = Math.abs(propValue);
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            /**
-             * Extends the general optional validator for the type `Number`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isOptional: function isOptional(propValue, propName, el) {
-                var isNumber = _isNumeric(propValue);
-                var result = true;
-
-                if (propValue && !isNumber) {
-                    logger.error('The prop "' + propName + '" is not a number. ', el);
-                    result = false;
-                }
-
-                propValue = Math.abs(propValue);
-
-                return {
-                    result: result,
-                    value: _isNumeric(propValue) ? propValue : undefined
-                };
-            }
-        },
-
-        isObject: {
-            /**
-             * Extends the general required validator for the type `Object`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isRequired: function isRequired(propValue, propName, el) {
-                var result = true;
-                var isObject = undefined;
-
-                // Since The prop is required, check for it's value beforehand.
-                propTypes.isRequired.apply(_this, _arguments);
-
-                // If the passed Property is a string, convert it to a JSON object beforehand.
-                try {
-                    propValue = JSON.parse(propValue);
-                } catch (e) {}
-
-                // Verify the type of the value.
-                isObject = _isObject(propValue);
-
-                if (!isObject) {
-                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            },
-
-            /**
-             * Extends the general optional validator for the type `Object`.
-             *
-             * @param propValue {*} The value which will be validated.
-             * @param propName {String} The name which will be logged in case of errors.
-             * @param el {HTMLElement} The element on which the value was expected on.
-             * @returns {{result: boolean, value: *}}
-             *
-             */
-            isOptional: function isOptional(propValue, propName, el) {
-                var isPropValueDefined = _isDefined(propValue);
-                var result = true;
-                var isObject = undefined;
-
-                // If the passed Property is a string, convert it to a JSON object beforehand.
-                try {
-                    propValue = JSON.parse(propValue);
-                } catch (e) {}
-
-                // Verify the type of the value.
-                isObject = _isObject(propValue);
-
-                if (isPropValueDefined && !isObject) {
-                    logger.error('The prop "' + propName + '" is not an valid JSON object. ', el);
-                    result = false;
-                }
-
-                return {
-                    result: result,
-                    value: propValue
-                };
-            }
-        }
-    };
 
     var logger = {
         _logLevel: 2,
@@ -581,14 +260,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @returns {Void}
      */
     function _setInitialStates(component) {
-        var _initialStates = component.getInitialStates();
-        var initialStates = _isObject(_initialStates) ? _initialStates : {};
+        var _initialState = component.getInitialState();
+        var initialState = _isObject(_initialState) ? _initialState : {};
 
-        for (var stateKey in initialStates) {
-            var value = initialStates[stateKey];
-
-            component.setState(stateKey, value);
-        }
+        component.setState(initialState);
     }
 
     var Component = (function () {
@@ -604,7 +279,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this._passedProps = opts.props || {};
             this.props = {};
-            this.states = {};
+            this.state = {};
             this.observers = {};
             this.el = element || global.document.createElement('div');
 
@@ -670,31 +345,50 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              *
              */
         }, {
-            key: "getInitialStates",
-            value: function getInitialStates() {
+            key: "getInitialState",
+            value: function getInitialState() {
                 return {};
             }
 
             /**
              * Sets a property to the Component.
              *
-             * @param stateName {String} The name under which the value will be saved under.
-             * @param stateVal {*} The value of the property.
-             *
+             * @param delta {Object} The diff object which holds all state changes for the component.
+             * @param opts {Object} Optional options object which f.e. could turn off state events from firing.
              */
         }, {
             key: "setState",
-            value: function setState(stateName, stateVal) {
-                var payload = {
-                    key: stateName,
-                    value: stateVal
-                };
+            value: function setState() {
+                var delta = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+                var opts = arguments.length <= 1 || arguments[1] === undefined ? { silent: false } : arguments[1];
 
-                this.states[stateName] = stateVal;
+                var isNotSilent = !opts.silent;
+                var previousState = _cloneObject(this.state);
 
-                // Trigger events
-                this.trigger('change', payload);
-                this.trigger('change:' + stateName, payload);
+                for (var key in delta) {
+                    var newValue = delta[key];
+                    var oldValue = previousState[key];
+
+                    if (newValue !== oldValue) {
+                        this.state[key] = newValue;
+
+                        if (isNotSilent) {
+                            this.trigger('change:' + key, {
+                                key: key,
+                                value: newValue,
+                                previousValue: oldValue
+                            });
+                        }
+                    }
+                }
+
+                // Trigger event
+                if (isNotSilent) {
+                    this.trigger('change', {
+                        delta: delta,
+                        previousState: previousState
+                    });
+                }
             }
 
             /**
@@ -707,7 +401,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "getState",
             value: function getState(stateName) {
-                return this.states[stateName];
+                return this.state[stateName];
             }
 
             /**
@@ -780,7 +474,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     return {
         Component: Component,
-        propTypes: propTypes,
         version: factoryOpts.packageVersion
     };
 });
