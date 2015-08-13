@@ -96,6 +96,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return val !== null && val !== undefined;
     }
 
+    /**
+     * @private
+     *
+     * Deep-Clones a object.
+     *
+     * @param obj {Object} The object to clone.
+     * @returns {Object} The cloned object.
+     */
+    function _cloneObject(obj) {
+        var target = {};
+
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                target[i] = obj[i];
+            }
+        }
+
+        return target;
+    }
+
     var logger = {
         _logLevel: 2,
 
@@ -333,7 +353,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             /**
              * Sets a property to the Component.
              *
-             * @param delta {Object} The name under which the value will be saved under.
+             * @param delta {Object} The diff object which holds all state changes for the component.
+             * @param opts {Object} Optional options object which f.e. could turn off state events from firing.
              */
         }, {
             key: "setState",
@@ -342,21 +363,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var opts = arguments.length <= 1 || arguments[1] === undefined ? { silent: false } : arguments[1];
 
                 var isNotSilent = !opts.silent;
+                var previousState = _cloneObject(this.state);
 
                 for (var key in delta) {
-                    this.state[key] = delta[key];
+                    var newValue = delta[key];
+                    var oldValue = previousState[key];
 
-                    if (isNotSilent) {
-                        this.trigger('change:' + key, {
-                            key: key,
-                            value: delta[key]
-                        });
+                    if (newValue !== oldValue) {
+                        this.state[key] = newValue;
+
+                        if (isNotSilent) {
+                            this.trigger('change:' + key, {
+                                key: key,
+                                value: newValue,
+                                previousValue: oldValue
+                            });
+                        }
                     }
                 }
 
                 // Trigger event
                 if (isNotSilent) {
-                    this.trigger('change', delta);
+                    this.trigger('change', {
+                        delta: delta,
+                        previousState: previousState
+                    });
                 }
             }
 

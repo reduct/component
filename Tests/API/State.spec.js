@@ -33,7 +33,12 @@ describe('@reduct/component: State API', function () {
         instance.setState({ 'myState': 2 });
 
         expect(eventCallback).to.have.been.called.with({
-            'myState': 2
+            delta: {
+                'myState': 2
+            },
+            previousState: {
+                'myState': 1
+            }
         });
     });
 
@@ -46,7 +51,8 @@ describe('@reduct/component: State API', function () {
 
         expect(eventCallback).to.have.been.called.with({
             key: 'myState',
-            value: 2
+            value: 2,
+            previousValue: 1
         });
     });
 
