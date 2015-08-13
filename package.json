@@ -1,6 +1,6 @@
 {
   "name": "@reduct/component",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {

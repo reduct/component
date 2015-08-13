@@ -1,7 +1,7 @@
 /**
  *
  * @name @reduct/component
- * @version 1.1.0
+ * @version 1.1.1
  * @license MIT
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
@@ -22,7 +22,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         packageVersion: {
             major: 1,
             minor: 1,
-            patch: 0
+            patch: 1
         }
     };
     var world = this;
