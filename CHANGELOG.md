@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+**Fixed issues:**
+- Fixed an issue where the global `process` object is not defined.
+
 ## 1.1.0
 **Implemented enhancements:**
 - Moved the `_setInitialStates` and `_validateAndSetProps` methods out of the class.
