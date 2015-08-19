@@ -286,7 +286,13 @@ function factory (global, factoryOpts) {
          *
          */
         getProp(propName) {
-            return this.props[propName];
+            const value = this.props[propName];
+
+            if (!_isDefined(value)) {
+                logger.warn(`No value found for the prop ${propName}. Make sure to declare a propType for this property.`);
+            }
+
+            return value;
         }
 
         /**
