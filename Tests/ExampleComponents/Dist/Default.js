@@ -29,14 +29,12 @@ var ExampleComponent = (function (_component$Component) {
         //
         // Creating child nodes for testing the new find API
         //
-        [1, 2, 3, 4, 5].map(function () {
+        [0, 1, 2, 3, 4].forEach(function () {
             var node = document.createElement('div');
 
             _this.el.appendChild(node);
 
             node.setAttribute('class', 'foo');
-
-            return node;
         });
     }
 

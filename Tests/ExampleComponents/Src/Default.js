@@ -8,14 +8,12 @@ class ExampleComponent extends component.Component {
         //
         // Creating child nodes for testing the new find API
         //
-        [1, 2, 3, 4, 5].map(() => {
+        [0, 1, 2, 3, 4].forEach(() => {
             let node = document.createElement('div');
 
             this.el.appendChild(node);
 
             node.setAttribute('class', 'foo');
-
-            return node;
         });
     }
 
