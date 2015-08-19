@@ -322,7 +322,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "getProp",
             value: function getProp(propName) {
-                return this.props[propName];
+                var value = this.props[propName];
+
+                if (!_isDefined(value)) {
+                    logger.warn("No value found for the prop " + propName + ". Make sure to declare a propType for this property.");
+                }
+
+                return value;
             }
 
             /**
