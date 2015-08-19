@@ -216,17 +216,23 @@ function factory (global, factoryOpts) {
                 logger.warn(messages.noElement);
             }
 
+            // Holds all props
             this.props = {};
-            this.state = {};
-            this.observers = {};
-            this.el = element || global.document.createElement('div');
 
-            //
+            // Holds the components state.
+            this.state = {};
+
+            // Holds all event listeners.
+            this.observers = {};
+
+            // The element property for the getElement() method.
+            this.el = element || global.document.createElement('div');
+            
             // Cache for not hitting the DOM over and over again
             // in the `find` and `findOne` methods.
-            //
             this.queryCache = {};
 
+            // Set the props and the initial state of the component.
             _validateAndSetProps(this, opts.propTypes, opts.props);
             _setInitialStates(this);
         }
