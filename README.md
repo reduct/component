@@ -106,7 +106,8 @@ Type: `Function`
 Argument `delta`: `Object`
 Argument `opts`: `Object` (Optional)
 
-Will set the given state of the component. By default, the component will fire specific change events for each changed state key.
+Will set the given state of the component. All passed keys should be specified in the `getInitialState()` method.
+By default, the component will fire specific change events for each changed state key.
 For example if you call `this.setState({ myKey: 1 })` the component will fire `change:myKey` as well as a general `change` event.
 If a `opts` Object with the option `silent: true` was passed, the component won't fire any change events.
 
