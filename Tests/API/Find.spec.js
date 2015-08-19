@@ -22,7 +22,7 @@ describe('@reduct/component: Find API', function () {
         expect(Object.keys(component.queryCache).length).to.equal(1);
     });
 
-    it('should be capable of returning multiple child node of the component\'s root node', function () {
+    it('should be capable of returning multiple child nodes of the component\'s root node', function () {
         var component = new DefaultComponent();
         var selector = '.foo';
         var nodes = component.findAll(selector);
