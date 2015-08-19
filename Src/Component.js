@@ -171,14 +171,13 @@ function factory (global, factoryOpts) {
      * @param {Object} propTypes A map of propTypes
      * @returns {Void}
      */
-    function _validateAndSetProps (component, propTypes) {
+    function _validateAndSetProps (component, propTypes, passedProps = {}) {
         const el = component.el;
-        const _passedProps = component._passedProps;
         const _defaultProps = component.getDefaultProps();
         const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
         for (let propName in propTypes) {
-            const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            const propValue = passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
             const validator = propTypes[propName];
             const validatorResults = validator(propValue, propName, el);
 
@@ -217,7 +216,6 @@ function factory (global, factoryOpts) {
                 logger.warn(messages.noElement);
             }
 
-            this._passedProps = opts.props || {};
             this.props = {};
             this.state = {};
             this.observers = {};
@@ -229,7 +227,7 @@ function factory (global, factoryOpts) {
             //
             this.queryCache = {};
 
-            _validateAndSetProps(this, opts.propTypes);
+            _validateAndSetProps(this, opts.propTypes, opts.props);
             _setInitialStates(this);
         }
 
