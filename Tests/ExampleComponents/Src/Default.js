@@ -2,8 +2,19 @@ var component = require('./../../../Dist/Component.js');
 
 // An ExampleClass for testing purposes.
 class ExampleComponent extends component.Component {
-    constructor(el, opts) {
-        super(el, opts);
+    constructor(el, props) {
+        super(el, props);
+
+        //
+        // Creating child nodes for testing the new find API
+        //
+        [0, 1, 2, 3, 4].forEach(() => {
+            let node = document.createElement('div');
+
+            this.el.appendChild(node);
+
+            node.setAttribute('class', 'foo');
+        });
     }
 
     getDefaultProps() {
@@ -19,4 +30,4 @@ class ExampleComponent extends component.Component {
     }
 }
 
-module.exports = ExampleComponent;
+export default ExampleComponent;
