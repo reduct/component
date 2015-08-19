@@ -199,10 +199,13 @@ function factory (global, factoryOpts) {
      * @returns {Void}
      */
     function _setInitialStates (component) {
-        const _initialState = component.getInitialState();
-        const initialState = _isObject(_initialState) ? _initialState : {};
+        const initialState = component.getInitialState();
 
-        component.setState(initialState);
+        if (_isObject(initialState)) {
+            component.setState(initialState);
+        } else {
+            logger.warn('Please return a valid object in the getInitialState() method.', component);
+        }
     }
 
     class Component {

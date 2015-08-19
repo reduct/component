@@ -260,10 +260,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @returns {Void}
      */
     function _setInitialStates(component) {
-        var _initialState = component.getInitialState();
-        var initialState = _isObject(_initialState) ? _initialState : {};
+        var initialState = component.getInitialState();
 
-        component.setState(initialState);
+        if (_isObject(initialState)) {
+            component.setState(initialState);
+        } else {
+            logger.warn('Please return a valid object in the getInitialState() method.', component);
+        }
     }
 
     var Component = (function () {
