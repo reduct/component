@@ -241,12 +241,22 @@ function factory (global, factoryOpts) {
         }
 
         /**
+         * Returns the next found child node by a given selector.
+         *
+         * @returns {HTMLElement}
+         *
+         */
+        find (selector) {
+            return this.findAll(selector).shift();
+        }
+
+        /**
          * Returns all found child nodes by a given selector.
          *
          * @returns {Array<HTMLElement>}
          *
          */
-        find (selector) {
+        findAll (selector) {
             if (this.queryCache[selector]) {
                 return this.queryCache[selector];
             }
@@ -256,16 +266,6 @@ function factory (global, factoryOpts) {
             this.queryCache[selector] = [...nodes];
 
             return nodes;
-        }
-
-        /**
-         * Returns the next found child node by a given selector.
-         *
-         * @returns {HTMLElement}
-         *
-         */
-        findOne (selector) {
-            return this.find(selector).shift();
         }
 
         /**

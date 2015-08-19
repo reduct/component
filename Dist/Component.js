@@ -309,14 +309,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
 
             /**
+             * Returns the next found child node by a given selector.
+             *
+             * @returns {HTMLElement}
+             *
+             */
+        }, {
+            key: "find",
+            value: function find(selector) {
+                return this.findAll(selector).shift();
+            }
+
+            /**
              * Returns all found child nodes by a given selector.
              *
              * @returns {Array<HTMLElement>}
              *
              */
         }, {
-            key: "find",
-            value: function find(selector) {
+            key: "findAll",
+            value: function findAll(selector) {
                 if (this.queryCache[selector]) {
                     return this.queryCache[selector];
                 }
@@ -326,18 +338,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.queryCache[selector] = [].concat(_toConsumableArray(nodes));
 
                 return nodes;
-            }
-
-            /**
-             * Returns the next found child node by a given selector.
-             *
-             * @returns {HTMLElement}
-             *
-             */
-        }, {
-            key: "findOne",
-            value: function findOne(selector) {
-                return this.find(selector).shift();
             }
 
             /**

@@ -12,24 +12,24 @@ describe('@reduct/component: Find API', function () {
     it('should be capable of returning one child node of the component\'s root node', function () {
         var component = new DefaultComponent();
         var selector = '.foo';
-        var node = component.findOne(selector);
+        var node = component.find(selector);
 
         expect(node).to.not.be.undefined;
         expect(node.nodeName).to.not.be.undefined;
 
         // Call again in order to check that there is already only one cached item
-        component.findOne(selector);
+        component.find(selector);
         expect(Object.keys(component.queryCache).length).to.equal(1);
     });
 
     it('should be capable of returning multiple child node of the component\'s root node', function () {
         var component = new DefaultComponent();
         var selector = '.foo';
-        var nodes = component.find(selector);
+        var nodes = component.findAll(selector);
 
         expect(nodes.length).to.equal(5);
 
-        component.find(selector);
+        component.findAll(selector);
         expect(Object.keys(component.queryCache).length).to.equal(1);
     });
 });

@@ -87,12 +87,12 @@ Will retrieve the element on which the component was mounted upon, if no element
 #### instance.find('selector');
 Type: `Function`
 
-Will return an array with child DOM nodes matching the given selector.
+Will return one child DOM node matching the given selector.
 
-#### instance.findOne('selector');
+#### instance.findAll('selector');
 Type: `Function`
 
-Will return one child DOM node matching the given selector.
+Will return an array with child DOM nodes matching the given selector.
 
 #### instance.getProp(key);
 Type: `Function`
