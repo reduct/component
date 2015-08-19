@@ -220,6 +220,12 @@ function factory (global, factoryOpts) {
             this.observers = {};
             this.el = element || global.document.createElement('div');
 
+            //
+            // Cache for not hitting the DOM over and over again
+            // in the `find` and `findOne` methods.
+            //
+            this.queryCache = {};
+
             _validateAndSetProps(this, opts.propTypes);
             _setInitialStates(this);
         }
@@ -232,6 +238,34 @@ function factory (global, factoryOpts) {
          */
         getElement() {
             return this.el;
+        }
+
+        /**
+         * Returns all found child nodes by a given selector.
+         *
+         * @returns {Array<HTMLElement>}
+         *
+         */
+        find (selector) {
+            if (this.queryCache[selector]) {
+                return this.queryCache[selector];
+            }
+
+            let nodes = Array.prototype.slice.call(this.getElement().querySelectorAll(selector));
+
+            this.queryCache[selector] = [...nodes];
+
+            return nodes;
+        }
+
+        /**
+         * Returns the next found child node by a given selector.
+         *
+         * @returns {HTMLElement}
+         *
+         */
+        findOne (selector) {
+            return this.find(selector).shift();
         }
 
         /**
