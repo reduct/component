@@ -233,13 +233,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @returns {Void}
      */
     function _validateAndSetProps(component, propTypes) {
+        var passedProps = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
         var el = component.el;
-        var _passedProps = component._passedProps;
         var _defaultProps = component.getDefaultProps();
         var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
         for (var propName in propTypes) {
-            var propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            var propValue = passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
             var validator = propTypes[propName];
             var validatorResults = validator(propValue, propName, el);
 
@@ -280,13 +281,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 logger.warn(messages.noElement);
             }
 
-            this._passedProps = opts.props || {};
             this.props = {};
             this.state = {};
             this.observers = {};
             this.el = element || global.document.createElement('div');
 
-            _validateAndSetProps(this, opts.propTypes);
+            _validateAndSetProps(this, opts.propTypes, opts.props);
             _setInitialStates(this);
         }
 
