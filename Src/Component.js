@@ -337,7 +337,7 @@ function factory (global, factoryOpts) {
                 let oldValue = previousState[key];
 
                 if (initialStateKeys.indexOf(key) === -1) {
-                    logger.error(`Please specify an initial value for '${key}' in our getInitialState() method.`);
+                    logger.error(`Please specify an initial value for '${key}' in your getInitialState() method.`);
                 } else if (newValue !== oldValue) {
                     this.state[key] = newValue;
 
