@@ -228,9 +228,8 @@ function factory (global, factoryOpts) {
 
             // The element property for the getElement() method.
             this.el = element || global.document.createElement('div');
-            
-            // Cache for not hitting the DOM over and over again
-            // in the `find` and `findOne` methods.
+
+            // Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
             this.queryCache = {};
 
             // Holds all keys of the initial state, used to check for the initial existence of state additions.

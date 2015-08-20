@@ -235,13 +235,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @returns {Void}
      */
     function _validateAndSetProps(component, propTypes) {
+        var passedProps = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
         var el = component.el;
-        var _passedProps = component._passedProps;
         var _defaultProps = component.getDefaultProps();
         var defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
         for (var propName in propTypes) {
-            var propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            var propValue = passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
             var validator = propTypes[propName];
             var validatorResults = validator(propValue, propName, el);
 
@@ -265,6 +266,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var initialState = component.getInitialState();
 
         if (_isObject(initialState)) {
+            component.initialStateKeys = Object.keys(initialState);
             component.setState(initialState);
         } else {
             logger.warn('Please return a valid object in the getInitialState() method.', component);
@@ -282,19 +284,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 logger.warn(messages.noElement);
             }
 
-            this._passedProps = opts.props || {};
+            // Holds all props
             this.props = {};
+
+            // Holds the components state.
             this.state = {};
+
+            // Holds all event listeners.
             this.observers = {};
+
+            // The element property for the getElement() method.
             this.el = element || global.document.createElement('div');
 
-            //
-            // Cache for not hitting the DOM over and over again
-            // in the `find` and `findOne` methods.
-            //
+            // Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
             this.queryCache = {};
 
-            _validateAndSetProps(this, opts.propTypes);
+            // Holds all keys of the initial state, used to check for the initial existence of state additions.
+            this.initialStateKeys = [];
+
+            // Set the props and the initial state of the component.
+            _validateAndSetProps(this, opts.propTypes, opts.props);
             _setInitialStates(this);
         }
 
@@ -394,7 +403,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
 
             /**
-             * Sets a property to the Component.
+             * Sets all differing state key/value pairs to the Components state.
              *
              * @param delta {Object} The diff object which holds all state changes for the component.
              * @param opts {Object} Optional options object which f.e. could turn off state events from firing.
@@ -407,12 +416,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var isNotSilent = !opts.silent;
                 var previousState = _cloneObject(this.state);
+                var initialStateKeys = this.initialStateKeys;
 
                 for (var key in delta) {
                     var newValue = delta[key];
                     var oldValue = previousState[key];
 
-                    if (newValue !== oldValue) {
+                    if (initialStateKeys.indexOf(key) === -1) {
+                        logger.error("Please specify an initial value for '" + key + "' in your getInitialState() method.");
+                    } else if (newValue !== oldValue) {
                         this.state[key] = newValue;
 
                         if (isNotSilent) {
