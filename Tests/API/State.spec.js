@@ -81,6 +81,14 @@ describe('@reduct/component: State API', function () {
         expect(instanceWithoutDefaults.getInitialState()).to.be.an('object');
     });
 
+    it('should only set state diffs if each key was described in the getInitialState() method.', function () {
+        var instanceWithoutDefaults = new ComponentWithoutDefaults();
+
+        instanceWithoutDefaults.setState({ myState: 2 });
+
+        expect(instanceWithoutDefaults.getState('myState')).to.be.undefined;
+    });
+
     afterEach(function () {
         instance = null;
     });

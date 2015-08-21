@@ -171,14 +171,13 @@ function factory (global, factoryOpts) {
      * @param {Object} propTypes A map of propTypes
      * @returns {Void}
      */
-    function _validateAndSetProps (component, propTypes) {
+    function _validateAndSetProps (component, propTypes, passedProps = {}) {
         const el = component.el;
-        const _passedProps = component._passedProps;
         const _defaultProps = component.getDefaultProps();
         const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
 
         for (let propName in propTypes) {
-            const propValue = _passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
+            const propValue = passedProps[propName] || el.getAttribute('data-' + propName.toLowerCase()) || defaultProps[propName];
             const validator = propTypes[propName];
             const validatorResults = validator(propValue, propName, el);
 
@@ -199,10 +198,14 @@ function factory (global, factoryOpts) {
      * @returns {Void}
      */
     function _setInitialStates (component) {
-        const _initialState = component.getInitialState();
-        const initialState = _isObject(_initialState) ? _initialState : {};
+        const initialState = component.getInitialState();
 
-        component.setState(initialState);
+        if (_isObject(initialState)) {
+            component.initialStateKeys = Object.keys(initialState);
+            component.setState(initialState);
+        } else {
+            logger.warn('Please return a valid object in the getInitialState() method.', component);
+        }
     }
 
     class Component {
@@ -214,19 +217,26 @@ function factory (global, factoryOpts) {
                 logger.warn(messages.noElement);
             }
 
-            this._passedProps = opts.props || {};
+            // Holds all props
             this.props = {};
+
+            // Holds the components state.
             this.state = {};
+
+            // Holds all event listeners.
             this.observers = {};
+
+            // The element property for the getElement() method.
             this.el = element || global.document.createElement('div');
 
-            //
-            // Cache for not hitting the DOM over and over again
-            // in the `find` and `findOne` methods.
-            //
+            // Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
             this.queryCache = {};
 
-            _validateAndSetProps(this, opts.propTypes);
+            // Holds all keys of the initial state, used to check for the initial existence of state additions.
+            this.initialStateKeys = [];
+
+            // Set the props and the initial state of the component.
+            _validateAndSetProps(this, opts.propTypes, opts.props);
             _setInitialStates(this);
         }
 
@@ -317,7 +327,7 @@ function factory (global, factoryOpts) {
         }
 
         /**
-         * Sets a property to the Component.
+         * Sets all differing state key/value pairs to the Components state.
          *
          * @param delta {Object} The diff object which holds all state changes for the component.
          * @param opts {Object} Optional options object which f.e. could turn off state events from firing.
@@ -325,12 +335,15 @@ function factory (global, factoryOpts) {
         setState(delta = {}, opts = { silent: false }) {
             const isNotSilent = !opts.silent;
             const previousState = _cloneObject(this.state);
+            const initialStateKeys = this.initialStateKeys;
 
             for (let key in delta) {
                 let newValue = delta[key];
                 let oldValue = previousState[key];
 
-                if (newValue !== oldValue) {
+                if (initialStateKeys.indexOf(key) === -1) {
+                    logger.error(`Please specify an initial value for '${key}' in your getInitialState() method.`);
+                } else if (newValue !== oldValue) {
                     this.state[key] = newValue;
 
                     if (isNotSilent) {
