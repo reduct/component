@@ -84,7 +84,9 @@ describe('@reduct/component: State API', function () {
     it('should only set state diffs if each key was described in the getInitialState() method.', function () {
         var instanceWithoutDefaults = new ComponentWithoutDefaults();
 
-        instanceWithoutDefaults.setState({ myState: 2 });
+        expect(function callGetWithoutHavingRegisteredTheRequestedItem () {
+            instanceWithoutDefaults.setState({ myState: 2 });
+        }).to.throw("@reduct/component Error: Please specify an initial value for 'myState' in your getInitialState() method.");
 
         expect(instanceWithoutDefaults.getState('myState')).to.be.undefined;
     });
