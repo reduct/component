@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run build-tests && reduct",
     "reduct": "reduct",
-    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist"
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out Tests/ExampleComponents/Dist"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,6 @@
     "sourceFolder": "Src/",
     "distributionFolder": "Dist/",
     "entryFile": "Component.js",
-    "globalPackageName": "reductComponent"
+    "globalPackageName": "reduct.component"
   }
 }
