@@ -1,7 +1,7 @@
 /**
  *
  * @name @reduct/component
- * @version 1.1.1
+ * @version 2.0.0
  * @license MIT
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
@@ -15,9 +15,9 @@
     var reductOpts = {
         isTestingEnv: false,
         packageVersion: {
-            major: 1,
-            minor: 1,
-            patch: 1
+            major: 2,
+            minor: 0,
+            patch: 0
         }
     };
     var world = this;
