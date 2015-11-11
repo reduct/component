@@ -1,3 +1,4 @@
 # General ignores.
-node_modules
-coverage.lcov
+node_modules/
+coverage/
+dist/

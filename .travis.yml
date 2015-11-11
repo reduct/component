@@ -1,18 +1,18 @@
+sudo: false
 language: node_js
-node_js:
-  - "stable"
-
-notifications:
-  email: false
-
 cache:
   directories:
     - node_modules
-
+notifications:
+  email: false
+node_js:
+  - '4'
 before_install:
-  - '[ "${TRAVIS_NODE_VERSION}" != "0.8" ] || npm install -g npm@1.4.28'
-  - npm install -g npm@latest
-  - npm install -g codeclimate-test-reporter
-
-after_script:
-  - npm run reduct publish-coverage
+  - npm i -g npm@^2.0.0
+before_script:
+  - npm prune
+after_success:
+  - npm run semantic-release
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
