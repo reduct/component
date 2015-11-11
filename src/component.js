@@ -1,5 +1,5 @@
 import {logger} from '@reduct/logger';
-import * as messages from './Messages.js';
+import * as messages from './messages.js';
 
 const componentLogger = logger.getLogger('@reduct/component');
 
