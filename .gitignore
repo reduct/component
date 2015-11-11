@@ -1,4 +1,4 @@
 # General ignores.
 node_modules/
 coverage/
-dist/
+dist/**/*.js
