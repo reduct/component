@@ -50,7 +50,6 @@
   "devDependencies": {
     "@inkdpixels/commit-analyzer": "0.0.2",
     "@inkdpixels/release-notes-generator": "0.0.2",
-    "@reduct/logger": "^1.0.2",
     "chai": "^3.4.1",
     "istanbul": "^0.4.0",
     "jsdom": "^7.0.2",
@@ -74,6 +73,7 @@
     "generateNotes": "@inkdpixels/release-notes-generator"
   },
   "dependencies": {
+    "@reduct/logger": "^1.0.2",
     "babelify": "^6.4.0",
     "browserify": "^12.0.1"
   }
