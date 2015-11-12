@@ -29,7 +29,7 @@ once the component package is installed, just require it in your application fil
 const component = require('@reduct/component');
 ```
 
-This package also supports AMD/RequireJS. Aren't using AMD or CommonJS? Just grab a [release](https://github.com/reduct/component/releases), include the `Dist/Component.min.js` and access the component via the following global:
+This package also supports AMD/RequireJS. Aren't using AMD or CommonJS? Access the component via the following global:
 ```js
 const component = window.reduct.Component;
 ```
