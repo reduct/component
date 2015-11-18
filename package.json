@@ -4,7 +4,7 @@
   "main": "dist/component.js",
   "scripts": {
     "postinstall": "npm run build",
-    "build": "browserify src/component.js -o dist/component.js --standalone reduct.Component -t [ babelify --presets [ es2015 ] ]",
+    "build": "browserify src/component.js -o dist/component.js --standalone reduct.Component -t [ babelify --presets [ es2015 ] ] -p browserify-derequire",
     "lint": "xo src/**/*.js",
     "mocha": "export TEST=true && find ./src -name '*.spec.js' | xargs istanbul cover -x *.spec.js _mocha -- -R spec --compilers js:babel/register",
     "test": "npm run lint && npm run mocha && npm run build",
@@ -76,6 +76,7 @@
     "@reduct/logger": "^1.0.2",
     "babel-preset-es2015": "^6.1.18",
     "babelify": "^7.2.0",
-    "browserify": "^12.0.1"
+    "browserify": "^12.0.1",
+    "browserify-derequire": "^0.9.4"
   }
 }
