@@ -20,6 +20,8 @@
     "component",
     "inheritance",
     "react",
+    "state",
+    "props",
     "dom"
   ],
   "author": "reduct",
