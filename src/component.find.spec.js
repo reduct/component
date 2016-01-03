@@ -1,8 +1,9 @@
 import chai from 'chai';
-import Component from './component.js';
-import {DOM} from './utils/';
+import Component from './component.mocha-polyfill.js';
+import utils from './utils/';
 
 const expect = chai.expect;
+const DOM = utils.DOM;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {
@@ -22,9 +23,7 @@ class DefaultComponent extends Component {
 }
 
 describe('@reduct/component: Find API', () => {
-	beforeEach(done => {
-		return DOM.create(DOM.defaultMock, done);
-	});
+	beforeEach(done => DOM.create(DOM.defaultMock, done));
 
 	it('should be capable of returning one child node of the component\'s root node', () => {
 		const el = document.getElementById('MyComponent');

@@ -1,8 +1,9 @@
 import chai from 'chai';
-import {DOM} from './utils/';
+import utils from './utils/';
 import Component from './component.js';
 
 const expect = chai.expect;
+const DOM = utils.DOM;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {
@@ -11,9 +12,7 @@ class DefaultComponent extends Component {
 }
 
 describe('@reduct/component: Element API', () => {
-	beforeEach(done => {
-		return DOM.create(DOM.defaultMock, done);
-	});
+	beforeEach(done => DOM.create(DOM.defaultMock, done));
 
 	it('should return a DOM element even if none was passed directly to the Constructor.', () => {
 		const componentInstance = new DefaultComponent();
