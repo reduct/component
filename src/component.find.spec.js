@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Component from './component.polyfill-mirror.js';
+import Component from './component.mocha-polyfill.js';
 import utils from './utils/';
 
 const expect = chai.expect;
