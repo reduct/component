@@ -1,12 +1,10 @@
-import chai from 'chai';
+import chai, {expect} from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import Component from './component.js';
 
 chai.should();
 chai.use(sinonChai);
-
-const expect = chai.expect;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {
@@ -38,7 +36,7 @@ describe('@reduct/component: State API', () => {
 	});
 
 	it('should return undefined if no state was set.', () => {
-		expect(instance.getState('anotherState')).to.be.an('undefined');
+		expect(instance.state.anotherState).to.be.an('undefined');
 	});
 
 	it('should return the value of a state which was previously set.', () => {
@@ -46,7 +44,7 @@ describe('@reduct/component: State API', () => {
 			myState: 2
 		});
 
-		expect(instance.getState('myState')).to.equal(2);
+		expect(instance.state.myState).to.equal(2);
 	});
 
 	it('should fire an general change event if any state was set.', () => {
@@ -100,7 +98,7 @@ describe('@reduct/component: State API', () => {
 	});
 
 	it('should return the initial state if present.', () => {
-		expect(instance.getState('myState')).to.equal(1);
+		expect(instance.state.myState).to.equal(1);
 	});
 
 	it('should return an empty object if no getInitialState() method was present.', () => {
@@ -119,7 +117,7 @@ describe('@reduct/component: State API', () => {
 
 		expect(fn).to.throw(`@reduct/component Error: Please specify an initial value for 'myState' in your getInitialState() method.`);
 
-		expect(instanceWithoutDefaults.getState('myState')).to.be.an('undefined');
+		expect(instanceWithoutDefaults.state.myState).to.be.an('undefined');
 	});
 
 	afterEach(() => {

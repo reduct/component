@@ -1,66 +1,26 @@
 import {logger} from '@reduct/logger';
+import {
+    cloneObject,
+    isDefined,
+    isObject,
+    protoType
+} from './utilities/';
 import * as messages from './messages.js';
 
 const componentLogger = logger.getLogger('@reduct/component');
 
 /**
- * @private
- *
- * Checks if the given argument is a object.
- *
- * @param obj {*} The argument which will be validated.
- * @returns {boolean}
- *
- */
-function _isObject(obj) {
-	return typeof obj === 'object';
-}
-
-/**
- * @private
- *
- * Checks if the given argument is defined and not `null`.
- *
- * @param val {*} The argument which will be validated.
- * @returns {boolean}
- *
- */
-function _isDefined(val) {
-	return val !== null && val !== undefined;
-}
-
-/**
- * @private
- *
- * Deep-Clones a object.
- *
- * @param obj {Object} The object to clone.
- * @returns {Object} The cloned object.
- */
-function _cloneObject(obj) {
-	const target = {};
-
-	for (const i in obj) {
-		if (obj.hasOwnProperty(i)) {
-			target[i] = obj[i];
-		}
-	}
-
-	return target;
-}
-
-/**
  * Helper function to move passed props via constructor into the component
- * instance and validate them along the way
+ * instance and validate them along the way.
  *
- * @param {Component} component The component instance
- * @param {Object} propTypes A map of propTypes
+ * @param {Function} context The component instance.
+ * @param {Object} propTypes A map of propTypes.
  * @returns {Void}
  */
-function _validateAndSetProps(component, propTypes, passedProps = {}) {
-	const el = component.el;
-	const _defaultProps = component.getDefaultProps();
-	const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+function _validateAndSetProps(context, propTypes, passedProps = {}) {
+	const {el, getDefaultProps} = context;
+	const contextDefaultProps = getDefaultProps();
+	const defaultProps = isObject(contextDefaultProps) ? contextDefaultProps : {};
 
 	for (const propName in propTypes) {
 		if (propTypes.hasOwnProperty(propName)) {
@@ -69,43 +29,46 @@ function _validateAndSetProps(component, propTypes, passedProps = {}) {
 			const validatorResults = validator(propValue, propName, el);
 
 			if (validatorResults.result) {
-				component.props[propName] = validatorResults.value;
+				context.props[propName] = validatorResults.value;
 			}
 		}
 	}
 
 	// Freeze the props object to avoid further editing off the object.
-	component.props = Object.freeze(component.props);
+	context.props = Object.freeze(context.props);
 }
 
 /**
  * Helper function to set initial state variables in the component
- * instance
+ * instance.
  *
- * @param {Component} component The component instance
+ * @param {Function} context The component instance.
  * @returns {Void}
  */
-function _setInitialStates(component) {
-	const initialState = component.getInitialState();
+function _setInitialStates(context) {
+	const initialState = context.getInitialState();
 
-	if (_isObject(initialState)) {
-		component.initialStateKeys = Object.keys(initialState);
-		component.setState(initialState);
+	if (isObject(initialState)) {
+		context.initialStateKeys = Object.keys(initialState);
+		context.setState(initialState);
 	} else {
-		componentLogger.warn('Please return a valid object in the getInitialState() method.', component);
+		componentLogger.warn('Please return a valid object in the getInitialState() method.', context);
 	}
 }
 
-class Component {
+class ComponentClass {
 	constructor(element, opts) {
 		// Fail-Safe mechanism if someone is passing an array or the like as a second argument.
-		opts = _isObject(opts) ? opts : {};
+		opts = isObject(opts) ? opts : {};
 
-		if (!_isDefined(element)) {
+		if (!isDefined(element)) {
 			componentLogger.warn(messages.noElement);
 		}
 
-		// Holds all props
+		// The element property for the getElement() method.
+		this.el = element || global.document.createElement('div');
+
+		// Holds all props.
 		this.props = {};
 
 		// Holds the components state.
@@ -113,9 +76,6 @@ class Component {
 
 		// Holds all event listeners.
 		this.observers = {};
-
-		// The element property for the getElement() method.
-		this.el = element || global.document.createElement('div');
 
 		// Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
 		this.queryCache = {};
@@ -155,8 +115,10 @@ class Component {
 	 *
 	 */
 	findAll(selector) {
-		if (this.queryCache[selector]) {
-			return this.queryCache[selector];
+		const cachedResult = this.queryCache[selector];
+
+		if (cachedResult) {
+			return cachedResult;
 		}
 
 		const nodeList = this.getElement().querySelectorAll(selector);
@@ -178,23 +140,6 @@ class Component {
 	}
 
 	/**
-	 * Returns the property for the given name.
-	 *
-	 * @param propName {String} The name of the property.
-	 * @returns {*} The value of the property.
-	 *
-	 */
-	getProp(propName) {
-		const value = this.props[propName];
-
-		if (!_isDefined(value)) {
-			componentLogger.warn(`No value found for the prop ${propName}. Make sure to declare a propType for this property.`);
-		}
-
-		return value;
-	}
-
-	/**
 	 * Returns a boolean regarding the existence of the property.
 	 *
 	 * @param propName {String} The name of the property.
@@ -202,7 +147,7 @@ class Component {
 	 *
 	 */
 	hasProp(propName) {
-		return _isDefined(this.props[propName]);
+		return isDefined(this.props[propName]);
 	}
 
 	/**
@@ -223,8 +168,8 @@ class Component {
 	 */
 	setState(delta = {}, opts = {silent: false}) {
 		const isNotSilent = !opts.silent;
-		const previousState = _cloneObject(this.state);
-		const initialStateKeys = this.initialStateKeys;
+		const previousState = cloneObject(this.state);
+		const {initialStateKeys} = this;
 
 		for (const key in delta) {
 			if (delta.hasOwnProperty(key)) {
@@ -254,17 +199,6 @@ class Component {
 				previousState
 			});
 		}
-	}
-
-	/**
-	 * Returns the property for the given name.
-	 *
-	 * @param stateName {String} The name of the property.
-	 * @returns {*} The value of the property.
-	 *
-	 */
-	getState(stateName) {
-		return this.state[stateName];
 	}
 
 	/**
@@ -324,4 +258,56 @@ class Component {
 	}
 }
 
-export default Component;
+//
+// First, we export the named `@component` decorator, for simplified usage.
+//
+export const component = decoratorPropTypes => CustomComponent => {
+	const prototype = protoType.extractFrom(CustomComponent);
+	const propTypes = decoratorPropTypes || CustomComponent.propTypes;
+
+	return function Wrapper(el, props) {
+		const BaseComponent = ComponentClass;
+
+		//
+		// Since the base class gets executed first, we need to transfer / reset the
+		// getDefaultProps() and getInitialState() method.
+		//
+		if (prototype.getDefaultProps) {
+			BaseComponent.prototype.getDefaultProps = prototype.getDefaultProps;
+		} else {
+			BaseComponent.prototype.getDefaultProps = ComponentClass.prototype.getDefaultProps;
+		}
+		if (prototype.getInitialState) {
+			BaseComponent.prototype.getInitialState = prototype.getInitialState;
+		} else {
+			BaseComponent.prototype.getInitialState = ComponentClass.prototype.getInitialState;
+		}
+
+		//
+		// Create an instance of the component.
+		//
+		const base = new BaseComponent(el, {
+			props,
+			propTypes
+		});
+
+		//
+		// Adjust the prototype of the actual component.
+		//
+		CustomComponent.prototype = base;
+
+		//
+		// Inject the prototype of the `CustomComponent`. This will
+		// merge the attributes and the methods of the `CustomComponent`
+		// with those from `@reduct/component`.
+		//
+		protoType.injectInto(CustomComponent, prototype);
+
+		return new CustomComponent();
+	};
+};
+
+//
+// And the ES6 class as the default export for users who would like to use it the traditional way.
+//
+export default ComponentClass;

@@ -1,9 +1,6 @@
-import chai from 'chai';
-import utils from './utils/';
+import {expect} from 'chai';
+import {DOM} from './test-utilities/';
 import Component from './component.js';
-
-const expect = chai.expect;
-const DOM = utils.DOM;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {

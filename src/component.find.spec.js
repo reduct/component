@@ -1,9 +1,6 @@
-import chai from 'chai';
+import {expect} from 'chai';
+import {DOM} from './test-utilities/';
 import Component from './component.mocha-polyfill.js';
-import utils from './utils/';
-
-const expect = chai.expect;
-const DOM = utils.DOM;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {
