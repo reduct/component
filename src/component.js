@@ -2,7 +2,8 @@ import {logger} from '@reduct/logger';
 import {
     cloneObject,
     isDefined,
-    isObject
+    isObject,
+    protoType
 } from './utilities/';
 import * as messages from './messages.js';
 
@@ -17,9 +18,9 @@ const componentLogger = logger.getLogger('@reduct/component');
  * @returns {Void}
  */
 function _validateAndSetProps(context, propTypes, passedProps = {}) {
-	const el = context.el;
-	const _defaultProps = context.getDefaultProps();
-	const defaultProps = isObject(_defaultProps) ? _defaultProps : {};
+	const {el, getDefaultProps} = context;
+	const contextDefaultProps = getDefaultProps();
+	const defaultProps = isObject(contextDefaultProps) ? contextDefaultProps : {};
 
 	for (const propName in propTypes) {
 		if (propTypes.hasOwnProperty(propName)) {
@@ -55,7 +56,7 @@ function _setInitialStates(context) {
 	}
 }
 
-class Component {
+class ComponentClass {
 	constructor(element, opts) {
 		// Fail-Safe mechanism if someone is passing an array or the like as a second argument.
 		opts = isObject(opts) ? opts : {};
@@ -114,8 +115,10 @@ class Component {
 	 *
 	 */
 	findAll(selector) {
-		if (this.queryCache[selector]) {
-			return this.queryCache[selector];
+		const cachedResult = this.queryCache[selector];
+
+		if (cachedResult) {
+			return cachedResult;
 		}
 
 		const nodeList = this.getElement().querySelectorAll(selector);
@@ -183,7 +186,7 @@ class Component {
 	setState(delta = {}, opts = {silent: false}) {
 		const isNotSilent = !opts.silent;
 		const previousState = cloneObject(this.state);
-		const initialStateKeys = this.initialStateKeys;
+		const {initialStateKeys} = this;
 
 		for (const key in delta) {
 			if (delta.hasOwnProperty(key)) {
@@ -283,4 +286,56 @@ class Component {
 	}
 }
 
-export default Component;
+//
+// First, we export the named `@component` decorator, for simplified usage.
+//
+export const component = decoratorPropTypes => CustomComponent => {
+	const prototype = protoType.extractFrom(CustomComponent);
+	const propTypes = decoratorPropTypes || CustomComponent.propTypes;
+
+	return function Wrapper(el, props) {
+		const BaseComponent = ComponentClass;
+
+		//
+		// Since the base class gets executed first, we need to transfer / reset the
+		// getDefaultProps() and getInitialState() method.
+		//
+		if (prototype.getDefaultProps) {
+			BaseComponent.prototype.getDefaultProps = prototype.getDefaultProps;
+		} else {
+			BaseComponent.prototype.getDefaultProps = ComponentClass.prototype.getDefaultProps;
+		}
+		if (prototype.getInitialState) {
+			BaseComponent.prototype.getInitialState = prototype.getInitialState;
+		} else {
+			BaseComponent.prototype.getInitialState = ComponentClass.prototype.getInitialState;
+		}
+
+		//
+		// Create an instance of the component.
+		//
+		const base = new BaseComponent(el, {
+			props,
+			propTypes
+		});
+
+		//
+		// Adjust the prototype of the actual component.
+		//
+		CustomComponent.prototype = base;
+
+		//
+		// Inject the prototype of the `CustomComponent`. This will
+		// merge the attributes and the methods of the `CustomComponent`
+		// with those from `@reduct/component`.
+		//
+		protoType.injectInto(CustomComponent, prototype);
+
+		return new CustomComponent();
+	};
+};
+
+//
+// And the ES6 class as the default export for users who would like to use it the traditional way.
+//
+export default ComponentClass;
