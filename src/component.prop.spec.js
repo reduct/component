@@ -1,7 +1,5 @@
-import chai from 'chai';
+import {expect} from 'chai';
 import Component from './component.js';
-
-const expect = chai.expect;
 
 const validator = propValue => {
 	const isPropInProps = propValue !== null && propValue !== undefined;

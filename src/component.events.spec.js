@@ -1,10 +1,8 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import utils from './test-utilities/';
+import {DOM} from './test-utilities/';
 import Component from './component.js';
-
-const DOM = utils.DOM;
 
 chai.should();
 chai.use(sinonChai);
