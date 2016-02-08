@@ -1,12 +1,10 @@
-import chai from 'chai';
+import chai, {expect} from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import Component from './component.js';
 
 chai.should();
 chai.use(sinonChai);
-
-const expect = chai.expect;
 
 class DefaultComponent extends Component {
 	constructor(el, props) {

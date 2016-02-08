@@ -6,16 +6,15 @@
 
 ## Features
 * Clean and simple react-like syntax (states, props, method names)
-* ES6 Class support
+* ES6 Class & Decorator support
 * Support for propTypes(required / optional / type of prop) which will be passed in while initiating a new instance.
-* 3-Way prop injection
+* 3-Way prop value injection
  * Via the `arguments` array while creating a new instance.
  * The `dataset` of the element if one was passed to the instance.
  * Or the described `getDefaultProps()` method of your class.
 * If the props are accessed via the elements dataset, they will automatically be converted into the specified propType type(`String`, `Number` and even `Object`s via `JSON.parse()`)
 * Simple `on`, `off` event observer pattern
 * ~ 400 bytes minified
-* No dependencies
 
 
 ## Install
@@ -34,47 +33,54 @@ This package also supports AMD/RequireJS. Aren't using AMD or CommonJS? Access t
 const component = window.reduct.Component;
 ```
 
+The package depends on the `Relfect` API. We recommend you to import the `babel-polyfill` package as a best practice to cover unwanted cross-browser problems.
 
-## Example
+## Example (Decorators)
+*Note: If you are using babel, install at least the `transform-decorators-legacy` and `transform-class-properties` plugins.*
+
 ```js
-// MyComponent.js
+import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
-const myComponentPropTypes = {
-  'myProp'              : propTypes.isRequired,
-  'myPropNumber'        : propTypes.isNumber.isRequired,
-  'myOptionalObjectProp': propTypes.isObject.isOptional
+@component({
+    testProp: propTypes.isString.isRequired
+})
+class Test {
+	constructor() {
+		this.testMe();
+	}
+
+	testMe() {
+		console.log(this.props.testProp);
+	}
 }
-
-class MyComponent extends component.Component {
-  constructor(el, props) {
-    super(el, {
-        'props': props,
-        'propTypes': myComponentPropTypes
-    });
-
-    this.on('logSomething', this.doSomething.bind(this));
-  }
-
-  doSomething() {
-    console.log(this.getProp('myProp'));
-  }
-}
-
- export default MyComponent;
 ```
 
+## Example (ES6 Class)
 ```js
-import MyComponent from 'MyComponent.js';
+import ComponentClass from '@reduct/component';
+import propTypes from '@reduct/nitpick';
 
-// Create a new instance, and optionally pass in props.
-const targetElement = document.querySelectorAll('[data-myComponent]')[0];
-const instance = new MyComponent(targetElement, {
-    'myProp': 'myString',
-    'myPropNumber': 2
-});
+export class Test extends ComponentClass {
+	static propTypes = {
+		testProp: propTypes.isString.isRequired
+	};
 
-instance.trigger('logSomething') // LOG: 'myString'
+    constructor(el, props) {
+		super(el, {
+			props,
+			propTypes: {
+				testProp: propTypes.isString.isRequired
+			}
+		});
+
+		this.testMe();
+	}
+
+	testMe() {
+		console.log(this.props.testProp);
+	}
+}
 ```
 
 
@@ -152,7 +158,6 @@ Argument `eventName`: `String`
 Argument `listener`: `Function`
 
 Removes the given listener from the event queue.
-
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style.
