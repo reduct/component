@@ -10,15 +10,15 @@ const componentLogger = logger.getLogger('@reduct/component');
 
 /**
  * Helper function to move passed props via constructor into the component
- * instance and validate them along the way
+ * instance and validate them along the way.
  *
- * @param {Component} component The component instance
- * @param {Object} propTypes A map of propTypes
+ * @param {Function} context The component instance.
+ * @param {Object} propTypes A map of propTypes.
  * @returns {Void}
  */
-function _validateAndSetProps(component, propTypes, passedProps = {}) {
-	const el = component.el;
-	const _defaultProps = component.getDefaultProps();
+function _validateAndSetProps(context, propTypes, passedProps = {}) {
+	const el = context.el;
+	const _defaultProps = context.getDefaultProps();
 	const defaultProps = isObject(_defaultProps) ? _defaultProps : {};
 
 	for (const propName in propTypes) {
@@ -28,30 +28,30 @@ function _validateAndSetProps(component, propTypes, passedProps = {}) {
 			const validatorResults = validator(propValue, propName, el);
 
 			if (validatorResults.result) {
-				component.props[propName] = validatorResults.value;
+				context.props[propName] = validatorResults.value;
 			}
 		}
 	}
 
 	// Freeze the props object to avoid further editing off the object.
-	component.props = Object.freeze(component.props);
+	context.props = Object.freeze(context.props);
 }
 
 /**
  * Helper function to set initial state variables in the component
- * instance
+ * instance.
  *
- * @param {Component} component The component instance
+ * @param {Function} context The component instance.
  * @returns {Void}
  */
-function _setInitialStates(component) {
-	const initialState = component.getInitialState();
+function _setInitialStates(context) {
+	const initialState = context.getInitialState();
 
 	if (isObject(initialState)) {
-		component.initialStateKeys = Object.keys(initialState);
-		component.setState(initialState);
+		context.initialStateKeys = Object.keys(initialState);
+		context.setState(initialState);
 	} else {
-		componentLogger.warn('Please return a valid object in the getInitialState() method.', component);
+		componentLogger.warn('Please return a valid object in the getInitialState() method.', context);
 	}
 }
 
@@ -64,7 +64,10 @@ class Component {
 			componentLogger.warn(messages.noElement);
 		}
 
-		// Holds all props
+		// The element property for the getElement() method.
+		this.el = element || global.document.createElement('div');
+
+		// Holds all props.
 		this.props = {};
 
 		// Holds the components state.
@@ -72,9 +75,6 @@ class Component {
 
 		// Holds all event listeners.
 		this.observers = {};
-
-		// The element property for the getElement() method.
-		this.el = element || global.document.createElement('div');
 
 		// Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
 		this.queryCache = {};

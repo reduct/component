@@ -3,7 +3,7 @@ import {isDefined} from './isDefined.js';
 import {isObject} from './isObject.js';
 
 export {
-    cloneObject,
-    isDefined,
-    isObject
+	cloneObject,
+	isDefined,
+	isObject
 };

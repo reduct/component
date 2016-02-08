@@ -5,6 +5,6 @@
  * @returns {boolean}
  *
  */
-export function _isObject(obj) {
+export function isObject(obj) {
 	return typeof obj === 'object';
 }

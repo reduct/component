@@ -5,6 +5,6 @@
  * @returns {boolean}
  *
  */
-export function _isDefined(val) {
+export function isDefined(val) {
 	return val !== null && val !== undefined;
 }
