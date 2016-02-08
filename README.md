@@ -84,6 +84,15 @@ export class Test extends ComponentClass {
 ```
 
 
+## Creating custom propType validators
+Any propType validator needs to be a function on which gets passed three arguments.
+The arguments in correct order are `propValue` for the value which was passed while initiating a class, the `propName` of the prop to validate and the `el` which is the DOM element of the instance.
+
+The validator should return an object which contains at least a `result` Boolean and the validated/transformed propValue.
+`F -> {result: Boolean, value: 'propValue'}`
+
+For reference, take a look at the default propTypes of [@reduct/nitpick](https://github.com/reduct/nitpick).
+
 ## API
 #### instance.getElement();
 Type: `Function`
