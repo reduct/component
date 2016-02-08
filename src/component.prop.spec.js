@@ -43,7 +43,7 @@ describe('@reduct/component: Prop API', () => {
 	it('should return undefined if no prop was set.', () => {
 		const instance = new DefaultComponent();
 
-		expect(instance.getProp('myProp')).to.be.an('undefined');
+		expect(instance.props.myProp).to.be.an('undefined');
 	});
 
 	it('should check if a prop is present.', () => {
@@ -62,7 +62,7 @@ describe('@reduct/component: Prop API', () => {
 			}
 		});
 
-		expect(instance.getProp('myProp')).to.equal(2);
+		expect(instance.props.myProp).to.equal(2);
 	});
 
 	it('should validate and set values of the elements dataset when propTypes are given.', () => {
@@ -77,7 +77,7 @@ describe('@reduct/component: Prop API', () => {
 			}
 		});
 
-		expect(instance.getProp('myProp')).to.equal('value');
+		expect(instance.props.myProp).to.equal('value');
 	});
 
 	it('should fall back to the getDefaultProps() method when propTypes are given but the prop wasn‘t found in either the passed props or the dataset.', () => {
@@ -87,7 +87,7 @@ describe('@reduct/component: Prop API', () => {
 			}
 		});
 
-		expect(instance.getProp('myProp')).to.equal(1);
+		expect(instance.props.myProp).to.equal(1);
 	});
 
 	it('should return an empty object if no getDefaultProps() method was present.', () => {

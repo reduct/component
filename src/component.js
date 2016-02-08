@@ -140,23 +140,6 @@ class ComponentClass {
 	}
 
 	/**
-	 * Returns the property for the given name.
-	 *
-	 * @param propName {String} The name of the property.
-	 * @returns {*} The value of the property.
-	 *
-	 */
-	getProp(propName) {
-		const value = this.props[propName];
-
-		if (!isDefined(value)) {
-			componentLogger.warn(`No value found for the prop ${propName}. Make sure to declare a propType for this property.`);
-		}
-
-		return value;
-	}
-
-	/**
 	 * Returns a boolean regarding the existence of the property.
 	 *
 	 * @param propName {String} The name of the property.
@@ -216,17 +199,6 @@ class ComponentClass {
 				previousState
 			});
 		}
-	}
-
-	/**
-	 * Returns the property for the given name.
-	 *
-	 * @param stateName {String} The name of the property.
-	 * @returns {*} The value of the property.
-	 *
-	 */
-	getState(stateName) {
-		return this.state[stateName];
 	}
 
 	/**

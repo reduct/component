@@ -36,7 +36,9 @@ const component = window.reduct.Component;
 The package depends on the `Relfect` API. We recommend you to import the `babel-polyfill` package as a best practice to cover unwanted cross-browser problems.
 
 ## Example (Decorators)
-*Note: If you are using babel, install at least the `transform-decorators-legacy` and `transform-class-properties` plugins.*
+*Note:
+If you are using babel, install at least the `transform-decorators-legacy` plugin if you want to use the decorator syntax.
+If you want to use the ES6 Class, we recommend you to install the `transform-class-properties` plugin.*
 
 ```js
 import {component} from '@reduct/component';
@@ -100,12 +102,6 @@ Type: `Function`
 
 Will return an array with child DOM nodes matching the given selector.
 
-#### instance.getProp(key);
-Type: `Function`
-Argument `key`: `String`
-
-Will retrieve the prop for the given key.
-
 #### instance.hasProp(key);
 Type: `Function`
 Argument `key`: `String`
@@ -126,12 +122,6 @@ Will set the given state of the component. All passed keys should be specified i
 By default, the component will fire specific change events for each changed state key.
 For example if you call `this.setState({ myKey: 1 })` the component will fire `change:myKey` as well as a general `change` event.
 If a `opts` Object with the option `silent: true` was passed, the component won't fire any change events.
-
-#### instance.getState(key);
-Type: `Function`
-Argument `key`: `String`
-
-Will return the given state of the component.
 
 #### instance.getInitialState();
 Type: `Function`
@@ -158,6 +148,15 @@ Argument `eventName`: `String`
 Argument `listener`: `Function`
 
 Removes the given listener from the event queue.
+
+
+## Retrieving state / props
+You can access the instance props / state e.g.:
+```js
+const {myProp} = this.props;
+const {myStateKey} = this.state;
+```
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style.
