@@ -1,6 +1,6 @@
 import chai from 'chai';
 import Component from './component.mocha-polyfill.js';
-import utils from './utils/';
+import utils from './test-utilities/';
 
 const expect = chai.expect;
 const DOM = utils.DOM;

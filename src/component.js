@@ -1,53 +1,12 @@
 import {logger} from '@reduct/logger';
+import {
+    cloneObject,
+    isDefined,
+    isObject
+} from './utilities/';
 import * as messages from './messages.js';
 
 const componentLogger = logger.getLogger('@reduct/component');
-
-/**
- * @private
- *
- * Checks if the given argument is a object.
- *
- * @param obj {*} The argument which will be validated.
- * @returns {boolean}
- *
- */
-function _isObject(obj) {
-	return typeof obj === 'object';
-}
-
-/**
- * @private
- *
- * Checks if the given argument is defined and not `null`.
- *
- * @param val {*} The argument which will be validated.
- * @returns {boolean}
- *
- */
-function _isDefined(val) {
-	return val !== null && val !== undefined;
-}
-
-/**
- * @private
- *
- * Deep-Clones a object.
- *
- * @param obj {Object} The object to clone.
- * @returns {Object} The cloned object.
- */
-function _cloneObject(obj) {
-	const target = {};
-
-	for (const i in obj) {
-		if (obj.hasOwnProperty(i)) {
-			target[i] = obj[i];
-		}
-	}
-
-	return target;
-}
 
 /**
  * Helper function to move passed props via constructor into the component
@@ -60,7 +19,7 @@ function _cloneObject(obj) {
 function _validateAndSetProps(component, propTypes, passedProps = {}) {
 	const el = component.el;
 	const _defaultProps = component.getDefaultProps();
-	const defaultProps = _isObject(_defaultProps) ? _defaultProps : {};
+	const defaultProps = isObject(_defaultProps) ? _defaultProps : {};
 
 	for (const propName in propTypes) {
 		if (propTypes.hasOwnProperty(propName)) {
@@ -88,7 +47,7 @@ function _validateAndSetProps(component, propTypes, passedProps = {}) {
 function _setInitialStates(component) {
 	const initialState = component.getInitialState();
 
-	if (_isObject(initialState)) {
+	if (isObject(initialState)) {
 		component.initialStateKeys = Object.keys(initialState);
 		component.setState(initialState);
 	} else {
@@ -99,9 +58,9 @@ function _setInitialStates(component) {
 class Component {
 	constructor(element, opts) {
 		// Fail-Safe mechanism if someone is passing an array or the like as a second argument.
-		opts = _isObject(opts) ? opts : {};
+		opts = isObject(opts) ? opts : {};
 
-		if (!_isDefined(element)) {
+		if (!isDefined(element)) {
 			componentLogger.warn(messages.noElement);
 		}
 
@@ -187,7 +146,7 @@ class Component {
 	getProp(propName) {
 		const value = this.props[propName];
 
-		if (!_isDefined(value)) {
+		if (!isDefined(value)) {
 			componentLogger.warn(`No value found for the prop ${propName}. Make sure to declare a propType for this property.`);
 		}
 
@@ -202,7 +161,7 @@ class Component {
 	 *
 	 */
 	hasProp(propName) {
-		return _isDefined(this.props[propName]);
+		return isDefined(this.props[propName]);
 	}
 
 	/**
@@ -223,7 +182,7 @@ class Component {
 	 */
 	setState(delta = {}, opts = {silent: false}) {
 		const isNotSilent = !opts.silent;
-		const previousState = _cloneObject(this.state);
+		const previousState = cloneObject(this.state);
 		const initialStateKeys = this.initialStateKeys;
 
 		for (const key in delta) {

@@ -1,7 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import utils from './utils/';
+import utils from './test-utilities/';
 import Component from './component.js';
 
 const DOM = utils.DOM;

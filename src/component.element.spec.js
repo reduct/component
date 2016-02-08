@@ -1,5 +1,5 @@
 import chai from 'chai';
-import utils from './utils/';
+import utils from './test-utilities/';
 import Component from './component.js';
 
 const expect = chai.expect;
