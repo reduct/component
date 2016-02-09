@@ -14,7 +14,7 @@
  * Or the described `getDefaultProps()` method of your class.
 * If the props are accessed via the elements dataset, they will automatically be converted into the specified propType type(`String`, `Number` and even `Object`s via `JSON.parse()`)
 * Simple `on`, `off` event observer pattern
-* ~ 400 bytes minified
+* ~ 11 kb when minified
 
 
 ## Install
