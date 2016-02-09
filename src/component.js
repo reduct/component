@@ -247,15 +247,6 @@ class ComponentClass {
 
 		this.observers[event] = listener ? value : [];
 	}
-
-	/**
-	 * Extends the Components prototype.
-	 *
-	 * @deprecated since version 1.1.0
-	 */
-	extend() {
-		componentLogger.error(messages.extendDeprecate);
-	}
 }
 
 //
