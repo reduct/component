@@ -12,7 +12,7 @@
  * Via the `arguments` array while creating a new instance.
  * The `dataset` of the element if one was passed to the instance.
  * Or the described `getDefaultProps()` method of your class.
-* If the props are accessed via the elements dataset, they will automatically be converted into the specified propType type(`String`, `Number` and even `Object`s via `JSON.parse()`)
+* If the props are accessed via the elements dataset, they will automatically be converted into the specified propType type(`String`, `Number` and even `Object`s via `JSON.parse()`) - See [@reduct/nitpick](https://github.com/reduct/nitpick).
 * Simple `on`, `off` event observer pattern
 * ~ 11 kb when minified
 
