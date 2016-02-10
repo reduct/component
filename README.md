@@ -25,7 +25,12 @@ npm install @reduct/component --save
 
 once the component package is installed, just require it in your application file.
 ```js
-const component = require('@reduct/component');
+import {component} from '@reduct/component';
+```
+
+or CommonJS:
+```js
+const reductComponent = require('@reduct/component');
 ```
 
 This package also supports AMD/RequireJS. Aren't using AMD or CommonJS? Access the component via the following global:
@@ -34,6 +39,7 @@ const component = window.reduct.Component;
 ```
 
 The package depends on the `Relfect` API. We recommend you to import the `babel-polyfill` package as a best practice to cover unwanted cross-browser problems.
+
 
 ## Example (Decorators)
 *Note:
@@ -57,6 +63,7 @@ class Test {
 	}
 }
 ```
+
 
 ## Example (ES6 Class)
 ```js
