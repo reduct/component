@@ -3,7 +3,7 @@ import {isDefined} from './isDefined.js';
 import {isError} from './isError.js';
 import {isObject} from './isObject.js';
 import {isFunction} from './isFunction.js';
-import {protoType} from './protoType.js';
+import {prototype} from './prototype.js';
 
 export {
 	cloneObject,
@@ -11,5 +11,5 @@ export {
 	isError,
 	isObject,
 	isFunction,
-	protoType
+	prototype
 };

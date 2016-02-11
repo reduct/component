@@ -5,11 +5,16 @@ import {
     isError,
     isObject,
     isFunction,
-    protoType
+    prototype
 } from './utilities/';
 import * as messages from './messages.js';
 
+console.log(prototype);
 const componentLogger = logger.getLogger('@reduct/component');
+const {
+	extractFrom,
+	injectInto
+} = prototype;
 
 /**
  * Helper function to move passed props via constructor into the component
@@ -293,7 +298,7 @@ class ComponentClass {
 // First, we export the named `@component` decorator, for simplified usage.
 //
 export const component = decoratorPropTypes => CustomComponent => {
-	const prototype = protoType.extractFrom(CustomComponent);
+	const prototype = extractFrom(CustomComponent);
 	const propTypes = decoratorPropTypes || CustomComponent.propTypes;
 
 	return function Wrapper(el, props) {
@@ -331,7 +336,7 @@ export const component = decoratorPropTypes => CustomComponent => {
 		// merge the attributes and the methods of the `CustomComponent`
 		// with those from `@reduct/component`.
 		//
-		protoType.injectInto(CustomComponent, prototype);
+		injectInto(CustomComponent, prototype);
 
 		return new CustomComponent();
 	};
