@@ -92,7 +92,7 @@ function _setInitialStates(context) {
 		context.initialStateKeys = Object.keys(initialState);
 		context.setState(initialState);
 	} else {
-		componentLogger.warn('Please return a valid object in the getInitialState() method.', context);
+		componentLogger.warn(`Please return a valid object in the getInitialState() method of "${context.constructor.name}".`);
 	}
 }
 
@@ -217,7 +217,7 @@ class ComponentClass {
 				const oldValue = previousState[key];
 
 				if (initialStateKeys.indexOf(key) === -1) {
-					componentLogger.error(`Please specify an initial value for '${key}' in your getInitialState() method.`);
+					componentLogger.error(`Please specify an initial value for '${key}' in your getInitialState() method of "${this.constructor.name}".`);
 				} else if (newValue !== oldValue) {
 					this.state[key] = newValue;
 
