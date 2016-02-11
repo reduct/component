@@ -41,7 +41,7 @@ const component = window.reduct.Component;
 The package depends on the `Relfect` API. We strongly recommend you to install and import the `babel-polyfill` package to conquer unwanted cross-browser problems.
 
 
-## Example (Decorators)
+## Example (ES6 Class with decorators)
 *Note: If you are using babel and want to use the decorator syntax, install the `transform-decorators-legacy` plugin.*
 
 ```js
