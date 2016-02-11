@@ -49,7 +49,7 @@ import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
 @component({
-    myProp: propTypes.isString.isRequired
+    myProp: propTypes.string.isRequired
 })
 class TestComponent {
 	constructor() {
@@ -82,12 +82,12 @@ export class TestComponent extends ComponentClass {
 	}
 }
 TestComponent.propTypes = {
-	myProp: propTypes.isString.isRequired,
+	myProp: propTypes.string.isRequired,
 
 	//
 	// If you are passing an object which contains an `isOptional` function, it will automatically be used to validate the prop.
 	//
-	anotherProp: propTypes.isString
+	anotherProp: propTypes.string
 };
 ```
 
@@ -102,7 +102,7 @@ const instance = new TestComponent(node, {
 ## Using propTypes
 In general you can use the propTypes of React, but reduct has it's own [propType package](https://github.com/reduct/nitpick) as well. You may ask why? There is one suitable difference between Reacts and Reduct propTypes.
 
-A reduct component is based upon DOM nodes, and the props are aggregated from the DOM node's dataset if no props where passed while initiating and no value was specified in the `getDefaultProps()` method. Using the DOM's dataset for prop values has a downside, you can no longer expect that `data-myProp="2"` will be a valid `Number` in your JavaScript Component. To bypass this issue, we recommend that your propType should convert the given value in case it is a string, for example, take a look at the [`propTypes.number` propType](https://github.com/reduct/nitpick/blob/master/src/number.js).
+A reduct component is based upon DOM nodes, and the props are aggregated from the DOM node's dataset if no props where passed while initiating and no value was specified in the `getDefaultProps()` method. Using the DOM's dataset for prop values has a downside, no type safety. E.g. you can no longer expect that `data-myProp="2"` will be a valid `Number` since the every property of a DOM nodes dataset is a string. To bypass this issue, we recommend that your propType should convert the given value in case it is a string, for example, take a look at the [`propTypes.number` propType](https://github.com/reduct/nitpick/blob/master/src/number.js).
 
 ## Creating custom propTypes
 As stated above, the structure of a propType is the same as with Reacts propType. It's a function which should return an Error object in case the validation has failed, the passed arguments are `props`, `propName` and `componentName`. From there on, you should validate the given props object or the targeted prop.
