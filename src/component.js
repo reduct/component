@@ -9,7 +9,6 @@ import {
 } from './utilities/';
 import * as messages from './messages.js';
 
-console.log(prototype);
 const componentLogger = logger.getLogger('@reduct/component');
 const {
 	extractFrom,
