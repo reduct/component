@@ -115,7 +115,7 @@ describe('@reduct/component: State API', () => {
 			});
 		};
 
-		expect(fn).to.throw(`@reduct/component Error: Please specify an initial value for 'myState' in your getInitialState() method.`);
+		expect(fn).to.throw(`@reduct/component Error: Please specify an initial value for 'myState' in your getInitialState() method of "ComponentWithoutDefaults".`);
 
 		expect(instanceWithoutDefaults.state.myState).to.be.an('undefined');
 	});

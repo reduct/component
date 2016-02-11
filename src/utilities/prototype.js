@@ -1,10 +1,10 @@
-export const protoType = {
-	extractFrom(Clazz) {
+export const prototype = {
+	extractFrom(Target) {
 		const prototype = {};
 
-		Reflect.ownKeys(Clazz.prototype).forEach(key => {
+		Reflect.ownKeys(Target.prototype).forEach(key => {
 			if (key !== 'constructor') {
-				prototype[key] = Clazz.prototype[key];
+				prototype[key] = Target.prototype[key];
 			}
 		});
 
