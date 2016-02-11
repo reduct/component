@@ -68,7 +68,7 @@ describe('@reduct/component: Prop API', () => {
 		};
 		const fn = () => new TestComponent();
 
-		expect(fn).to.throw('@reduct/component Error: The propType for "myProp" returned an Error with the message:');
+		expect(fn).to.throw('The propType for "myProp" in Component "TestComponent" returned an Error with the message:');
 	});
 
 	it('should validate and set the passed props when propTypes are given.', () => {
@@ -93,5 +93,37 @@ describe('@reduct/component: Prop API', () => {
 		const instance = new DefaultComponent(null);
 
 		expect(instance.props.myProp).to.equal(1);
+	});
+
+	it('should use the isOptional function automatically if an object which contains a isOptional function was passed as the propType.', () => {
+		class TestComponent extends Component {
+			constructor(el, opts) {
+				super(el, opts);
+			}
+		}
+		TestComponent.propTypes = {
+			myProp: {
+				isOptional: validator
+			}
+		};
+		const instance = new TestComponent(null, {
+			myProp: 2
+		});
+
+		expect(instance.props.myProp).to.equal(2);
+	});
+
+	it('should throw an error if a propType is not a function.', () => {
+		class TestComponent extends Component {
+			constructor(el, opts) {
+				super(el, opts);
+			}
+		}
+		TestComponent.propTypes = {
+			myProp: 'nope'
+		};
+		const fn = () => new TestComponent();
+
+		expect(fn).to.throw('Invalid propType "myProp" specified in Component "TestComponent". Please specify a function as the propType validator.');
 	});
 });

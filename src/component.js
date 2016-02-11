@@ -4,6 +4,7 @@ import {
     isDefined,
     isError,
     isObject,
+    isFunction,
     protoType
 } from './utilities/';
 import * as messages from './messages.js';
@@ -43,14 +44,23 @@ function _validateAndSetProps(context, passedProps) {
 	});
 
 	//
-	// Afterwards, we validate the generated props object with each propType validator.
+	// After the aggregation is done, we validate the generated props object with each propType validator.
+	// If the user passed an object containing a `isOptional` function as the propType, we map the propType to the function.
+	// This reduces the overal code needed to defined propTypes and increases similarity with Reacts syntax.
 	//
 	propNames.forEach(propName => {
-		const propType = propTypes[propName];
+		const propTypeTarget = propTypes[propName];
+		const propType = isObject(propTypeTarget) && isFunction(propTypeTarget.isOptional) ? propTypeTarget.isOptional : propTypeTarget;
+		const isPropTypeInvalid = !isFunction(propType);
+
+		if (isPropTypeInvalid) {
+			logger.error(`Invalid propType "${propName}" specified in Component "${componentName}". Please specify a function as the propType validator.`);
+		}
+
 		const propTypeResult = propType(props, propName, componentName);
 
 		if (isError(propTypeResult)) {
-			throw new Error(`@reduct/component Error: The propType for "${propName}" returned an Error with the message:
+			logger.error(`The propType for "${propName}" in Component "${componentName}" returned an Error with the message:
 
 "${propTypeResult.message}".`);
 		}
