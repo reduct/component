@@ -4,7 +4,7 @@
  * @param obj {Object} The object to clone.
  * @returns {Object} The cloned object.
  */
-export function cloneObject(obj) {
+export function cloneObject(obj = {}) {
 	const target = {};
 
 	for (const i in obj) {
