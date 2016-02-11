@@ -2,6 +2,7 @@ import {logger} from '@reduct/logger';
 import {
     cloneObject,
     isDefined,
+    isError,
     isObject,
     protoType
 } from './utilities/';
@@ -14,28 +15,57 @@ const componentLogger = logger.getLogger('@reduct/component');
  * instance and validate them along the way.
  *
  * @param {Function} context The component instance.
- * @param {Object} propTypes A map of propTypes.
+ * @param {Object} passedProps An optional props object which can be directly passed to the class.
  * @returns {Void}
  */
-function _validateAndSetProps(context, propTypes, passedProps = {}) {
-	const {el, getDefaultProps} = context;
-	const contextDefaultProps = getDefaultProps();
-	const defaultProps = isObject(contextDefaultProps) ? contextDefaultProps : {};
+function _validateAndSetProps(context, passedProps) {
+	const {
+		el,
+		getDefaultProps
+	} = context;
+	const defaultProps = getDefaultProps();
+	const propTypes = context.constructor.propTypes || {};
+	const componentName = context.constructor.name;
+	const propNames = Object.keys(propTypes);
+	const props = {};
 
-	for (const propName in propTypes) {
-		if (propTypes.hasOwnProperty(propName)) {
-			const propValue = passedProps[propName] || el.getAttribute(`data-${propName.toLowerCase()}`) || defaultProps[propName];
-			const validator = propTypes[propName];
-			const validatorResults = validator(propValue, propName, el);
-
-			if (validatorResults.result) {
-				context.props[propName] = validatorResults.value;
-			}
-		}
+	if (!isObject(defaultProps)) {
+		logger.error(`The getDefaultProps() method of Component "${componentName}" did not return a valid Object. This can lead to unexpected behavior and Errors.`);
 	}
 
+	//
+	// First of, we need to aggregate all props, either from the passed props, the dom or the getDefaultProps() method.
+	//
+	propNames.forEach(propName => {
+		const value = passedProps[propName] || el.getAttribute(`data-${propName.toLowerCase()}`) || defaultProps[propName];
+
+		props[propName] = value;
+	});
+
+	//
+	// Afterwards, we validate the generated props object with each propType validator.
+	//
+	propNames.forEach(propName => {
+		const propType = propTypes[propName];
+		const propTypeResult = propType(props, propName, componentName);
+
+		if (isError(propTypeResult)) {
+			throw new Error(`@reduct/component Error: The propType for "${propName}" returned an Error with the message:
+
+"${propTypeResult.message}".`);
+		}
+
+		//
+		// If no error was thrown, and the propType has returned a transformed value,
+		// which is not `null` or `undefined`, overwrite the aggregated value.
+		//
+		if (isDefined(propTypeResult)) {
+			props[propName] = propTypeResult;
+		}
+	});
+
 	// Freeze the props object to avoid further editing off the object.
-	context.props = Object.freeze(context.props);
+	context.props = Object.freeze(props);
 }
 
 /**
@@ -57,9 +87,9 @@ function _setInitialStates(context) {
 }
 
 class ComponentClass {
-	constructor(element, opts) {
+	constructor(element, props) {
 		// Fail-Safe mechanism if someone is passing an array or the like as a second argument.
-		opts = isObject(opts) ? opts : {};
+		props = isObject(props) ? props : {};
 
 		if (!isDefined(element)) {
 			componentLogger.warn(messages.noElement);
@@ -84,7 +114,7 @@ class ComponentClass {
 		this.initialStateKeys = [];
 
 		// Set the props and the initial state of the component.
-		_validateAndSetProps(this, opts.propTypes, opts.props);
+		_validateAndSetProps(this, props);
 		_setInitialStates(this);
 	}
 
@@ -277,10 +307,9 @@ export const component = decoratorPropTypes => CustomComponent => {
 		//
 		// Create an instance of the component.
 		//
-		const base = new BaseComponent(el, {
-			props,
-			propTypes
-		});
+		BaseComponent.propTypes = propTypes;
+		const base = new BaseComponent(el, props);
+		BaseComponent.propTypes = {};
 
 		//
 		// Adjust the prototype of the actual component.

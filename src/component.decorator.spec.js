@@ -6,10 +6,7 @@ import {component} from './component.mocha-polyfill.js';
 class TestComponent {}
 
 @component({
-	testProp: value => ({
-		result: true,
-		value
-	})
+	testProp: (props, propName) => props[propName]
 })
 class TestComponentWithDefaults {
 	getDefaultProps() {
