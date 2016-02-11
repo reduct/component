@@ -51,12 +51,13 @@ import propTypes from '@reduct/nitpick';
 @component({
     myProp: propTypes.isString.isRequired
 })
-class Test {
+class TestComponent {
 	constructor() {
 		this.testMe();
 	}
 
 	testMe() {
+		// Prints "My fancy prop..." into the UA's console.
 		console.log(this.props.myProp);
 	}
 }
@@ -76,13 +77,26 @@ export class TestComponent extends ComponentClass {
 	}
 
 	testMe() {
+		// Prints "My fancy prop..." into the UA's console.
 		console.log(this.props.myProp);
 	}
 }
 TestComponent.propTypes = {
-	myProp: validator
-};
+	myProp: propTypes.isString.isRequired,
 
+	//
+	// If you are passing an object which contains an `isOptional` function, it will automatically be used to validate the prop.
+	//
+	anotherProp: propTypes.isString
+};
+```
+
+## Instantiating a component.
+```js
+const node = document.querySelector('data-component="TestComponent"');
+const instance = new TestComponent(node, {
+	myProp: 'My fancy prop...'
+});
 ```
 
 ## Using propTypes
