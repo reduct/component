@@ -1,13 +1,13 @@
 # @reduct/component
 [![Build Status](https://travis-ci.org/reduct/component.svg)](https://travis-ci.org/reduct/component) [![Dependency Status](https://david-dm.org/reduct/component.svg)](https://david-dm.org/reduct/component) [![devDependency Status](https://david-dm.org/reduct/component/dev-status.svg)](https://david-dm.org/reduct/component#info=devDependencies) [![Code Climate](https://codeclimate.com/github/reduct/component/badges/gpa.svg)](https://codeclimate.com/github/reduct/component) [![Test Coverage](https://codeclimate.com/github/reduct/component/badges/coverage.svg)](https://codeclimate.com/github/reduct/component/coverage)
 
-> A prototypical class that makes it easy to create Components with nodes with a powerful instance configuration system and a react-like API.
+> A prototypical class/decorator that makes it easy to create Components with nodes with a powerful instance configuration system and a react-like API.
 
 
 ## Features
-* Clean and simple react-like syntax (states, props, method names)
+* Clean and simple react-like syntax (state, props, method names)
 * ES6 Class & Decorator support
-* Support for propTypes(required / optional / type of prop) which will be passed in while initiating a new instance.
+* Support for propTypes(isRequired / isOptional / data types) which will be passed in while initiating a new instance.
 * 3-Way prop value injection
  * Via the `arguments` array while creating a new instance.
  * The `dataset` of the element if one was passed to the instance.
@@ -18,7 +18,6 @@
 
 
 ## Install
-With npm, use the familiar syntax e.g.:
 ```shell
 npm install @reduct/component --save
 ```
@@ -41,7 +40,7 @@ const component = window.reduct.Component;
 The package depends on the `Relfect` API. We strongly recommend you to install and import the `babel-polyfill` package to conquer unwanted cross-browser problems.
 
 
-## Example (ES6 Class with decorators)
+### Example (ES6 Class with decorators)
 *Note: If you are using babel and want to use the decorator syntax, install the `transform-decorators-legacy` plugin.*
 
 ```js
@@ -49,7 +48,15 @@ import {component} from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
 @component({
-    myProp: propTypes.string.isRequired
+	//
+	// Defines a required string prop
+	//
+	myProp: propTypes.string.isRequired
+
+	//
+	// Defines an optional string prop
+	//
+	optionalProp: propTypes.string
 })
 class TestComponent {
 	constructor() {
@@ -64,13 +71,13 @@ class TestComponent {
 ```
 
 
-## Example (ES6 Class)
+### Example (ES6 Class)
 ```js
 import ComponentClass from '@reduct/component';
 import propTypes from '@reduct/nitpick';
 
 export class TestComponent extends ComponentClass {
-    constructor(el, props) {
+	constructor(el, props) {
 		super(el, props);
 
 		this.testMe();
@@ -82,16 +89,11 @@ export class TestComponent extends ComponentClass {
 	}
 }
 TestComponent.propTypes = {
-	myProp: propTypes.string.isRequired,
-
-	//
-	// If you are passing an object which contains an `isOptional` function, it will automatically be used to validate the prop.
-	//
-	anotherProp: propTypes.string
+	myProp: propTypes.string.isRequired
 };
 ```
 
-## Instantiating a component.
+### Instantiating a component.
 ```js
 const node = document.querySelector('data-component="TestComponent"');
 const instance = new TestComponent(node, {
@@ -100,12 +102,12 @@ const instance = new TestComponent(node, {
 ```
 
 ## Using propTypes
-In general you can use the propTypes of React, but reduct has it's own [propType package](https://github.com/reduct/nitpick) as well. You may ask why? There is one suitable difference between Reacts and Reduct propTypes.
+In general you can use the propTypes of React, but reduct has it's own [propType package](https://github.com/reduct/nitpick) as well. You may ask why? There is one suitable difference between React's and Reduct's propTypes.
 
-A reduct component is based upon DOM nodes, and the props are aggregated from the DOM node's dataset if no props where passed while initiating and no value was specified in the `getDefaultProps()` method. Using the DOM's dataset for prop values has a downside, no type safety. E.g. you can no longer expect that `data-myProp="2"` will be a valid `Number` since the every property of a DOM nodes dataset is a string. To bypass this issue, we recommend that your propType should convert the given value in case it is a string, for example, take a look at the [`propTypes.number` propType](https://github.com/reduct/nitpick/blob/master/src/number.js).
+A reduct component is based upon DOM nodes, and the props are aggregated from the DOM node's dataset if no props where passed while initiating and no value was specified in the `getDefaultProps()` method. Using the DOM's dataset for prop values has a downside after all, no type safety. E.g. you can no longer expect that `data-myProp="2"` will be a valid `Number` since the every property of a DOM nodes dataset is a string. To bypass this issue, we recommend that your propType should convert the given value in case it is a string, for example, take a look at the [`propTypes.number` propType](https://github.com/reduct/nitpick/blob/master/src/number.js).
 
-## Creating custom propTypes
-As stated above, the structure of a propType is the same as with Reacts propType. It's a function which should return an Error object in case the validation has failed, the passed arguments are `props`, `propName` and `componentName`. From there on, you should validate the given props object or the targeted prop.
+### Creating custom propTypes
+As stated above, the structure of a propType is the same as with React's propTypes: A function which should return an Error object in case the validation has failed, the passed arguments are `props`, `propName` and `componentName`. From there on, you should validate the given props object or the targeted prop.
 
 ```js
 export function myCustomPropType(props, propName, componentName) {
@@ -117,7 +119,18 @@ export function myCustomPropType(props, propName, componentName) {
 
 For reference, take a look at the default propTypes of [@reduct/nitpick](https://github.com/reduct/nitpick).
 
-## API
+### My prop does not get passed into the component
+Make sure to define a propType for the given property. We force the usage of propTypes since it is a best-practice anyway and we cannot anticipate props which are only defined on the DOM node.
+
+### Retrieving state / props
+You can access the instance props / state e.g.:
+```js
+const {myProp} = this.props;
+const {myStateKey} = this.state;
+```
+
+
+## Component API
 #### instance.getElement();
 Type: `Function`
 
@@ -166,12 +179,12 @@ Argument `listener`: `Function`
 
 Creates/Uses an event and attaches a callback to the given eventName.
 
-#### instance.trigger(eventName, [arg1, arg2, ...]);
+#### instance.trigger(eventName, args);
 Type: `Function`
 Argument `eventName`: `String`
 Argument `args`: `*`
 
-Triggers an event and executes all functions for the given eventName with the passed arguments.
+Triggers an event and executes all functions for the given eventName with the passed argument.
 
 #### instance.off(eventName, listener);
 Type: `Function`
@@ -179,14 +192,6 @@ Argument `eventName`: `String`
 Argument `listener`: `Function`
 
 Removes the given listener from the event queue.
-
-
-## Retrieving state / props
-You can access the instance props / state e.g.:
-```js
-const {myProp} = this.props;
-const {myStateKey} = this.state;
-```
 
 
 ## Contributing
