@@ -16,8 +16,7 @@ const {
 } = prototype;
 
 /**
- * Helper function to move passed props via constructor into the component
- * instance and validate them along the way.
+ * Helper function which executes all propTypes.
  *
  * @param {Function} context The component instance.
  * @param {Object} passedProps An optional props object which can be directly passed to the class.
@@ -39,7 +38,7 @@ function _validateAndSetProps(context, passedProps) {
 	}
 
 	//
-	// First of, we need to aggregate all props, either from the passed props, the dom or the getDefaultProps() method.
+	// First of, we need to aggregate all props, either from the passed props, the DOM or the getDefaultProps() method.
 	//
 	propNames.forEach(propName => {
 		const value = passedProps[propName] || el.getAttribute(`data-${propName.toLowerCase()}`) || defaultProps[propName];
@@ -48,9 +47,9 @@ function _validateAndSetProps(context, passedProps) {
 	});
 
 	//
-	// After the aggregation is done, we validate the generated props object with each propType validator.
-	// If the user passed an object containing a `isOptional` function as the propType, we map the propType to the function.
-	// This reduces the overal code needed to defined propTypes and increases similarity with Reacts syntax.
+	// After the aggregation is done, we validate the generated props object with the propTypes.
+	// If the user passed an object containing a `isOptional` function as the propType, we map the propType to the `isOptional` function.
+	// This reduces the overal code needed to defined propTypes and increases similarity with React's syntax.
 	//
 	propNames.forEach(propName => {
 		const propTypeTarget = propTypes[propName];
@@ -121,7 +120,7 @@ class ComponentClass {
 		// Holds all event listeners.
 		this.observers = {};
 
-		// Cache for not hitting the DOM over and over again in the `find` and `findOne` methods.
+		// Cache for not hitting the DOM over and over again in the `find` and `findAll` methods.
 		this.queryCache = {};
 
 		// Holds all keys of the initial state, used to check for the initial existence of state additions.
@@ -236,7 +235,7 @@ class ComponentClass {
 			}
 		}
 
-		// Trigger event
+		// Trigger the general change event.
 		if (isNotSilent) {
 			this.trigger('change', {
 				delta,
@@ -298,7 +297,7 @@ class ComponentClass {
 //
 export const component = decoratorPropTypes => CustomComponent => {
 	const prototype = extractFrom(CustomComponent);
-	const propTypes = decoratorPropTypes || CustomComponent.propTypes;
+	const propTypes = decoratorPropTypes || CustomComponent.propTypes || {};
 
 	return function Wrapper(el, props) {
 		const BaseComponent = ComponentClass;
@@ -342,6 +341,6 @@ export const component = decoratorPropTypes => CustomComponent => {
 };
 
 //
-// And the ES6 class as the default export for users who would like to use it the traditional way.
+// Export the ES6 class for users who would like to use it the traditional way.
 //
 export default ComponentClass;
