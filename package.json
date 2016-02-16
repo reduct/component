@@ -50,8 +50,8 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@inkdpixels/commit-analyzer": "^0.0.4",
-    "@inkdpixels/release-notes-generator": "^0.0.4",
+    "@inkdpixels/commit-analyzer": "^1.0.0",
+    "@inkdpixels/release-notes-generator": "^1.0.0",
     "@reduct/logger": "^1.0.2",
     "babel-plugin-transform-class-properties": "^6.5.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
