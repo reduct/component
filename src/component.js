@@ -1,11 +1,11 @@
 import {logger} from '@reduct/logger';
 import {
-    cloneObject,
-    isDefined,
-    isError,
-    isObject,
-    isFunction,
-    prototype
+	cloneObject,
+	isDefined,
+	isError,
+	isObject,
+	isFunction,
+	prototype
 } from './utilities/';
 import * as messages from './messages.js';
 
@@ -29,7 +29,7 @@ function _validateAndSetProps(context, passedProps) {
 	} = context;
 	const defaultProps = getDefaultProps();
 	const propTypes = context.constructor.propTypes || {};
-	const componentName = context.constructor.name;
+	const componentName = context._internalName;
 	const propNames = Object.keys(propTypes);
 	const props = {};
 
@@ -95,12 +95,12 @@ function _setInitialStates(context) {
 		context.initialStateKeys = Object.keys(initialState);
 		context.setState(initialState);
 	} else {
-		componentLogger.warn(`Please return a valid object in the getInitialState() method of "${context.constructor.name}".`);
+		componentLogger.warn(`Please return a valid object in the getInitialState() method of "${context._internalName}".`);
 	}
 }
 
 class ComponentClass {
-	constructor(element, props) {
+	constructor(element, props, _internalName) {
 		// Fail-Safe mechanism if someone is passing an array or the like as a second argument.
 		props = isObject(props) ? props : {};
 
@@ -125,6 +125,10 @@ class ComponentClass {
 
 		// Holds all keys of the initial state, used to check for the initial existence of state additions.
 		this.initialStateKeys = [];
+
+		// Since the decorator does not maintain it's parent context constructor name,
+		// we need to save the internal name for the component as a writable property.
+		this._internalName = _internalName || this.constructor.name;
 
 		// Set the props and the initial state of the component.
 		_validateAndSetProps(this, props);
@@ -220,7 +224,7 @@ class ComponentClass {
 				const oldValue = previousState[key];
 
 				if (initialStateKeys.indexOf(key) === -1) {
-					componentLogger.error(`Please specify an initial value for '${key}' in your getInitialState() method of "${this.constructor.name}".`);
+					componentLogger.error(`Please specify an initial value for '${key}' in your getInitialState() method of "${this._internalName}".`);
 				} else if (newValue !== oldValue) {
 					this.state[key] = newValue;
 
@@ -298,6 +302,7 @@ class ComponentClass {
 export const component = decoratorPropTypes => CustomComponent => {
 	const prototype = extractFrom(CustomComponent);
 	const propTypes = decoratorPropTypes || CustomComponent.propTypes || {};
+	const componentName = CustomComponent.name;
 
 	return function Wrapper(el, props) {
 		const BaseComponent = ComponentClass;
@@ -321,7 +326,7 @@ export const component = decoratorPropTypes => CustomComponent => {
 		// Create an instance of the component.
 		//
 		BaseComponent.propTypes = propTypes;
-		const base = new BaseComponent(el, props);
+		const base = new BaseComponent(el, props, componentName);
 		BaseComponent.propTypes = {};
 
 		//

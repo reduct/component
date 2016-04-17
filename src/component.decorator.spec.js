@@ -39,4 +39,10 @@ describe('@reduct/component: Decorator', () => {
 		expect(instance.props.testProp).to.equal('test');
 		expect(instance.state.testState).to.equal(false);
 	});
+
+	it('should maintain the name of the given target Class as "_internalName".', () => {
+		const instance = new TestComponentWithDefaults();
+
+		expect(instance._internalName).to.equal('TestComponentWithDefaults');
+	});
 });
