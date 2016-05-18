@@ -37,7 +37,7 @@ This package also supports AMD/RequireJS. Aren't using AMD or CommonJS? Access t
 const component = window.reduct.Component;
 ```
 
-The package depends on the `Relfect` API. We strongly recommend you to install and import the `babel-polyfill` package to conquer unwanted cross-browser problems.
+The package depends on the `Reflect` API. We strongly recommend you to install and import the `babel-polyfill` package to conquer unwanted cross-browser problems.
 
 
 ### Example (ES6 Class with decorators)
